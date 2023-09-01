@@ -1,0 +1,149 @@
+"use client";
+
+import { useRef, useState } from "react";
+import { toast } from "react-hot-toast";
+import ClipLoader from "react-spinners/ClipLoader";
+import { IconButton, TextareaAutosize } from "@mui/material";
+import SendIcon from "@mui/icons-material/Send";
+import { useAppDispatch } from "@/store/Redux/hooks";
+import { friendsActions } from "@/store/Redux/friendsSlice/friendsSlice";
+import { nanoid } from "nanoid";
+
+type ChatControlsProp = {
+  chatId: string;
+  chatPartnerId: string;
+  sessionId: string;
+};
+
+const ChatControls = ({
+  chatId,
+  chatPartnerId,
+  sessionId,
+}: ChatControlsProp) => {
+  const messageRef = useRef<HTMLTextAreaElement>(null!);
+  const [isSending, setIsSending] = useState(false);
+  const [isEmpty, setIsEmpty] = useState(true);
+
+  const dispatch = useAppDispatch();
+
+  function onUserInput() {
+    const messageText = messageRef.current.value;
+    if (messageText.trim().length !== 0) {
+      setIsEmpty(false);
+    } else {
+      setIsEmpty(true);
+    }
+  }
+
+  async function sendMessage() {
+    const messageText = messageRef.current.value;
+    if (!messageText || messageText.trim().length === 0) {
+      toast.error("نمیتوانید پیام خالی بفرستید.");
+      return;
+    }
+
+    const timestamp = Date.now();
+
+    const message: Message = {
+      id: nanoid(),
+      senderId: sessionId,
+      recieverId: chatPartnerId,
+      text: messageText,
+      timestamp,
+    };
+
+    try {
+      setIsSending(true);
+
+      dispatch(
+        friendsActions.optimisticallyUpdateFriendChat({
+          friendId: chatPartnerId,
+          message,
+          messageStatus: "pending",
+        })
+      );
+
+      const response = await fetch("/api/message/send", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          message,
+          chatId,
+        }),
+      });
+      const resData = await response.json();
+
+      if (resData.error) {
+        toast.error(resData.message);
+        dispatch(
+          friendsActions.updateFriendChat({
+            friendId: chatPartnerId,
+            message: {
+              ...message,
+              status: "error",
+            },
+          })
+        );
+      } else {
+        messageRef.current.value = "";
+        setTimeout(() => {
+          messageRef.current.focus();
+          setIsEmpty(true);
+        }, 100);
+        dispatch(
+          friendsActions.updateFriendChat({
+            friendId: chatPartnerId,
+            message: {
+              ...message,
+              status: "success",
+            },
+          })
+        );
+      }
+    } catch (error) {
+      toast.error("خطا در ارسال پیام. لطفا دوباره امتحان کنید.");
+      dispatch(
+        friendsActions.updateFriendChat({
+          friendId: chatPartnerId,
+          message: {
+            ...message,
+            status: "error",
+          },
+        })
+      );
+    } finally {
+      setIsSending(false);
+    }
+  }
+
+  return (
+    <div className="flex items-start bg-white rounded-2xl overflow-hidden">
+      <IconButton
+        aria-label={isSending ? "در حال ارسال" : "ارسال"}
+        onClick={sendMessage}
+        disabled={isSending || isEmpty}
+      >
+        {isSending ? <ClipLoader size={25} color="#737373" /> : <SendIcon />}
+      </IconButton>
+      <TextareaAutosize
+        maxRows={3}
+        ref={messageRef}
+        onKeyDown={(e) => {
+          if (e.key === "Enter" && !e.shiftKey) {
+            e.preventDefault();
+            sendMessage();
+          }
+        }}
+        onChange={onUserInput}
+        className="font-light focus:outline-none px-3 py-2 flex-grow resize-none"
+        aria-label="متن پیام"
+        placeholder="پیام خود را وارد کنید..."
+        disabled={isSending}
+      />
+    </div>
+  );
+};
+
+export default ChatControls;
