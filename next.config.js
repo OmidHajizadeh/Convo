@@ -9,8 +9,8 @@ const nextConfig = {
     NEXT_PUBLIC_PUSHER_APP_KEY: "7dfc18eab0a65da85c2a",
 
     NEXTAUTH_SECRET: "supersecret",
-    NEXTAUTH_URL: "http://localhost:3000",
-    NEXT_PUBLIC_NEXTAUTH_URL: "http://localhost:3000",
+    NEXTAUTH_URL: "https://convo-tan.vercel.app",
+    NEXT_PUBLIC_NEXTAUTH_URL: "https://convo-tan.vercel.app",
 
     UPSTASH_REDIS_REST_URL: "https://eu1-nice-ostrich-39114.upstash.io",
     UPSTASH_REDIS_REST_TOKEN: "AZjKASQgMjc2ZTQ1OTEtZWFjMi00ZWZiLTliNjUtOGU0NTQzMmNmM2E3YTczNTllMzNjNjhhNGY4ZWE0YzZkYThjMjQ0Y2QwMWQ=",
