@@ -23,6 +23,7 @@ const EditForm = ({ session }: EditFormProps) => {
       },
     }
   );
+  
   const { errors, isSubmitting } = formState;
   const router = useRouter();
   const [name, setName] = useState(session.user.name);
@@ -61,7 +62,7 @@ const EditForm = ({ session }: EditFormProps) => {
     <form
       noValidate
       onSubmit={handleSubmit(submitProfileHandler)}
-      className="flex flex-col items-start gap-3 mt-4"
+      className="grid sm:grid-cols-2 gap-3 mt-4"
     >
       <TextField
         label="اسم نمایشی"
@@ -81,16 +82,19 @@ const EditForm = ({ session }: EditFormProps) => {
         })}
         error={!!errors.name}
         helperText={errors.name ? errors.name.message : `25/${name.length}`}
-        className="w-full max-w-3xl"
+        className="w-full"
       />
-      <Button
-        type="submit"
-        disableElevation
-        variant="contained"
-        startIcon={<EditIcon />}
-      >
-        ویرایش
-      </Button>
+      <span></span>
+      <div>
+        <Button
+          type="submit"
+          disableElevation
+          variant="contained"
+          startIcon={<EditIcon />}
+        >
+          ویرایش
+        </Button>
+      </div>
     </form>
   );
 };

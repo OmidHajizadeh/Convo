@@ -4,7 +4,6 @@ import { db } from "@/lib/database/db";
 import { fetchServerSession } from "@/utils/serverInteractions";
 import ChatPartnerHead from "./_components/ChatPartnerHead";
 import ChatPanel from "./_components/ChatPanel";
-import { Skeleton } from "@mui/material";
 
 type ChatPageProps = {
   params: {
@@ -12,7 +11,7 @@ type ChatPageProps = {
   };
 };
 
-const ChatPage = async ({ params: { chatId } }: ChatPageProps) => {
+async function chatPage(chatId: string) {
   const session = await fetchServerSession();
   if (!session) notFound();
   const { user } = session;
@@ -29,6 +28,21 @@ const ChatPage = async ({ params: { chatId } }: ChatPageProps) => {
   } catch (error) {
     notFound();
   }
+  return {
+    user,
+    chatPartner,
+  };
+}
+
+export async function generateMetadata({ params: { chatId } }: ChatPageProps) {
+  const { chatPartner } = await chatPage(chatId);
+  return {
+    title: `چت با ${chatPartner.name}`,
+  };
+}
+
+const ChatPage = async ({ params: { chatId } }: ChatPageProps) => {
+  const { chatPartner, user } = await chatPage(chatId);
 
   return (
     <div className="h-full">

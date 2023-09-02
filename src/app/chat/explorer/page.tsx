@@ -1,3 +1,4 @@
+import { Metadata } from "next";
 import Image from "next/image";
 import { notFound } from "next/navigation";
 
@@ -6,6 +7,10 @@ import { fetchRedis } from "@/utils/fetchRedis";
 import { Explorer } from "@/lib/Models/Explorer";
 import ExplorerListItem from "./_components/ExplorerListItem";
 import UserStatus from "./_components/UserStatus";
+
+export const metadata: Metadata = {
+  title: "اکسپلورر",
+};
 
 const ExplorerPage = async () => {
   const session = await fetchServerSession();

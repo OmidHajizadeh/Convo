@@ -2,12 +2,13 @@
 
 import { useRef, useState } from "react";
 import { toast } from "react-hot-toast";
+import { nanoid } from "nanoid";
 import ClipLoader from "react-spinners/ClipLoader";
 import { IconButton, TextareaAutosize } from "@mui/material";
 import SendIcon from "@mui/icons-material/Send";
+
 import { useAppDispatch } from "@/store/Redux/hooks";
 import { friendsActions } from "@/store/Redux/friendsSlice/friendsSlice";
-import { nanoid } from "nanoid";
 
 type ChatControlsProp = {
   chatId: string;

@@ -9,6 +9,10 @@ import NextAuthProvider from "@/lib/auth/next-auth-provider";
 export const metadata: Metadata = {
   title: "کانوو",
   description: "Convo Chat App",
+  applicationName: "Convo",
+  creator: "Omid Hajizadeh",
+  manifest: "/manifest.json",
+  themeColor: "#78b5d5",
 };
 
 const mainFont = localFont({

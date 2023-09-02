@@ -1,11 +1,11 @@
 "use client";
 
 import Image from "next/image";
+import { toast } from "react-hot-toast";
 import { IconButton } from "@mui/material";
 import AddCircleIcon from "@mui/icons-material/AddCircle";
 
 import { Explorer } from "@/lib/Models/Explorer";
-import { toast } from "react-hot-toast";
 
 type ExplorerListItemProps = {
   explorer: Explorer;

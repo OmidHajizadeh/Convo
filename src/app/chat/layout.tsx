@@ -5,13 +5,11 @@ import ReduxProvider from "@/store/Redux/ReduxProvider";
 import { fetchRedis } from "@/utils/fetchRedis";
 import {
   fetchServerSession,
-  getChatMessages,
   getFriendsByUserId,
 } from "@/utils/serverInteractions";
 import NewFriendRequestsSubscriber from "@/utils/subscribers/NewFriendRequestsSubscriber";
 import ResponsiveChatSidebar from "@/components/ResponsiveChatSidebar";
 import HeadUser from "@/components/HeadUser";
-import UserOptions from "@/components/UserOptions";
 import FriendsChatSubscriber from "@/utils/subscribers/FriendsChatSubscriber";
 import ExplorerStatus from "@/utils/subscribers/ExplorerStatus";
 import { Friend } from "@/lib/Models/Friend";
@@ -40,7 +38,7 @@ const ChatListLayout = async ({ children }: ChildrenProp) => {
     );
 
     friends = await getFriendsByUserId(session.user.id);
-    
+
     isAlreadyInExplorer = await fetchRedis<0 | 1>(
       "hexists",
       "explorer:explorer_list",

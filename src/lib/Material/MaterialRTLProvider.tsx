@@ -21,20 +21,20 @@ const theme = createTheme({
       main: "#1f1f1f",
     },
     secondary: {
-      main: '#707070'
+      main: "#707070",
     },
     success: {
-      main: '#d4d4d4',
+      main: "#d4d4d4",
     },
     error: {
-      main: '#dc3545'
+      main: "#dc3545",
     },
     info: {
-      main: '#17a2b8'
+      main: "#17a2b8",
     },
     warning: {
-      main: '#ffc107',
-    }
+      main: "#ffc107",
+    },
   },
   breakpoints: {
     values: {
@@ -58,3 +58,40 @@ export default function MaterialRTLProvider({
     </CacheProvider>
   );
 }
+
+
+const consoleHead = [
+  "color: yellow",
+  "text-align: center",
+  "width: 100%",
+  "display: block",
+  "text-shadow: 2px 2px black",
+  "padding: 10px",
+].join(";");
+const consoleBody = [
+  "color: #78b5d5",
+  "text-align: center",
+  "width: 100%",
+  "margin-block: -2.5rem -1.5rem",
+  "display: block",
+  "font-family:  Lucida Handwriting",
+  "font-size: 45px",
+  "font-weight: 1000",
+  "text-shadow: 4px 4px black",
+  "padding: 10px",
+].join(";");
+const consoleFooter = [
+  "color: lime",
+  "text-align: center",
+  "width: 100%",
+  "display: block",
+  "text-shadow: 2px 2px black",
+  "padding: 10px",
+].join(";");
+
+console.log(
+  "%cCreated by\n%cOmid Hajizadeh\n%cContact me at omid.hajizadehh@gmail.com",
+  consoleHead,
+  consoleBody,
+  consoleFooter
+);

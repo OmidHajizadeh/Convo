@@ -13,19 +13,19 @@ type FriendListProps = {
 
 const FriendList = ({ session }: FriendListProps) => {
   const { friendsList } = useAppSelector((state) => state.friends);
-  const [friendsListRedux, setFriendsListRedux] = useState<Friend[]>([]);
+  // const [friendsListRedux, setFriendsListRedux] = useState<Friend[]>([]);
 
-  // ! This messed up work is done to avoid hydration errors :/
+  // // ! This messed up work is done to avoid hydration errors :/
 
-  useEffect(() => {
-    setFriendsListRedux(friendsList);
-  }, [friendsList]);
+  // useEffect(() => {
+  //   setFriendsListRedux(friendsList);
+  // }, [friendsList]);
 
   return (
-    <>
-      {friendsListRedux.length > 0 ? (
+    <div suppressHydrationWarning>
+      {friendsList.length > 0 ? (
         <ul className="w-full space-y-3">
-          {friendsListRedux.map((friendObject) => {
+          {friendsList.map((friendObject) => {
             return (
               <FriendListItem
                 key={friendObject.friend.id}
@@ -36,8 +36,8 @@ const FriendList = ({ session }: FriendListProps) => {
           })}
         </ul>
       ) : (
-        <div className="grid place-items-center h-full">
-          <div className="w-full flex items-center flex-col">
+        <div className="flex items-center justify-center h-full">
+          <div>
             <Image
               src="/no-chat.svg"
               alt="بنر خالی بودن لیست چت"
@@ -51,7 +51,7 @@ const FriendList = ({ session }: FriendListProps) => {
           </div>
         </div>
       )}
-    </>
+    </div>
   );
 };
 

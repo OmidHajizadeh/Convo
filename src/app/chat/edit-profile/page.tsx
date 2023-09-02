@@ -1,6 +1,12 @@
-import { fetchServerSession } from "@/utils/serverInteractions";
+import { Metadata } from "next";
 import { notFound } from "next/navigation";
+
+import { fetchServerSession } from "@/utils/serverInteractions";
 import EditForm from "./_components/EditForm";
+
+export const metadata: Metadata = {
+  title: "ویرایش پروفایل",
+};
 
 const EditProfilePage = async () => {
   const session = await fetchServerSession();

@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect, useRef } from "react";
 import Image from "next/image";
 import { format } from "date-fns";
 import { Avatar } from "@mui/material";
@@ -7,7 +8,6 @@ import ClockLoader from "react-spinners/ClockLoader";
 import ErrorIcon from "@mui/icons-material/Error";
 
 import { Friend } from "@/lib/Models/Friend";
-import { useEffect, useRef } from "react";
 
 type ChatMessagesProps = {
   currentUser: User;

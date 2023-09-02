@@ -1,7 +1,12 @@
+import { Metadata } from "next";
 import { notFound } from "next/navigation";
 
 import RequestsList from "./_components/RequestsList";
 import { fetchServerSession } from "@/utils/serverInteractions";
+
+export const metadata: Metadata = {
+  title: "درخواست ها",
+};
 
 const RequestsPage = async () => {
   const session = await fetchServerSession();

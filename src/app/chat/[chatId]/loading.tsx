@@ -1,4 +1,3 @@
-import { ConvoPuffLoader } from "@/components/spinners";
 import { Skeleton } from "@mui/material";
 
 const ChatLoadingPage = () => {
