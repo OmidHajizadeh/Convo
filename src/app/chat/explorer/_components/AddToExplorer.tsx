@@ -27,7 +27,7 @@ const AddToExplorer = () => {
         body: JSON.stringify({
           statusText: formData.statusText,
         }),
-        cache: 'no-store'
+        // cache: 'no-store'
       });
       const data = await response.json();
       if (data.error) {

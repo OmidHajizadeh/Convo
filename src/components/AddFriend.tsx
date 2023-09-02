@@ -38,7 +38,7 @@ export default function FormDialog() {
         body: JSON.stringify({
           email: data.email,
         }),
-        cache: 'no-store'
+        // cache: 'no-store'
       });
 
       const resData = await res.json();
