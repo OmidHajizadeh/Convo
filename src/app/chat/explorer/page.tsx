@@ -35,11 +35,12 @@ const ExplorerPage = async () => {
   let people: User[];
 
   try {
-    let peopleString = await Promise.all(
-      peopleIds.map((item) => fetchRedis<string>("get", `user:${item}`))
+    people = await Promise.all(
+      peopleIds.map(async (item) => {
+        const user = await fetchRedis<string>("get", `user:${item}`);
+        return JSON.parse(user) as User;
+      })
     );
-    people = peopleString.map(userString => JSON.parse(userString) as User);
-
   } catch (error) {
     notFound();
   }

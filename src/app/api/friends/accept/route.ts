@@ -83,11 +83,9 @@ export async function POST(req: NextRequest) {
   }
 
   try {
-    await Promise.all([
-      db.sadd(`user:${session.user.id}:friends`, senderId),
-      db.sadd(`user:${senderId}:friends`, session.user.id),
-      db.srem(`user:${session.user.id}:incoming_friend_requests`, senderId),
-    ]);
+    await db.sadd(`user:${session.user.id}:friends`, senderId);
+    await db.sadd(`user:${senderId}:friends`, session.user.id);
+    await db.srem(`user:${session.user.id}:incoming_friend_requests`, senderId);
   } catch (error) {
     return NextResponse.json(
       {

@@ -30,7 +30,6 @@ const RequestsList = () => {
       body: JSON.stringify({
         id: senderId,
       }),
-      // cache: 'no-store'
     });
 
     const resData = await res.json();

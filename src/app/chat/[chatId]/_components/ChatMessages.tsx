@@ -96,11 +96,7 @@ const ChatMessages = ({ currentUser, partnerObj }: ChatMessagesProps) => {
                 <p className="chat-message__text mb-1 font-light">
                   {message.text}
                 </p>
-                <small
-                  className={`chat-message__date text-gray-600/60 ${
-                    isMessageFromCurrentUser ? "self-end" : "self-start"
-                  }`}
-                >
+                <small className="chat-message__date self-end text-gray-600/60">
                   {formattedTimestamp(message.timestamp)}
                 </small>
               </div>

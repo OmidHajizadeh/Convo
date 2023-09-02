@@ -25,6 +25,10 @@ export default withAuth(
     if (!isAuth && isAccessingSensitiveRoute) {
       return NextResponse.redirect(new URL("/login", req.url));
     }
+
+    // if (pathname === "/") {
+    //   return NextResponse.redirect(new URL("/chat", req.url));
+    // }
   },
   {
     callbacks: {
