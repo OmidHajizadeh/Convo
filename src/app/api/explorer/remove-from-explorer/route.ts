@@ -3,7 +3,7 @@ import { fetchRedis } from "@/utils/fetchRedis";
 import { fetchServerSession } from "@/utils/serverInteractions";
 import { NextResponse } from "next/server";
 
-export const dynamic = 'force-dynamic';
+export const dynamic = 'auto';
 
 export async function GET() {
   const session = await fetchServerSession();
