@@ -38,6 +38,7 @@ export default function FormDialog() {
         body: JSON.stringify({
           email: data.email,
         }),
+        cache: 'no-store'
       });
 
       const resData = await res.json();
@@ -62,6 +63,7 @@ export default function FormDialog() {
         onClick={handleClickOpen}
         disableElevation
         color="secondary"
+        aria-label="افزودن دوست"
         className="!fixed bottom-4 end-4 !rounded-[50%] !w-16 !h-16"
       >
         <AddIcon className="!w-9 !h-9" />

@@ -30,11 +30,14 @@ const ChatListLayout = async ({ children }: ChildrenProp) => {
       `user:${session.user.id}:incoming_friend_requests`
     );
 
-    incomingFriendRequests = await Promise.all(
-      incommingFriendRequestIds.map(async (senderId) => {
-        const sender = await fetchRedis<string>("get", `user:${senderId}`);
-        return JSON.parse(sender);
-      })
+    let incomingFriendRequestsString = await Promise.all(
+      incommingFriendRequestIds.map((senderId) =>
+        fetchRedis<string>("get", `user:${senderId}`)
+      )
+    );
+
+    incomingFriendRequests = incomingFriendRequestsString.map(
+      (friend) => JSON.parse(friend) as User
     );
 
     friends = await getFriendsByUserId(session.user.id);

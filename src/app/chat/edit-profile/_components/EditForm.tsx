@@ -41,6 +41,7 @@ const EditForm = ({ session }: EditFormProps) => {
         body: JSON.stringify({
           name: formData.name,
         }),
+        cache: 'no-store'
       });
 
       const resData = await res.json();

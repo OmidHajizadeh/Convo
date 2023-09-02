@@ -69,6 +69,7 @@ const ChatControls = ({
           message,
           chatId,
         }),
+        cache: 'no-store'
       });
       const resData = await response.json();
 

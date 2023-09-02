@@ -47,7 +47,7 @@ const AboutPage = () => {
               className="grid place-items-center h-full w-full p-3"
             >
               <Image
-                className="w-auto max-h-full"
+                className="w-auto max-h-full object-cover"
                 src="/packages/nextjs.webp"
                 blurDataURL="/packages/nextjs.webp"
                 width={300}
@@ -67,7 +67,7 @@ const AboutPage = () => {
               className="grid place-items-center h-full w-full p-3"
             >
               <Image
-                className="w-auto max-h-full"
+                className="w-auto max-h-full object-cover"
                 src="/packages/nextauth.webp"
                 blurDataURL="/packages/nextauth.webp"
                 width={300}
@@ -87,7 +87,7 @@ const AboutPage = () => {
               className="grid place-items-center h-full w-full p-3"
             >
               <Image
-                className="w-auto max-h-full"
+                className="w-auto max-h-full object-cover"
                 src="/packages/mui.webp"
                 blurDataURL="/packages/mui.webp"
                 width={300}
@@ -107,7 +107,7 @@ const AboutPage = () => {
               className="grid place-items-center h-full w-full p-3"
             >
               <Image
-                className="w-auto max-h-full"
+                className="w-auto max-h-full object-cover"
                 src="/packages/tailwindcss.webp"
                 blurDataURL="/packages/tailwindcss.webp"
                 width={300}
@@ -127,7 +127,7 @@ const AboutPage = () => {
               className="grid place-items-center h-full w-full p-3"
             >
               <Image
-                className="w-auto max-h-full"
+                className="w-auto max-h-full object-cover"
                 src="/packages/typescript.webp"
                 blurDataURL="/packages/typescript.webp"
                 width={300}
@@ -147,7 +147,7 @@ const AboutPage = () => {
               className="grid place-items-center h-full w-full p-3"
             >
               <Image
-                className="w-auto max-h-full"
+                className="w-auto max-h-full object-cover"
                 src="/packages/upstash.webp"
                 blurDataURL="/packages/upstash.webp"
                 width={300}
@@ -167,7 +167,7 @@ const AboutPage = () => {
               className="grid place-items-center h-full w-full p-3"
             >
               <Image
-                className="w-auto max-h-full"
+                className="w-auto max-h-full object-cover"
                 src="/packages/redis.webp"
                 blurDataURL="/packages/redis.webp"
                 width={300}
@@ -187,7 +187,7 @@ const AboutPage = () => {
               className="grid place-items-center h-full w-full p-3"
             >
               <Image
-                className="w-auto max-h-full"
+                className="w-auto max-h-full object-cover"
                 src="/packages/redux.webp"
                 blurDataURL="/packages/redux.webp"
                 width={300}
@@ -207,7 +207,7 @@ const AboutPage = () => {
               className="grid place-items-center h-full w-full p-3"
             >
               <Image
-                className="w-auto max-h-full"
+                className="w-auto max-h-full object-cover"
                 src="/packages/pusher.webp"
                 blurDataURL="/packages/pusher.webp"
                 width={300}

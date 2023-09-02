@@ -127,10 +127,7 @@ export async function POST(req: Request) {
     );
   }
 
-  let friendString: string = await fetchRedis<string>(
-    "get",
-    `user:${friendId}`
-  );
+  let friendString: string;
 
   try {
     friendString = await fetchRedis<string>("get", `user:${friendId}`);

@@ -14,7 +14,9 @@ const RemoveFromExplorer = () => {
   async function removeProfileHandler() {
     try {
       setIsloading(true);
-      const response = await fetch("/api/explorer/remove-from-explorer");
+      const response = await fetch("/api/explorer/remove-from-explorer", {
+        cache: 'no-store'
+      });
       const data = await response.json();
       if (data.error) {
         toast.error(data.message);

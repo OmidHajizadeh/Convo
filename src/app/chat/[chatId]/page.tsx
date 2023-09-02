@@ -4,6 +4,7 @@ import { db } from "@/lib/database/db";
 import { fetchServerSession } from "@/utils/serverInteractions";
 import ChatPartnerHead from "./_components/ChatPartnerHead";
 import ChatPanel from "./_components/ChatPanel";
+import { fetchRedis } from "@/utils/fetchRedis";
 
 type ChatPageProps = {
   params: {
@@ -24,7 +25,11 @@ async function chatPage(chatId: string) {
   let chatPartner: User;
 
   try {
-    chatPartner = (await db.get(`user:${chatPartnerId}`)) as User;
+    let chatPartnerString = await fetchRedis<string>(
+      "get",
+      `user:${chatPartnerId}`
+    );
+    chatPartner = JSON.parse(chatPartnerString);
   } catch (error) {
     notFound();
   }

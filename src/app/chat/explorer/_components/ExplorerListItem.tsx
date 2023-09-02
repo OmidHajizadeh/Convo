@@ -20,6 +20,7 @@ const ExplorerListItem = ({ explorer }: ExplorerListItemProps) => {
         body: JSON.stringify({
           email: explorer.user.email,
         }),
+        cache: 'no-store'
       });
 
       const resData = await res.json();
