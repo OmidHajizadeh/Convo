@@ -9,6 +9,9 @@ export const metadata: Metadata = {
   title: "لیست چت",
 };
 
+export const dynamic = 'force-dynamic';
+
+
 const ChatPage = async () => {
   const session = await fetchServerSession();
   if (!session) notFound();

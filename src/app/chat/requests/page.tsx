@@ -8,6 +8,9 @@ export const metadata: Metadata = {
   title: "درخواست ها",
 };
 
+export const dynamic = 'force-dynamic';
+
+
 const RequestsPage = async () => {
   const session = await fetchServerSession();
   if (!session) notFound();

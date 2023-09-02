@@ -6,6 +6,8 @@ export const metadata: Metadata = {
   title: "درباره کانوو",
 };
 
+export const dynamic = 'force-dynamic';
+
 const AboutPage = () => {
   return (
     <div className="h-full flex flex-col p-4" dir="ltr">
