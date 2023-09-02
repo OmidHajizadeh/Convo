@@ -12,7 +12,7 @@ export const metadata: Metadata = {
   title: "اکسپلورر",
 };
 
-export const dynamic = 'force-dynamic';
+export const revalidate = 0;
 
 const ExplorerPage = async () => {
   const session = await fetchServerSession();

@@ -1,6 +1,5 @@
 import { notFound } from "next/navigation";
 
-import { db } from "@/lib/database/db";
 import { fetchServerSession } from "@/utils/serverInteractions";
 import ChatPartnerHead from "./_components/ChatPartnerHead";
 import ChatPanel from "./_components/ChatPanel";
@@ -11,6 +10,8 @@ type ChatPageProps = {
     chatId: string;
   };
 };
+
+export const revalidate = 0;
 
 async function chatPage(chatId: string) {
   const session = await fetchServerSession();

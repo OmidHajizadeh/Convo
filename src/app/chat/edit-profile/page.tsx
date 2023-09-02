@@ -8,7 +8,7 @@ export const metadata: Metadata = {
   title: "ویرایش پروفایل",
 };
 
-export const dynamic = 'force-dynamic';
+export const revalidate = 0;
 
 const EditProfilePage = async () => {
   const session = await fetchServerSession();

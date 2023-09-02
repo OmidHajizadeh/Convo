@@ -9,7 +9,7 @@ export const metadata: Metadata = {
   title: "لیست چت",
 };
 
-export const dynamic = 'force-dynamic';
+export const revalidate = 0;
 
 
 const ChatPage = async () => {

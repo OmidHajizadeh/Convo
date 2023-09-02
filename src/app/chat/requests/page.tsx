@@ -8,7 +8,7 @@ export const metadata: Metadata = {
   title: "درخواست ها",
 };
 
-export const dynamic = 'force-dynamic';
+export const revalidate = 0;
 
 
 const RequestsPage = async () => {
