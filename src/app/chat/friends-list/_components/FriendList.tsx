@@ -36,8 +36,8 @@ const FriendList = ({ session }: FriendListProps) => {
           })}
         </ul>
       ) : (
-        <div className="flex items-center justify-center h-full">
-          <div>
+        <div className="grid place-items-center h-full">
+          <div className="w-full flex items-center flex-col">
             <Image
               src="/no-chat.svg"
               alt="بنر خالی بودن لیست چت"

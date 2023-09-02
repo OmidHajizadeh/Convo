@@ -62,7 +62,7 @@ export default function FormDialog() {
         onClick={handleClickOpen}
         disableElevation
         color="secondary"
-        className="!fixed bottom-4 end-4 !rounded-full !w-16 !h-16"
+        className="!fixed bottom-4 end-4 !rounded-[50%] !w-16 !h-16"
       >
         <AddIcon className="!w-9 !h-9" />
       </Button>

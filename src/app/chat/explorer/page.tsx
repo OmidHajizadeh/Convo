@@ -48,7 +48,7 @@ const ExplorerPage = async () => {
     .filter((explorer) => explorer.user.id !== session.user.id);
 
   return (
-    <div className="h-full p-4">
+    <div className="h-full p-4 overflow-auto">
       <div className="text-center h-full flex flex-col">
         <p>
           شما میتوانید با قرار دادن خود در لیست اکسپلورر، به دیگران اجازه دهید
@@ -67,18 +67,20 @@ const ExplorerPage = async () => {
             })}
           </ul>
         ) : (
-          <div className="flex flex-col items-center overflow-auto">
-            <Image
-              alt="لیست خالی اکسپلورر"
-              src="/empty-explorer.svg"
-              width={800}
-              height={800}
-              referrerPolicy="no-referrer"
-              className="max-w-[20rem] w-full"
-            />
-            <h3 className="text-lg font-medium">
-              پروفایلی برای نمایش یافت نشد
-            </h3>
+          <div className="grid place-items-center h-full">
+            <div className="w-full flex items-center flex-col">
+              <Image
+                alt="لیست خالی اکسپلورر"
+                src="/empty-explorer.svg"
+                width={800}
+                height={800}
+                referrerPolicy="no-referrer"
+                className="max-w-[26rem] w-full"
+              />
+              <h3 className="text-center mt-3 font-bold text-2xl">
+                پروفایلی برای نمایش یافت نشد
+              </h3>
+            </div>
           </div>
         )}
       </div>

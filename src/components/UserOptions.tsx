@@ -3,11 +3,11 @@
 import Link from "next/link";
 import EditIcon from "@mui/icons-material/Edit";
 import GroupIcon from "@mui/icons-material/Group";
-import PersonAddIcon from "@mui/icons-material/PersonAdd";
 import LogoutIcon from "@mui/icons-material/Logout";
 import Diversity3Icon from "@mui/icons-material/Diversity3";
 import ExploreIcon from "@mui/icons-material/Explore";
 import Avatar from "@mui/material/Avatar";
+import InfoIcon from '@mui/icons-material/Info';
 
 import { useAppSelector } from "@/store/Redux/hooks";
 
@@ -66,6 +66,14 @@ export default function UserOptions({
             <EditIcon />
           </Avatar>
           <span>ویرایش اطلاعات</span>
+        </Link>
+      </li>
+      <li className="px-4 py-2 flex">
+        <Link className="flex items-center w-full" onClick={closeDrawerHandler} href="/chat/about">
+          <Avatar className="me-3">
+            <InfoIcon />
+          </Avatar>
+          <span>درباره کانوو</span>
         </Link>
       </li>
 
