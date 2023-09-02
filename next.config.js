@@ -20,6 +20,7 @@ const nextConfig = {
     NEXTAUTH_SECRET: "v2KDsXQyl6uFqJV1MuhiVAFPOgJ8kSJzWbps7VTgfE8",
     NEXTAUTH_URL: "https://convo-tan.vercel.app",
     NEXT_PUBLIC_NEXTAUTH_URL: "https://convo-tan.vercel.app",
+
     UPSTASH_REDIS_REST_URL: "https://eu1-nice-ostrich-39114.upstash.io",
     UPSTASH_REDIS_REST_TOKEN:
       "AZjKASQgMjc2ZTQ1OTEtZWFjMi00ZWZiLTliNjUtOGU0NTQzMmNmM2E3YTczNTllMzNjNjhhNGY4ZWE0YzZkYThjMjQ0Y2QwMWQ=",
