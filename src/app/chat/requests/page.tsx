@@ -8,9 +8,6 @@ export const metadata: Metadata = {
   title: "درخواست ها",
 };
 
-export const revalidate = 0;
-
-
 const RequestsPage = async () => {
   const session = await fetchServerSession();
   if (!session) notFound();

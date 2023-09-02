@@ -3,8 +3,6 @@ import { fetchRedis } from "@/utils/fetchRedis";
 import { fetchServerSession } from "@/utils/serverInteractions";
 import { NextResponse } from "next/server";
 
-export const revalidate = 0;
-
 export async function GET() {
   const session = await fetchServerSession();
 

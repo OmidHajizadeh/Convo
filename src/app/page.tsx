@@ -4,9 +4,9 @@ import Link from "next/link";
 
 export default async function Home() {
   return (
-    <main className="min-h-screen flex gap-3 flex-col md:flex-row justify-center md:justify-evenly items-center overflow-hidden relative bg-landing-wave-lines bg-fixed bg-cover bg-no-repeat bg-center">
+    <main className="min-h-screen flex gap-3 flex-col lg:flex-row justify-center lg:justify-evenly items-center overflow-hidden relative bg-landing-wave-lines bg-fixed bg-cover bg-no-repeat bg-center">
       <section>
-        <article className="p-4 xl:p-8 flex flex-col gap-3 backdrop-blur-sm w-auto max-w-full rounded-2xl text-center md:text-start">
+        <article className="p-4 xl:p-8 flex flex-col gap-3 backdrop-blur-sm w-auto max-w-full rounded-2xl text-center lg:text-start">
           <h1 className="text-7xl font-bold">کانوو</h1>
           <p>وب اپلیکشن چت برای صحبت کردن با دوستان و دوست یابی</p>
           <Button
@@ -14,13 +14,13 @@ export default async function Home() {
             href="/login"
             variant="contained"
             disableElevation
-            className="self-center md:self-end"
+            className="self-center lg:self-end"
           >
             بزن بریم!
           </Button>
         </article>
       </section>
-      <div>
+      <div className="hidden lg:block">
         <Image
           src="/landing-page/phone.webp"
           width={800}

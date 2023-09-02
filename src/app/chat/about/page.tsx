@@ -6,8 +6,6 @@ export const metadata: Metadata = {
   title: "درباره کانوو",
 };
 
-export const revalidate = 0;
-
 const AboutPage = () => {
   return (
     <div className="h-full flex flex-col p-4" dir="ltr">

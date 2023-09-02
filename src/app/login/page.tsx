@@ -27,8 +27,8 @@ const LoginPage = () => {
 
   return (
     <main className="grid place-items-center min-h-screen bg-landing-wave-lines bg-fixed bg-cover bg-no-repeat bg-center">
-      <section className="flex flex-col justify-center overflow-auto md:flex-row gap-4 p-5 xl:container w-full relative xl:rounded-2xl bg-slate-100/20 shadow-xl backdrop-blur-sm h-screen xl:h-[50rem] max-h-screen">
-        <div className="md:flex-1 flex flex-col justify-center items-center text-center">
+      <section className="flex flex-col justify-center overflow-auto lg:flex-row gap-4 p-5 xl:container w-full relative xl:rounded-2xl bg-slate-100/20 shadow-xl backdrop-blur-sm h-screen xl:h-[50rem] max-h-screen">
+        <div className="lg:flex-1 flex flex-col justify-center items-center text-center">
           <h3 className="text-4xl sm:text-6xl font-bold mb-8">ورود به کانوو</h3>
           <p className="mb-4">با استفاده از یکی از سرویس های زیر وارد شوید</p>
           <div className="w-full max-w-[30rem]">
@@ -54,7 +54,7 @@ const LoginPage = () => {
             </Button>
           </div>
         </div>
-        <div className="md:flex-1 hidden md:grid place-items-center">
+        <div className="lg:flex-1 hidden lg:grid place-items-center">
           <Image
             src="/login.svg"
             width={500}

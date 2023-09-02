@@ -8,8 +8,6 @@ export const metadata: Metadata = {
   title: "ویرایش پروفایل",
 };
 
-export const revalidate = 0;
-
 const EditProfilePage = async () => {
   const session = await fetchServerSession();
   if (!session) notFound();

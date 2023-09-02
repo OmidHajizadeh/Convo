@@ -1,12 +1,10 @@
 import { NextRequest, NextResponse } from "next/server";
-import { nanoid } from "nanoid";
 
 import { db } from "@/lib/database/db";
 import { fetchRedis } from "@/utils/fetchRedis";
 import { fetchServerSession } from "@/utils/serverInteractions";
 import { pusherServer } from "@/lib/pusher/pusher";
 import { toPusherKey } from "@/utils/helpers";
-import { Friend } from "@/lib/Models/Friend";
 
 export async function POST(req: NextRequest) {
   const session = await fetchServerSession();

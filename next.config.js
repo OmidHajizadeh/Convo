@@ -12,7 +12,6 @@ const nextConfig = {
   images: {
     domains: ["avatars.githubusercontent.com", "lh3.googleusercontent.com"],
   },
-  output: 'export',
   env: {
     PUSHER_APP_ID: "1655774",
     PUSHER_APP_SECRET: "3cd642f23712c62d6e68",
@@ -36,7 +35,6 @@ const nextConfig = {
 
     GITHUB_CLIENT_ID: "0479a102e794479d7c8a",
     GITHUB_CLIENT_SECRET: "392e7818ab4a1c5d87f05dcb6e4a2e9986e015a8",
-    GITHUB_PAGES: true,
   },
 };
 

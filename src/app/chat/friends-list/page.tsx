@@ -9,9 +9,6 @@ export const metadata: Metadata = {
   title: "لیست چت",
 };
 
-export const revalidate = 0;
-
-
 const ChatPage = async () => {
   const session = await fetchServerSession();
   if (!session) notFound();

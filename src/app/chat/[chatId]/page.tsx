@@ -11,8 +11,6 @@ type ChatPageProps = {
   };
 };
 
-export const revalidate = 0;
-
 async function chatPage(chatId: string) {
   const session = await fetchServerSession();
   if (!session) notFound();
