@@ -12,6 +12,7 @@ const nextConfig = {
   images: {
     domains: ["avatars.githubusercontent.com", "lh3.googleusercontent.com"],
   },
+  output: 'export',
   env: {
     PUSHER_APP_ID: "1655774",
     PUSHER_APP_SECRET: "3cd642f23712c62d6e68",
