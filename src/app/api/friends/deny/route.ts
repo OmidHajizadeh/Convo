@@ -27,7 +27,18 @@ export async function POST(req: NextRequest) {
     );
   }
 
-  await db.srem(`user:${session.user.id}:incoming_friend_requests`, senderId);
+  try {
+    await db.srem(`user:${session.user.id}:incoming_friend_requests`, senderId);
+  } catch (error) {
+    return NextResponse.json(
+      {
+        message: "خطا در برقراری ارتباط با سرور",
+        error: true,
+        source: "deny: removing friend request",
+      },
+      { status: 500 }
+    );
+  }
 
   pusherServer.trigger(
     toPusherKey(`user:${senderId}:friend_request_response`),

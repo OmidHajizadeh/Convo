@@ -27,12 +27,26 @@ export async function POST(req: Request) {
     );
   }
 
-  const isAlreadyInExplorer = await fetchRedis<0 | 1>(
-    "hexists",
-    "explorer:explorer_list",
-    session.user.id
-  );
+  let isAlreadyInExplorer: 0 | 1;
 
+  try {
+    isAlreadyInExplorer = await fetchRedis<0 | 1>(
+      "hexists",
+      "explorer:explorer_list",
+      session.user.id
+    );
+  } catch (error) {
+    return NextResponse.json(
+      {
+        message: "خطا در برقراری ارتباط با سرور",
+        source: "add-to-explorer: isAlreadyInExplorer",
+        error: true,
+      },
+      {
+        status: 500,
+      }
+    );
+  }
   // Has the user been added already
   if (isAlreadyInExplorer) {
     return NextResponse.json(

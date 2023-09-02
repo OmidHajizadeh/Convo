@@ -13,7 +13,7 @@ const ChatPartnerHead = ({ user }: ChatPartnerHeadProps) => {
       </Avatar>
       <div>
         <h3 className="-mb-1">{user.name}</h3>
-        <small className="text-slate-500">آنلاین</small>
+        <small className="text-slate-500">{user.email}</small>
       </div>
     </div>
   );

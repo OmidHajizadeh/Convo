@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { Avatar, IconButton } from "@mui/material";
+import { IconButton } from "@mui/material";
 import AddCircleIcon from "@mui/icons-material/AddCircle";
 
 import { Explorer } from "@/lib/Models/Explorer";
@@ -12,7 +12,6 @@ type ExplorerListItemProps = {
 };
 
 const ExplorerListItem = ({ explorer }: ExplorerListItemProps) => {
-
   async function sendFriendRequestHandler() {
     try {
       toast.loading("در حال ارسال درخواست...", { id: "friend-request" });
@@ -40,16 +39,15 @@ const ExplorerListItem = ({ explorer }: ExplorerListItemProps) => {
   return (
     <li
       key={explorer.user.id}
-      className="flex rounded-lg px-4 py-3 bg-slate-200 text-start"
+      className="flex items-center rounded-lg px-4 py-3 bg-slate-200 text-start"
     >
-      <Avatar className="me-3">
-        <Image
-          src={explorer.user.image!}
-          alt={explorer.user.name!}
-          width={400}
-          height={400}
-        />
-      </Avatar>
+      <Image
+        src={explorer.user.image!}
+        alt={explorer.user.name!}
+        width={400}
+        height={400}
+        className="me-3 w-20 h-20 rounded-lg"
+      />
       <span className="flex flex-col flex-grow">
         <span>{explorer.user.name}</span>
         <small className="text-slate-500">{explorer.statusText}</small>

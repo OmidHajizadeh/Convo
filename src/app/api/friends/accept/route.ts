@@ -28,11 +28,24 @@ export async function POST(req: NextRequest) {
     );
   }
 
-  const hasFriendRequest = await fetchRedis<0 | 1>(
-    "sismember",
-    `user:${session.user.id}:incoming_friend_requests`,
-    senderId
-  );
+  let hasFriendRequest: 0 | 1;
+
+  try {
+    hasFriendRequest = await fetchRedis<0 | 1>(
+      "sismember",
+      `user:${session.user.id}:incoming_friend_requests`,
+      senderId
+    );
+  } catch (error) {
+    return NextResponse.json(
+      {
+        message: "خطا در برقراری ارتباط با سرور",
+        error: true,
+        source: "accept: hasFriendRequest",
+      },
+      { status: 500 }
+    );
+  }
 
   // has a friend request
   if (!hasFriendRequest) {
@@ -42,11 +55,24 @@ export async function POST(req: NextRequest) {
     );
   }
 
-  const areAlreadyFriends = await fetchRedis<0 | 1>(
-    "sismember",
-    `user:${session.user.id}:friends`,
-    senderId
-  );
+  let areAlreadyFriends: 0 | 1;
+
+  try {
+    areAlreadyFriends = await fetchRedis<0 | 1>(
+      "sismember",
+      `user:${session.user.id}:friends`,
+      senderId
+    );
+  } catch (error) {
+    return NextResponse.json(
+      {
+        message: "خطا در برقراری ارتباط با سرور",
+        error: true,
+        source: "accept: areAlreadyFriends",
+      },
+      { status: 500 }
+    );
+  }
 
   // are already friends
   if (areAlreadyFriends) {
@@ -56,12 +82,35 @@ export async function POST(req: NextRequest) {
     );
   }
 
-  await db.sadd(`user:${session.user.id}:friends`, senderId);
-  await db.sadd(`user:${senderId}:friends`, session.user.id);
-  // await db.srem(`user:${senderId}:outbound_friend_requests`, session.user.id);
-  await db.srem(`user:${session.user.id}:incoming_friend_requests`, senderId);
+  try {
+    await db.sadd(`user:${session.user.id}:friends`, senderId);
+    await db.sadd(`user:${senderId}:friends`, session.user.id);
+    await db.srem(`user:${session.user.id}:incoming_friend_requests`, senderId);
+  } catch (error) {
+    return NextResponse.json(
+      {
+        message: "خطا در برقراری ارتباط با سرور",
+        error: true,
+        source: "accept: responsing to friend request",
+      },
+      { status: 500 }
+    );
+  }
 
-  const friendString = await fetchRedis<string>("get", `user:${senderId}`);
+  let friendString: string;
+
+  try {
+    friendString = await fetchRedis<string>("get", `user:${senderId}`);
+  } catch (error) {
+    return NextResponse.json(
+      {
+        message: "خطا در برقراری ارتباط با سرور",
+        error: true,
+        source: "accept: retreiving friend info",
+      },
+      { status: 500 }
+    );
+  }
 
   pusherServer.trigger(
     toPusherKey(`user:${senderId}:friend_request_response`),

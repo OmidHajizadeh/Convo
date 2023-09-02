@@ -29,13 +29,38 @@ export async function POST(req: Request) {
 
   const userId = session.user.id;
 
-  const dataBaseUser = (await db.get(`user:${userId}`)) as User;
+  let dataBaseUser: User;
+
+  try {
+    dataBaseUser = (await db.get(`user:${userId}`)) as User;
+  } catch (error) {
+    return NextResponse.json(
+      {
+        message: "خطا در برقراری ارتباط با سرور",
+        error: true,
+        source: "edit-profile: getting user info",
+      },
+      { status: 500 }
+    );
+  }
+
   const newUser = {
     ...dataBaseUser,
     name,
   };
 
-  await db.set(`user:${userId}`, JSON.stringify(newUser));
+  try {
+    await db.set(`user:${userId}`, JSON.stringify(newUser));
+  } catch (error) {
+    return NextResponse.json(
+      {
+        message: "خطا در برقراری ارتباط با سرور",
+        error: true,
+        source: "edit-profile: setting user info",
+      },
+      { status: 500 }
+    );
+  }
 
   return NextResponse.json(
     {

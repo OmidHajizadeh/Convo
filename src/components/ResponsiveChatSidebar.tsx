@@ -45,7 +45,7 @@ export default function ResponsiveChatSidebar({
       <CssBaseline />
       <AppBar
         position="absolute"
-        variant="outlined"
+        elevation={0}
         sx={{
           width: { xl: `calc(100% - ${drawerWidth}px)` },
           ml: { xl: `${drawerWidth}px` },

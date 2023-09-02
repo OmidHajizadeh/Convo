@@ -22,17 +22,13 @@ const ChatControls = ({
 }: ChatControlsProp) => {
   const messageRef = useRef<HTMLTextAreaElement>(null!);
   const [isSending, setIsSending] = useState(false);
-  const [isEmpty, setIsEmpty] = useState(true);
+  const [text, setText] = useState("");
 
   const dispatch = useAppDispatch();
 
   function onUserInput() {
     const messageText = messageRef.current.value;
-    if (messageText.trim().length !== 0) {
-      setIsEmpty(false);
-    } else {
-      setIsEmpty(true);
-    }
+    setText(messageText);
   }
 
   async function sendMessage() {
@@ -90,7 +86,7 @@ const ChatControls = ({
         messageRef.current.value = "";
         setTimeout(() => {
           messageRef.current.focus();
-          setIsEmpty(true);
+          setText("");
         }, 100);
         dispatch(
           friendsActions.updateFriendChat({
@@ -119,29 +115,33 @@ const ChatControls = ({
   }
 
   return (
-    <div className="flex items-start bg-white rounded-2xl overflow-hidden">
-      <IconButton
-        aria-label={isSending ? "در حال ارسال" : "ارسال"}
-        onClick={sendMessage}
-        disabled={isSending || isEmpty}
-      >
-        {isSending ? <ClipLoader size={25} color="#737373" /> : <SendIcon />}
-      </IconButton>
-      <TextareaAutosize
-        maxRows={3}
-        ref={messageRef}
-        onKeyDown={(e) => {
-          if (e.key === "Enter" && !e.shiftKey) {
-            e.preventDefault();
-            sendMessage();
-          }
-        }}
-        onChange={onUserInput}
-        className="font-light focus:outline-none px-3 py-2 flex-grow resize-none"
-        aria-label="متن پیام"
-        placeholder="پیام خود را وارد کنید..."
-        disabled={isSending}
-      />
+    <div className="relative">
+      <div className="flex items-start bg-white rounded-2xl overflow-hidden">
+        <IconButton
+          aria-label={isSending ? "در حال ارسال" : "ارسال"}
+          onClick={sendMessage}
+          disabled={isSending || text.length === 0}
+          className="w-10"
+        >
+          {isSending ? <ClipLoader size={22} color="#737373" /> : <SendIcon />}
+        </IconButton>
+        <TextareaAutosize
+          maxRows={3}
+          ref={messageRef}
+          onKeyDown={(e) => {
+            if (e.key === "Enter" && !e.shiftKey) {
+              e.preventDefault();
+              sendMessage();
+            }
+          }}
+          onChange={onUserInput}
+          className="font-light focus:outline-none px-3 py-2 flex-grow resize-none"
+          aria-label="متن پیام"
+          placeholder="پیام خود را وارد کنید..."
+          disabled={isSending}
+        />
+      </div>
+      <small className="absolute text-slate-400/50 -top-4 start-14">500/{text.length}</small>
     </div>
   );
 };

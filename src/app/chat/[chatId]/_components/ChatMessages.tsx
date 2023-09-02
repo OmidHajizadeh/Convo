@@ -79,7 +79,7 @@ const ChatMessages = ({ currentUser, partnerObj }: ChatMessagesProps) => {
                 )}
               </figure>
               <div
-                className={`chat-message__context-container text-black flex rounded-xl flex-col py-2 px-3 max-w-xs min-w-[5rem] ${
+                className={`chat-message__context-container break-words text-black flex rounded-xl flex-col py-2 px-3 max-w-xs min-w-[5rem] ${
                   isMessageFromCurrentUser
                     ? "order-2 bg-convo-gray"
                     : "order-1 bg-convo-blue"

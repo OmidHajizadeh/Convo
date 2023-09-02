@@ -11,20 +11,32 @@ const ExplorerPage = async () => {
   const session = await fetchServerSession();
   if (!session) notFound();
 
-  const peopleHash = await fetchRedis<string[]>(
-    "hgetall",
-    "explorer:explorer_list"
-  );
+  let peopleHash: string[];
+
+  try {
+    peopleHash = await fetchRedis<string[]>(
+      "hgetall",
+      "explorer:explorer_list"
+    );
+  } catch (error) {
+    notFound();
+  }
 
   const peopleIds = peopleHash.filter((p, index) => index % 2 === 0);
   const peopleTexts = peopleHash.filter((p, index) => index % 2 === 1);
 
-  const people: User[] = await Promise.all(
-    peopleIds.map(async (item) => {
-      const user = await fetchRedis<string>("get", `user:${item}`);
-      return JSON.parse(user) as User;
-    })
-  );
+  let people: User[];
+
+  try {
+    people = await Promise.all(
+      peopleIds.map(async (item) => {
+        const user = await fetchRedis<string>("get", `user:${item}`);
+        return JSON.parse(user) as User;
+      })
+    );
+  } catch (error) {
+    notFound();
+  }
 
   const explorers: Explorer[] = people
     .map((person, index) => {

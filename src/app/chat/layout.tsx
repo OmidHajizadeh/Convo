@@ -14,31 +14,41 @@ import HeadUser from "@/components/HeadUser";
 import UserOptions from "@/components/UserOptions";
 import FriendsChatSubscriber from "@/utils/subscribers/FriendsChatSubscriber";
 import ExplorerStatus from "@/utils/subscribers/ExplorerStatus";
+import { Friend } from "@/lib/Models/Friend";
 
 const ChatListLayout = async ({ children }: ChildrenProp) => {
   const session = await fetchServerSession();
 
   if (!session) notFound();
 
-  const incommingFriendRequestIds = await fetchRedis<string[]>(
-    "smembers",
-    `user:${session.user.id}:incoming_friend_requests`
-  );
+  let incomingFriendRequests: User[];
+  let isAlreadyInExplorer: 0 | 1;
 
-  const incomingFriendRequests: User[] = await Promise.all(
-    incommingFriendRequestIds.map(async (senderId) => {
-      const sender = await fetchRedis<string>("get", `user:${senderId}`);
-      return JSON.parse(sender);
-    })
-  );
+  let friends: Friend[];
 
-  const isAlreadyInExplorer = await fetchRedis<0 | 1>(
-    "hexists",
-    "explorer:explorer_list",
-    session.user.id
-  );
+  try {
+    const incommingFriendRequestIds = await fetchRedis<string[]>(
+      "smembers",
+      `user:${session.user.id}:incoming_friend_requests`
+    );
 
-  const friends = await getFriendsByUserId(session.user.id);
+    incomingFriendRequests = await Promise.all(
+      incommingFriendRequestIds.map(async (senderId) => {
+        const sender = await fetchRedis<string>("get", `user:${senderId}`);
+        return JSON.parse(sender);
+      })
+    );
+
+    friends = await getFriendsByUserId(session.user.id);
+    
+    isAlreadyInExplorer = await fetchRedis<0 | 1>(
+      "hexists",
+      "explorer:explorer_list",
+      session.user.id
+    );
+  } catch (error) {
+    notFound();
+  }
 
   return (
     <div className="h-screen grid place-items-center bg-landing-wave-lines bg-fixed bg-cover bg-no-repeat bg-center">
@@ -52,12 +62,8 @@ const ChatListLayout = async ({ children }: ChildrenProp) => {
             initialFriends={friends}
             sessionId={session.user.id}
           />
-          <ExplorerStatus
-            isAlreadyInExplorer={!!isAlreadyInExplorer}
-          />
-          <ResponsiveChatSidebar
-            userHead={<HeadUser session={session} />}
-          >
+          <ExplorerStatus isAlreadyInExplorer={!!isAlreadyInExplorer} />
+          <ResponsiveChatSidebar userHead={<HeadUser session={session} />}>
             {children}
           </ResponsiveChatSidebar>
         </ReduxProvider>

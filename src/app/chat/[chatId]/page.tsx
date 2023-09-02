@@ -1,11 +1,10 @@
 import { notFound } from "next/navigation";
 
 import { db } from "@/lib/database/db";
-import {
-  fetchServerSession,
-} from "@/utils/serverInteractions";
+import { fetchServerSession } from "@/utils/serverInteractions";
 import ChatPartnerHead from "./_components/ChatPartnerHead";
 import ChatPanel from "./_components/ChatPanel";
+import { Skeleton } from "@mui/material";
 
 type ChatPageProps = {
   params: {
@@ -23,7 +22,13 @@ const ChatPage = async ({ params: { chatId } }: ChatPageProps) => {
   if (userId1 !== user.id && userId2 !== user.id) notFound();
 
   const chatPartnerId = user.id === userId1 ? userId2 : userId1;
-  const chatPartner = (await db.get(`user:${chatPartnerId}`)) as User;
+  let chatPartner: User;
+
+  try {
+    chatPartner = (await db.get(`user:${chatPartnerId}`)) as User;
+  } catch (error) {
+    notFound();
+  }
 
   return (
     <div className="h-full">

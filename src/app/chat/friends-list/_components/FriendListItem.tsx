@@ -4,7 +4,6 @@ import Avatar from "@mui/material/Avatar";
 
 import { chatHrefConstructor } from "@/utils/helpers";
 import { Friend } from "@/lib/Models/Friend";
-import { Badge } from "@mui/material";
 
 type FriendListItemProps = {
   friendObject: Friend;
@@ -17,23 +16,14 @@ const FriendListItem = ({ friendObject, session }: FriendListItemProps) => {
   return (
     <li className="rounded-lg px-4 py-3 bg-slate-200">
       <Link className="flex w-full items-center" href={`/chat/${chatId}`}>
-        <Badge
-          className="me-3"
-          overlap="circular"
-          anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
-          badgeContent={
-            <span className="w-4 h-4 bg-lime-400 rounded-full border-2 border-white" />
-          }
-        >
-          <Avatar>
-            <Image
-              src={friendObject.friend.image!}
-              alt={friendObject.friend.name!}
-              width={400}
-              height={400}
-            />
-          </Avatar>
-        </Badge>
+        <Avatar className="me-3">
+          <Image
+            src={friendObject.friend.image!}
+            alt={friendObject.friend.name!}
+            width={400}
+            height={400}
+          />
+        </Avatar>
         <div className="flex flex-col">
           <span>{friendObject.friend.name}</span>
           <span className="text-slate-500 inline-flex items-center gap-2">
