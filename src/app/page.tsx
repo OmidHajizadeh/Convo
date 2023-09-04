@@ -6,7 +6,7 @@ export default async function Home() {
   return (
     <main className="min-h-screen flex gap-3 flex-col lg:flex-row justify-center lg:justify-evenly items-center overflow-hidden relative bg-landing-wave-lines bg-fixed bg-cover bg-no-repeat bg-center">
       <section>
-        <article className="p-4 xl:p-8 flex flex-col gap-3 backdrop-blur-sm w-auto max-w-full rounded-2xl text-center lg:text-start">
+        <article className="p-4 xl:p-8 mx-4 flex flex-col dark:bg-slate-200/10 gap-3 backdrop-blur-sm w-auto max-w-full rounded-2xl text-center lg:text-start">
           <h1 className="text-7xl font-bold">کانوو</h1>
           <p>وب اپلیکشن چت برای صحبت کردن با دوستان و دوست یابی</p>
           <Button

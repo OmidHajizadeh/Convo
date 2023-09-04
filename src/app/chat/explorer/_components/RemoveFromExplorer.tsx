@@ -33,13 +33,12 @@ const RemoveFromExplorer = () => {
     <Button
       disabled={isLoading}
       onClick={removeProfileHandler}
-      variant="contained"
-      color="error"
+      color="warning"
       disableElevation
-      className="!mt-4 self-center"
+      className="!mt-4 !font-light"
       startIcon={<RemoveCircleIcon />}
     >
-      حذف پرفایل
+      حذف
     </Button>
   );
 };

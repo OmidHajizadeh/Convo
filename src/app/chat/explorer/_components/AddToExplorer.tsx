@@ -49,6 +49,7 @@ const AddToExplorer = () => {
       <TextField
         label="پیغام"
         variant="outlined"
+        color="info"
         {...register("statusText", {
           required: {
             value: true,
@@ -66,7 +67,7 @@ const AddToExplorer = () => {
         helperText={
           errors.statusText ? errors.statusText.message : `100/${statusLength}`
         }
-        className="w-full max-w-3xl"
+        className="w-full max-w-3xl !font-light"
       />
       <Button
         disabled={isSubmitting}

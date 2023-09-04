@@ -2,32 +2,34 @@ import { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 
+import PageFrame from "@/components/PageFrame";
+
 export const metadata: Metadata = {
   title: "درباره کانوو",
 };
 
 const AboutPage = () => {
   return (
-    <div className="h-full flex flex-col p-4" dir="ltr">
+    <PageFrame className="flex flex-col" dir="ltr">
       <section className="flex flex-col items-center xl:items-start gap-3">
         <code className="flex flex-col sm:flex-row gap-3 items-center">
           <span>App Name</span>
-          <span className="rounded-md bg-slate-200/75 py-1 px-2">Convo</span>
+          <span className="rounded-md bg-slate-200/75 dark:text-black py-1 px-2">Convo</span>
         </code>
         <code className="flex flex-col sm:flex-row gap-3 items-center">
           <span>Version</span>
-          <span className="rounded-md bg-slate-200/75 py-1 px-2">1.0.0</span>
+          <span className="rounded-md bg-slate-200/75 dark:text-black py-1 px-2">1.0.0</span>
         </code>
         <code className="flex flex-col sm:flex-row gap-3 items-center">
           <span>Creator</span>
-          <span className="rounded-md bg-slate-200/75 py-1 px-2">
+          <span className="rounded-md bg-slate-200/75 dark:text-black py-1 px-2">
             Omid Hajizadeh
           </span>
         </code>
         <code className="flex flex-col sm:flex-row gap-3 items-center">
           <span>Contact Info</span>
           <Link
-            className="rounded-md bg-slate-200/75 py-1 px-2"
+            className="rounded-md bg-slate-200/75 dark:text-black py-1 px-2"
             href="mailto:omid.hajizadehh@gmail.com"
           >
             omid.hajizadehh@gmail.com
@@ -219,7 +221,7 @@ const AboutPage = () => {
           </li>
         </ul>
       </section>
-    </div>
+    </PageFrame>
   );
 };
 

@@ -1,6 +1,7 @@
 import type { Config } from "tailwindcss";
 
 const config: Config = {
+  darkMode: "class",
   content: [
     "./src/components/**/*.{js,ts,jsx,tsx,mdx}",
     "./src/app/**/*.{js,ts,jsx,tsx,mdx}",
@@ -34,12 +35,30 @@ const config: Config = {
       colors: {
         "convo-blue": "#1fe5f2",
         "convo-gray": "#d4d4d4",
-        primary: "#1f1f1f",
-        secondary: "#707070",
-        success: "#d4d4d4",
-        error: "#dc3545",
-        info: "#17a2b8",
-        warning: "#ffc107",
+        primary: {
+          light: "#141414",
+          dark: "#2b2b2b",
+        },
+        secondary: {
+          light: "#e5e5e5",
+          dark: "#7c7c7c",
+        },
+        success: {
+          light: "#64bf6a",
+          dark: "#56a35a",
+        },
+        error: {
+          light: "#e50404",
+          dark: "#cc0404",
+        },
+        info: {
+          light: "#17a2b8",
+          dark: "#148b9e",
+        },
+        warning: {
+          light: "#ffc107",
+          dark: "#e5ad06",
+        },
       },
     },
   },

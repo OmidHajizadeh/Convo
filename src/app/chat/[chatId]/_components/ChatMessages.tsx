@@ -28,7 +28,7 @@ const ChatMessages = ({ currentUser, partnerObj }: ChatMessagesProps) => {
   return (
     <section
       ref={sectionRef}
-      className="p-3 overflow-auto bg-chat-pattern h-full bg-blend-darken bg-fixed bg-center bg-repeat bg-contain"
+      className="p-3 overflow-auto bg-chat-pattern h-full bg-blend-darken dark:bg-black/60 bg-fixed bg-center bg-repeat bg-contain"
     >
       <div className="grid place-items-center">
         <div className="mt-20 mb-8 flex flex-col items-center">
@@ -79,10 +79,10 @@ const ChatMessages = ({ currentUser, partnerObj }: ChatMessagesProps) => {
                 )}
               </figure>
               <div
-                className={`chat-message__context-container break-words text-black flex rounded-xl flex-col py-2 px-3 max-w-xs min-w-[5rem] ${
+                className={`chat-message__context-container break-words text-black dark:text-slate-200 flex rounded-xl flex-col py-2 px-3 max-w-xs min-w-[7rem] ${
                   isMessageFromCurrentUser
-                    ? "order-2 bg-convo-gray"
-                    : "order-1 bg-convo-blue"
+                    ? "order-2 bg-zinc-300 dark:bg-zinc-950"
+                    : "order-1 bg-teal-400 dark:bg-teal-950"
                 } ${
                   !hasANextMessage &&
                   isMessageFromCurrentUser &&
@@ -96,7 +96,11 @@ const ChatMessages = ({ currentUser, partnerObj }: ChatMessagesProps) => {
                 <p className="chat-message__text mb-1 font-light">
                   {message.text}
                 </p>
-                <small className="chat-message__date self-end text-gray-600/60">
+                <small
+                  className={`chat-message__date text-gray-600/60 dark:text-white/50 ${
+                    isMessageFromCurrentUser ? "self-end" : "self-start"
+                  }`}
+                >
                   {formattedTimestamp(message.timestamp)}
                 </small>
               </div>

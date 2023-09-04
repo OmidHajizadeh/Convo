@@ -14,7 +14,7 @@ const FriendListItem = ({ friendObject, session }: FriendListItemProps) => {
   const chatId = chatHrefConstructor(session.user.id, friendObject.friend.id);
 
   return (
-    <li className="rounded-lg px-4 py-3 bg-slate-200">
+    <li className="rounded-lg px-4 py-3 bg-gray-100/80 dark:bg-gray-700/80">
       <Link className="flex w-full items-center" href={`/chat/${chatId}`}>
         <Avatar className="me-3">
           <Image
@@ -26,23 +26,23 @@ const FriendListItem = ({ friendObject, session }: FriendListItemProps) => {
         </Avatar>
         <div className="flex flex-col">
           <span>{friendObject.friend.name}</span>
-          <span className="text-slate-500 inline-flex items-center gap-2">
+          <small className="text-slate-500 dark:text-slate-200 inline-flex items-center gap-2">
             {friendObject.messages.length !== 0 ? (
               <>
-                <small>
+                <span>
                   {friendObject.messages[0].senderId === session.user.id
                     ? session.user.name
                     : friendObject.friend.name}
-                </small>
+                </span>
                 :
-                <small className="lines-1">
+                <span className="lines-1">
                   {friendObject.messages[0].text}
-                </small>
+                </span>
               </>
             ) : (
               <small>بدون گفتگو</small>
             )}
-          </span>
+          </small>
         </div>
       </Link>
     </li>

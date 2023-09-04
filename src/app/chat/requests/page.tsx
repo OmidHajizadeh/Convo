@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 
 import RequestsList from "./_components/RequestsList";
 import { fetchServerSession } from "@/utils/serverInteractions";
+import PageFrame from "@/components/PageFrame";
 
 export const metadata: Metadata = {
   title: "درخواست ها",
@@ -13,9 +14,9 @@ const RequestsPage = async () => {
   if (!session) notFound();
 
   return (
-    <div className="p-4 h-full">
+    <PageFrame>
       <RequestsList />
-    </div>
+    </PageFrame>
   );
 };
 

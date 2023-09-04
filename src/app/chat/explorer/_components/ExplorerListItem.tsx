@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import { toast } from "react-hot-toast";
-import { IconButton } from "@mui/material";
+import { IconButton, ListItem, Tooltip } from "@mui/material";
 import AddCircleIcon from "@mui/icons-material/AddCircle";
 
 import { Explorer } from "@/lib/Models/Explorer";
@@ -37,9 +37,20 @@ const ExplorerListItem = ({ explorer }: ExplorerListItemProps) => {
   }
 
   return (
-    <li
+    <ListItem
       key={explorer.user.id}
-      className="flex items-center rounded-lg px-4 py-3 bg-slate-200 text-start"
+      className="flex items-center rounded-lg !p-4 bg-gray-100/80 dark:bg-gray-700/80 text-start"
+      secondaryAction={
+        <Tooltip title="ارسال درخواست دوستی" arrow placement="top-end">
+        <IconButton
+          onClick={sendFriendRequestHandler}
+          edge="end"
+          aria-label="ارسال درخواست دوستی"
+          >
+          <AddCircleIcon />
+        </IconButton>
+          </Tooltip>
+      }
     >
       <Image
         src={explorer.user.image!}
@@ -50,17 +61,9 @@ const ExplorerListItem = ({ explorer }: ExplorerListItemProps) => {
       />
       <span className="flex flex-col flex-grow">
         <span>{explorer.user.name}</span>
-        <small className="text-slate-500">{explorer.statusText}</small>
+        <small className="dark:text-slate-200">{explorer.statusText}</small>
       </span>
-      <IconButton
-        onClick={sendFriendRequestHandler}
-        edge="end"
-        aria-label="ارسال درخواست دوستی"
-        className="self-start"
-      >
-        <AddCircleIcon />
-      </IconButton>
-    </li>
+    </ListItem>
   );
 };
 

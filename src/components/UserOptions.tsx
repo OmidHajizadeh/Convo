@@ -1,15 +1,17 @@
 "use client";
 
 import Link from "next/link";
+import { useTheme } from "next-themes";
 import EditIcon from "@mui/icons-material/Edit";
 import GroupIcon from "@mui/icons-material/Group";
 import LogoutIcon from "@mui/icons-material/Logout";
 import Diversity3Icon from "@mui/icons-material/Diversity3";
 import ExploreIcon from "@mui/icons-material/Explore";
 import Avatar from "@mui/material/Avatar";
-import InfoIcon from '@mui/icons-material/Info';
+import InfoIcon from "@mui/icons-material/Info";
 
 import { useAppSelector } from "@/store/Redux/hooks";
+import { Badge } from "@mui/material";
 
 export default function UserOptions({
   onCloseDrawer,
@@ -19,6 +21,7 @@ export default function UserOptions({
   const { friendRequestsCount } = useAppSelector(
     (store) => store.friendRequests
   );
+  const { resolvedTheme } = useTheme();
 
   function closeDrawerHandler() {
     onCloseDrawer();
@@ -26,63 +29,129 @@ export default function UserOptions({
 
   return (
     <>
-      <li className="px-4 py-2 flex">
-        <Link className="flex items-center w-full" onClick={closeDrawerHandler} href="/chat/friends-list">
+      <li className="px-4 py-2">
+        <Link
+          className="flex items-center w-full"
+          onClick={closeDrawerHandler}
+          href="/chat/friends-list"
+        >
           <Avatar className="me-3">
-            <Diversity3Icon />
+            <Diversity3Icon className="dark:text-black" />
           </Avatar>
-          <span>لیست چت</span>
-        </Link>
-      </li>
-
-      <li className="px-4 py-2 flex">
-        <Link className="flex items-center w-full" onClick={closeDrawerHandler} href="/chat/requests">
-          <Avatar className="me-3">
-            <GroupIcon />
-          </Avatar>
-          <span className="flex flex-col">
-            <span>درخواست ها</span>
-            {friendRequestsCount === 0 ? null : (
-              <small className="text-red-600">
-                {friendRequestsCount} درخواست دوستی دارید
-              </small>
-            )}
+          <span
+            className={`${
+              resolvedTheme === "light" ? "text-black" : "text-white"
+            }`}
+          >
+            لیست چت
           </span>
         </Link>
       </li>
 
-      <li className="px-4 py-2 flex">
-        <Link className="flex items-center w-full" onClick={closeDrawerHandler} href="/chat/explorer">
-          <Avatar className="me-3">
-            <ExploreIcon />
-          </Avatar>
-          <span>اکسپلورر</span>
+      <li className="px-4 py-2">
+        <Link
+          className="flex items-center w-full"
+          onClick={closeDrawerHandler}
+          href="/chat/requests"
+        >
+          <Badge
+            overlap="circular"
+            anchorOrigin={{ vertical: "bottom", horizontal: "left" }}
+            badgeContent={
+              friendRequestsCount === 0 ? null : (
+                <span className="inline-flex justify-center items-center bg-red-500 text-white aspect-square min-w-4 min-h-4 w-full h-full rounded-full">
+                  {friendRequestsCount}
+                </span>
+              )
+            }
+          >
+            <Avatar className="me-3">
+              <GroupIcon className="dark:text-black" />
+            </Avatar>
+          </Badge>
+          <span
+            className={`${
+              resolvedTheme === "light" ? "text-black" : "text-white"
+            }`}
+          >
+            درخواست ها
+          </span>
         </Link>
       </li>
 
-      <li className="px-4 py-2 flex">
-        <Link className="flex items-center w-full" onClick={closeDrawerHandler} href="/chat/edit-profile">
+      <li className="px-4 py-2">
+        <Link
+          className="flex items-center w-full"
+          onClick={closeDrawerHandler}
+          href="/chat/explorer"
+        >
           <Avatar className="me-3">
-            <EditIcon />
+            <ExploreIcon className="dark:text-black" />
           </Avatar>
-          <span>ویرایش اطلاعات</span>
-        </Link>
-      </li>
-      <li className="px-4 py-2 flex">
-        <Link className="flex items-center w-full" onClick={closeDrawerHandler} href="/chat/about">
-          <Avatar className="me-3">
-            <InfoIcon />
-          </Avatar>
-          <span>درباره کانوو</span>
+          <span
+            className={`${
+              resolvedTheme === "light" ? "text-black" : "text-white"
+            }`}
+          >
+            اکسپلورر
+          </span>
         </Link>
       </li>
 
-      <li className="px-4 py-2 flex">
-        <Link className="flex items-center w-full" onClick={closeDrawerHandler} href="/api/auth/signout">
+      <li className="px-4 py-2">
+        <Link
+          className="flex items-center w-full"
+          onClick={closeDrawerHandler}
+          href="/chat/edit-profile"
+        >
           <Avatar className="me-3">
-            <LogoutIcon />
+            <EditIcon className="dark:text-black" />
           </Avatar>
-          <span>خروج</span>
+          <span
+            className={`${
+              resolvedTheme === "light" ? "text-black" : "text-white"
+            }`}
+          >
+            ویرایش اطلاعات
+          </span>
+        </Link>
+      </li>
+
+      <li className="px-4 py-2">
+        <Link
+          className="flex items-center w-full"
+          onClick={closeDrawerHandler}
+          href="/chat/about"
+        >
+          <Avatar className="me-3">
+            <InfoIcon className="dark:text-black" />
+          </Avatar>
+          <span
+            className={`${
+              resolvedTheme === "light" ? "text-black" : "text-white"
+            }`}
+          >
+            درباره کانوو
+          </span>
+        </Link>
+      </li>
+
+      <li className="px-4 py-2">
+        <Link
+          className="flex items-center w-full"
+          onClick={closeDrawerHandler}
+          href="/api/auth/signout"
+        >
+          <Avatar className="me-3">
+            <LogoutIcon className="dark:text-black" />
+          </Avatar>
+          <span
+            className={`${
+              resolvedTheme === "light" ? "text-black" : "text-white"
+            }`}
+          >
+            خروج
+          </span>
         </Link>
       </li>
     </>

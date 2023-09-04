@@ -78,6 +78,7 @@ export default function FormDialog() {
             <TextField
               fullWidth
               margin="dense"
+              color="info"
               autoFocus
               id="friend-email"
               type="email"

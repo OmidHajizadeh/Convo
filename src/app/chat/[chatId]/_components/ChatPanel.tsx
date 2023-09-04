@@ -36,7 +36,7 @@ const ChatPanel = ({ currentUser, chatPartner, chatId }: ChatPanelProps) => {
           <ChatMessages partnerObj={friend} currentUser={currentUser as User} />
         )}
       </div>
-      <div className="convo-chat__controls flex-shrink p-4 bg-success/30">
+      <div className="convo-chat__controls bg-secondary-light/50 dark:bg-primary-dark flex-shrink p-4 bg-success/30">
         <ChatControls
           sessionId={currentUser.id}
           chatId={chatId}

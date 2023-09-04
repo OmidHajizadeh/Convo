@@ -116,8 +116,8 @@ const ChatControls = ({
   }
 
   return (
-    <div className="relative">
-      <div className="flex items-start bg-white rounded-2xl overflow-hidden">
+    <div className="relative pt-2">
+      <div className="flex items-start bg-white dark:bg-gray-300/10 rounded-2xl overflow-hidden">
         <IconButton
           aria-label={isSending ? "در حال ارسال" : "ارسال"}
           onClick={sendMessage}
@@ -136,13 +136,13 @@ const ChatControls = ({
             }
           }}
           onChange={onUserInput}
-          className="font-light focus:outline-none px-3 py-2 flex-grow resize-none"
+          className="font-light focus:outline-none px-3 py-2 flex-grow resize-none dark:bg-primary-light"
           aria-label="متن پیام"
           placeholder="پیام خود را وارد کنید..."
           disabled={isSending}
         />
       </div>
-      <small className="absolute text-slate-400/50 -top-4 start-14">500/{text.length}</small>
+      <small className="absolute text-slate-400/50 -top-3 start-10">500/{text.length}</small>
     </div>
   );
 };

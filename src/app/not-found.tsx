@@ -3,26 +3,26 @@ import Image from "next/image";
 const NotFoundPage = () => {
   return (
     <main className="grid place-items-center min-h-screen bg-landing-wave-lines bg-fixed bg-cover bg-no-repeat bg-center">
-      <section className="flex flex-col justify-center overflow-auto md:flex-row gap-4 p-5 xl:container w-full relative xl:rounded-2xl bg-slate-100/20 shadow-xl backdrop-blur-sm h-screen xl:h-[50rem] max-h-screen">
+      <section className="flex flex-col justify-center overflow-auto md:flex-row gap-4 p-5 xl:container w-full relative xl:rounded-2xl dark:bg-gray-900/40 bg-gray-100/30 shadow-xl backdrop-blur-sm h-screen xl:h-[50rem] max-h-screen">
         <div className="md:flex-1 flex flex-col justify-center items-center text-center md:text-start">
           <div>
-            <h3 className="text-4xl font-bold">خطای سمت کاربر</h3>
+            <h3 className="text-4xl font-bold dark:text-slate-100">خطای سمت کاربر</h3>
             <p className="mb-8 text-gray-400">دلایل و راه حل های احتمالی:</p>
             <ul className="space-y-8 mt-4">
               <li className="flex flex-col">
-                <span>ارتباط اینترنتی شما قطع یا ضعیف است</span>
+                <span className="dark:text-slate-100">ارتباط اینترنتی شما قطع یا ضعیف است</span>
                 <span className="text-gray-400 font-light">
                   ارتباط خود را چک کنید
                 </span>
               </li>
               <li className="flex flex-col">
-                <span>اطلاعات کاربری شما دریافت نشده</span>
+                <span className="dark:text-slate-100">اطلاعات کاربری شما دریافت نشده</span>
                 <span className="text-gray-400 font-light">
                   صفحه را رفرش کنید
                 </span>
               </li>
               <li className="flex flex-col">
-                <span>نشست کاربری شما منقضی شده</span>
+                <span className="dark:text-slate-100">نشست کاربری شما منقضی شده</span>
                 <span className="text-gray-400 font-light">
                   از حساب کاربری خود خارج شوید و مجدداً ورود کنید
                 </span>

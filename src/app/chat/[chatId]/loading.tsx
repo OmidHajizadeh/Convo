@@ -2,8 +2,8 @@ import { Skeleton } from "@mui/material";
 
 const ChatLoadingPage = () => {
   return (
-    <div className="h-full flex flex-col relative border overflow-auto bg-chat-pattern bg-blend-darken bg-fixed bg-center bg-repeat bg-contain">
-      <div className="header flex p-4 bg-slate-50 backdrop-blur-md">
+    <div className="h-full flex flex-col relative overflow-auto bg-chat-pattern bg-blend-darken dark:bg-black/60 bg-fixed bg-center bg-repeat bg-contain">
+      <div className="header flex p-4 bg-slate-50 dark:bg-gray-500/50 backdrop-blur-md">
         <span className="me-3">
           <Skeleton variant="circular" width={40} height={40} />
         </span>
@@ -19,7 +19,7 @@ const ChatLoadingPage = () => {
       <div className="flex-grow flex flex-col gap-3 p-4">
         <div className="message self-start flex items-end gap-2">
           <div className="avatar w-12 hidden md:block"></div>
-          <div className="text bg-slate-100 rounded-md min-w-[12rem] p-3">
+          <div className="text bg-slate-100 dark:bg-gray-600 rounded-md min-w-[12rem] p-3">
             <Skeleton
               variant="text"
               sx={{ fontSize: "1rem", maxWidth: "100%" }}
@@ -31,7 +31,7 @@ const ChatLoadingPage = () => {
           <div className="avatar w-12 hidden md:block">
             <Skeleton variant="circular" width={40} height={40} />
           </div>
-          <div className="text bg-slate-100 rounded-md min-w-[12rem] p-3">
+          <div className="text bg-slate-100 dark:bg-gray-600 rounded-md min-w-[12rem] p-3">
             <Skeleton
               variant="text"
               sx={{ fontSize: "1rem", maxWidth: "100%" }}
@@ -41,7 +41,7 @@ const ChatLoadingPage = () => {
         </div>
 
         <div className="message self-end flex items-end gap-2">
-          <div className="text bg-slate-100 rounded-md min-w-[12rem] p-3">
+          <div className="text bg-slate-100 dark:bg-gray-600 rounded-md min-w-[12rem] p-3">
             <Skeleton
               variant="text"
               sx={{ fontSize: "1rem", maxWidth: "100%" }}
@@ -51,7 +51,7 @@ const ChatLoadingPage = () => {
           <div className="avatar w-12"></div>
         </div>
         <div className="message self-end flex items-end gap-2">
-          <div className="text bg-slate-100 rounded-md min-w-[12rem] p-3">
+          <div className="text bg-slate-100 dark:bg-gray-600 rounded-md min-w-[12rem] p-3">
             <Skeleton
               variant="text"
               sx={{ fontSize: "1rem", maxWidth: "100%" }}
@@ -63,7 +63,7 @@ const ChatLoadingPage = () => {
           </div>
         </div>
       </div>
-      <div className="h-20 bg-slate-100 p-3 flex items-center justify-stretch">
+      <div className="h-20 bg-slate-100 dark:bg-primary-dark p-3 flex items-center justify-stretch">
         <Skeleton
           variant="rectangular"
           className="rounded-full w-full"

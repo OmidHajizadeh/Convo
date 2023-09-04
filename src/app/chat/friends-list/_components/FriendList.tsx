@@ -13,16 +13,15 @@ type FriendListProps = {
 
 const FriendList = ({ session }: FriendListProps) => {
   const { friendsList } = useAppSelector((state) => state.friends);
-  // const [friendsListRedux, setFriendsListRedux] = useState<Friend[]>([]);
 
-  // // ! This messed up work is done to avoid hydration errors :/
-
-  // useEffect(() => {
-  //   setFriendsListRedux(friendsList);
-  // }, [friendsList]);
+  const [isMounted, setIsMounted] = useState(false);
+  useEffect(() => setIsMounted(true), []);
+  if (!isMounted) {
+    return null;
+  }
 
   return (
-    <div suppressHydrationWarning>
+    <>
       {friendsList.length > 0 ? (
         <ul className="w-full space-y-3">
           {friendsList.map((friendObject) => {
@@ -37,7 +36,7 @@ const FriendList = ({ session }: FriendListProps) => {
         </ul>
       ) : (
         <div className="flex items-center justify-center h-full">
-          <div>
+          <div className="flex-grow flex flex-col items-center">
             <Image
               src="/no-chat.svg"
               alt="بنر خالی بودن لیست چت"
@@ -46,12 +45,12 @@ const FriendList = ({ session }: FriendListProps) => {
               className="max-w-[26rem] w-full"
             />
             <h3 className="text-center mt-3 font-bold text-2xl">
-              مکالمه ای پیدا نشد :(
+              مکالمه ای پیدا نشد
             </h3>
           </div>
         </div>
       )}
-    </div>
+    </>
   );
 };
 

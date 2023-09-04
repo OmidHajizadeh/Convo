@@ -4,6 +4,7 @@ import { fetchServerSession } from "@/utils/serverInteractions";
 import ChatPartnerHead from "./_components/ChatPartnerHead";
 import ChatPanel from "./_components/ChatPanel";
 import { fetchRedis } from "@/utils/fetchRedis";
+import { Skeleton } from "@mui/material";
 
 type ChatPageProps = {
   params: {

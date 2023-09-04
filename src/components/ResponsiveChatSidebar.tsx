@@ -12,6 +12,8 @@ import MenuIcon from "@mui/icons-material/Menu";
 import Toolbar from "@mui/material/Toolbar";
 
 import UserOptions from "./UserOptions";
+import ToggleThemeButton from "./ToggleThemeButton";
+import { useTheme } from "next-themes";
 
 const drawerWidth = 320;
 
@@ -25,6 +27,7 @@ export default function ResponsiveChatSidebar({
   userHead,
 }: ResponsiveChatSidebarProps) {
   const [mobileOpen, setMobileOpen] = useState(false);
+  const { resolvedTheme } = useTheme();
 
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
@@ -33,7 +36,13 @@ export default function ResponsiveChatSidebar({
   const drawer = (
     <>
       <Toolbar />
-      <div className="convo-menu__user p-3">{userHead}</div>
+      <div
+        className={`convo-menu__user p-3 ${
+          resolvedTheme === "light" ? "text-black" : "text-white"
+        }`}
+      >
+        {userHead}
+      </div>
       <Divider />
       <ul className="mt-2">
         <UserOptions onCloseDrawer={handleDrawerToggle} />
@@ -45,43 +54,51 @@ export default function ResponsiveChatSidebar({
     <Box sx={{ display: "flex" }}>
       <CssBaseline />
       <AppBar
+        className=""
         position="absolute"
         elevation={0}
         sx={{
           width: { xl: `calc(100% - ${drawerWidth}px)` },
           ml: { xl: `${drawerWidth}px` },
           border: "unset",
-          backgroundColor: t => t.palette.success.main
+          backgroundColor: (t) => resolvedTheme === "light" ? t.palette.secondary.light : t.palette.primary.main,
+          backdropFilter: "blur(8px)",
         }}
       >
-        <Toolbar>
-          <IconButton
-            color="inherit"
-            aria-label="open drawer"
-            edge="start"
-            onClick={handleDrawerToggle}
-            sx={{ mr: 2, display: { xl: "none" } }}
-          >
-            <MenuIcon />
-          </IconButton>
-          <Image
-            src="/logo.png"
-            alt="کانوو"
-            width={400}
-            height={400}
-            className="w-8 h-8 me-4"
-          />
-          <h6 className="text-black">کانوو</h6>
+        <Toolbar className="flex items justify-between">
+          <span className="flex-grow flex items-center">
+            <IconButton
+              className=""
+              color="inherit"
+              aria-label="open drawer"
+              edge="start"
+              onClick={handleDrawerToggle}
+              sx={{ mr: 2, display: { xl: "none" } }}
+            >
+              <MenuIcon />
+            </IconButton>
+            <Image
+              src="/logo.png"
+              alt="کانوو"
+              width={400}
+              height={400}
+              className="w-8 h-8 me-4"
+            />
+            <h6 className="text-black dark:text-white text-xl">کانوو</h6>
+          </span>
+          <ToggleThemeButton />
         </Toolbar>
       </AppBar>
       <Box
         component="nav"
+        className=""
         sx={{ width: { xl: drawerWidth }, flexShrink: { xl: 0 } }}
         aria-label="mailbox folders"
       >
         <Drawer
           variant="temporary"
           open={mobileOpen}
+          className=""
           onClose={handleDrawerToggle}
           ModalProps={{
             keepMounted: true, // Better open performance on mobile.
@@ -89,7 +106,8 @@ export default function ResponsiveChatSidebar({
           sx={{
             display: { xs: "block", xl: "none" },
             "& .MuiDrawer-paper": {
-              backgroundColor: 'rgb(248 250 252)',
+              backgroundColor:
+                resolvedTheme === "light" ? "rgb(248 250 252)" : "#000",
               border: "unset",
               boxSizing: "border-box",
               width: drawerWidth,
@@ -107,9 +125,12 @@ export default function ResponsiveChatSidebar({
           sx={{
             display: { xs: "none", xl: "block" },
             "& .MuiDrawer-paper": {
-              backgroundColor: 'rgb(248 250 252 / 0.5)',
+              backgroundColor:
+                resolvedTheme === "light"
+                  ? "rgba(248, 250, 252, 0.6)"
+                  : (t) => t.palette.primary.light,
               backdropFilter: "blur(4px)",
-              // border: "unset",
+              border: "unset",
               boxSizing: "border-box",
               width: drawerWidth,
               position: "absolute",
