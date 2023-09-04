@@ -1,4 +1,5 @@
-import Skeleton from "@mui/material/Skeleton";
+import { Skeleton } from "@/lib/Material/MaterialClientComponents";
+
 import PageFrame from "@/components/PageFrame";
 
 const ChatListLoadingPage = () => {

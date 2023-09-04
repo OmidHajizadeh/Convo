@@ -2,8 +2,9 @@
 
 import Image from "next/image";
 import { toast } from "react-hot-toast";
-import { IconButton, ListItem, Tooltip } from "@mui/material";
-import AddCircleIcon from "@mui/icons-material/AddCircle";
+
+import { IconButton, ListItem, Tooltip } from "@/lib/Material/MaterialClientComponents";
+import { AddCircleIcon } from "@/lib/Material/MaterialClientIcons";
 
 import { Explorer } from "@/lib/Models/Explorer";
 

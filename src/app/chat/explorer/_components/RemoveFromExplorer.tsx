@@ -1,9 +1,10 @@
 "use client";
 
-import { Button } from "@mui/material";
 import { useState } from "react";
 import { toast } from "react-hot-toast";
-import RemoveCircleIcon from '@mui/icons-material/RemoveCircle';
+
+import { Button } from "@/lib/Material/MaterialClientComponents";
+import { RemoveCircleIcon } from "@/lib/Material/MaterialClientIcons";
 
 import { explorerActions } from "@/store/Redux/Explorer/explorerSlice";
 import { useAppDispatch } from "@/store/Redux/hooks";

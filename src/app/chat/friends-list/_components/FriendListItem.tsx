@@ -1,6 +1,7 @@
 import Link from "next/link";
 import Image from "next/image";
-import Avatar from "@mui/material/Avatar";
+
+import { Avatar } from "@/lib/Material/MaterialClientComponents";
 
 import { chatHrefConstructor } from "@/utils/helpers";
 import { Friend } from "@/lib/Models/Friend";

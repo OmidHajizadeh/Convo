@@ -1,10 +1,12 @@
 "use client";
 
+import { useEffect, useState } from "react";
+
+import { Alert } from "@/lib/Material/MaterialClientComponents";
+
 import { useAppSelector } from "@/store/Redux/hooks";
 import RemoveFromExplorer from "./RemoveFromExplorer";
 import AddToExplorer from "./AddToExplorer";
-import { useEffect, useState } from "react";
-import { Alert } from "@mui/material";
 
 const UserStatus = () => {
   const { isUserInExplorer } = useAppSelector((state) => state.explorer);

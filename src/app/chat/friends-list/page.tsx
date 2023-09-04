@@ -2,9 +2,8 @@ import { Metadata } from "next";
 import { notFound } from "next/navigation";
 
 import { fetchServerSession } from "@/utils/serverInteractions";
-import FriendList from "@/app/chat/friends-list/_components/FriendList";
+import FriendList from "./_components/FriendList";
 import AddFriend from "@/components/AddFriend";
-import { Button } from "@mui/material";
 import PageFrame from "@/components/PageFrame";
 
 export const metadata: Metadata = {

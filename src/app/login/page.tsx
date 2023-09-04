@@ -4,9 +4,9 @@ import { useState } from "react";
 import Image from "next/image";
 import { toast } from "react-hot-toast";
 import { signIn } from "next-auth/react";
-import { Button } from "@mui/material";
-import GoogleIcon from "@mui/icons-material/Google";
-import GitHubIcon from "@mui/icons-material/GitHub";
+
+import { Button } from "@/lib/Material/MaterialClientComponents";
+import { GoogleIcon, GitHubIcon } from "@/lib/Material/MaterialClientIcons";
 
 const LoginPage = () => {
   const [isLoading, setIsLoading] = useState(false);

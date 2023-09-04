@@ -3,9 +3,10 @@
 import { useEffect, useRef } from "react";
 import Image from "next/image";
 import { format } from "date-fns";
-import { Avatar } from "@mui/material";
 import ClockLoader from "react-spinners/ClockLoader";
-import ErrorIcon from "@mui/icons-material/Error";
+
+import { Avatar } from "@/lib/Material/MaterialClientComponents";
+import { ErrorIcon } from "@/lib/Material/MaterialClientIcons";
 
 import { Friend } from "@/lib/Models/Friend";
 

@@ -1,11 +1,12 @@
 "use client";
 
-import { Button, TextField } from "@mui/material";
 import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { toast } from "react-hot-toast";
-import EditIcon from "@mui/icons-material/Edit";
 import { useState } from "react";
+
+import { Button, TextField } from "@/lib/Material/MaterialClientComponents";
+import { EditIcon } from "@/lib/Material/MaterialClientIcons";
 
 type EditFormProps = {
   session: Session;
@@ -23,7 +24,7 @@ const EditForm = ({ session }: EditFormProps) => {
       },
     }
   );
-  
+
   const { errors, isSubmitting } = formState;
   const router = useRouter();
   const [name, setName] = useState(session.user.name);

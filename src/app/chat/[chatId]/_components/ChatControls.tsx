@@ -4,8 +4,12 @@ import { useRef, useState } from "react";
 import { toast } from "react-hot-toast";
 import { nanoid } from "nanoid";
 import ClipLoader from "react-spinners/ClipLoader";
-import { IconButton, TextareaAutosize } from "@mui/material";
-import SendIcon from "@mui/icons-material/Send";
+
+import {
+  IconButton,
+  TextareaAutosize,
+} from "@/lib/Material/MaterialClientComponents";
+import { SendIcon } from "@/lib/Material/MaterialClientIcons";
 
 import { useAppDispatch } from "@/store/Redux/hooks";
 import { friendsActions } from "@/store/Redux/friendsSlice/friendsSlice";
@@ -142,7 +146,9 @@ const ChatControls = ({
           disabled={isSending}
         />
       </div>
-      <small className="absolute text-slate-400/50 -top-3 start-10">500/{text.length}</small>
+      <small className="absolute text-slate-400/50 -top-3 start-10">
+        500/{text.length}
+      </small>
     </div>
   );
 };

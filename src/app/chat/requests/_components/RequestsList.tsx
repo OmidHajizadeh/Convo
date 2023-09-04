@@ -3,17 +3,23 @@
 import { useEffect, useState } from "react";
 import Image from "next/image";
 import { toast } from "react-hot-toast";
-import ListItem from "@mui/material/ListItem";
-import Avatar from "@mui/material/Avatar";
-import IconButton from "@mui/material/IconButton";
-import CheckCircleIcon from "@mui/icons-material/CheckCircle";
-import CancelIcon from "@mui/icons-material/Cancel";
+
+import {
+  ListItem,
+  Avatar,
+  Tooltip,
+  IconButton,
+} from "@/lib/Material/MaterialClientComponents";
+
+import {
+  CancelIcon,
+  CheckCircleIcon,
+} from "@/lib/Material/MaterialClientIcons";
 
 import { useAppDispatch, useAppSelector } from "@/store/Redux/hooks";
 import { friendRequestsActions } from "@/store/Redux/FriendRequests/friendRequestsSlice";
 import { friendsActions } from "@/store/Redux/friendsSlice/friendsSlice";
 import { Friend } from "@/lib/Models/Friend";
-import { Tooltip } from "@mui/material";
 
 const RequestsList = () => {
   const [isLoading, setIsLoading] = useState(false);

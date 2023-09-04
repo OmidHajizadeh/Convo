@@ -1,5 +1,7 @@
 import Image from "next/image";
-import Avatar from "@mui/material/Avatar";
+
+import { Avatar } from "@/lib/Material/MaterialClientComponents";
+
 
 type ChatPartnerHeadProps = {
   user: User;

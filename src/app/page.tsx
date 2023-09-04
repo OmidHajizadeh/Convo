@@ -1,6 +1,7 @@
-import { Button } from "@mui/material";
 import Image from "next/image";
 import Link from "next/link";
+
+import { Button } from "@/lib/Material/MaterialClientComponents";
 
 export default async function Home() {
   return (

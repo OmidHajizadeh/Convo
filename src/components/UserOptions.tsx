@@ -2,13 +2,16 @@
 
 import Link from "next/link";
 import { useTheme } from "next-themes";
-import EditIcon from "@mui/icons-material/Edit";
-import GroupIcon from "@mui/icons-material/Group";
-import LogoutIcon from "@mui/icons-material/Logout";
-import Diversity3Icon from "@mui/icons-material/Diversity3";
-import ExploreIcon from "@mui/icons-material/Explore";
-import Avatar from "@mui/material/Avatar";
-import InfoIcon from "@mui/icons-material/Info";
+import { Avatar } from "@/lib/Material/MaterialClientComponents";
+
+import {
+  EditIcon,
+  GroupIcon,
+  LogoutIcon,
+  Diversity3Icon,
+  ExploreIcon,
+  InfoIcon,
+} from "@/lib/Material/MaterialClientIcons";
 
 import { useAppSelector } from "@/store/Redux/hooks";
 import { Badge } from "@mui/material";

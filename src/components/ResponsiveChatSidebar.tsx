@@ -2,14 +2,17 @@
 
 import Image from "next/image";
 import { useState } from "react";
-import AppBar from "@mui/material/AppBar";
-import Box from "@mui/material/Box";
-import CssBaseline from "@mui/material/CssBaseline";
-import Divider from "@mui/material/Divider";
-import Drawer from "@mui/material/Drawer";
-import IconButton from "@mui/material/IconButton";
-import MenuIcon from "@mui/icons-material/Menu";
-import Toolbar from "@mui/material/Toolbar";
+
+import {
+  AppBar,
+  Box,
+  CssBaseline,
+  Divider,
+  Drawer,
+  IconButton,
+  Toolbar,
+} from "@/lib/Material/MaterialClientComponents";
+import { MenuIcon } from "@/lib/Material/MaterialClientIcons";
 
 import UserOptions from "./UserOptions";
 import ToggleThemeButton from "./ToggleThemeButton";
@@ -61,7 +64,10 @@ export default function ResponsiveChatSidebar({
           width: { xl: `calc(100% - ${drawerWidth}px)` },
           ml: { xl: `${drawerWidth}px` },
           border: "unset",
-          backgroundColor: (t) => resolvedTheme === "light" ? t.palette.secondary.light : t.palette.primary.main,
+          backgroundColor: (t) =>
+            resolvedTheme === "light"
+              ? t.palette.secondary.light
+              : t.palette.primary.main,
           backdropFilter: "blur(8px)",
         }}
       >

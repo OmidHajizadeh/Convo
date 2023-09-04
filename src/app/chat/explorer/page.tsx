@@ -2,13 +2,14 @@ import { Metadata } from "next";
 import Image from "next/image";
 import { notFound } from "next/navigation";
 
+import { Alert } from "@/lib/Material/MaterialClientComponents";
+
 import { fetchServerSession } from "@/utils/serverInteractions";
 import { fetchRedis } from "@/utils/fetchRedis";
 import { Explorer } from "@/lib/Models/Explorer";
 import ExplorerListItem from "./_components/ExplorerListItem";
 import UserStatus from "./_components/UserStatus";
 import PageFrame from "@/components/PageFrame";
-import { Alert } from "@mui/material";
 
 export const metadata: Metadata = {
   title: "اکسپلورر",
