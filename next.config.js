@@ -18,8 +18,8 @@ const nextConfig = {
     NEXT_PUBLIC_PUSHER_APP_KEY: "7dfc18eab0a65da85c2a",
 
     NEXTAUTH_SECRET: "v2KDsXQyl6uFqJV1MuhiVAFPOgJ8kSJzWbps7VTgfE8",
-    NEXTAUTH_URL: "http://localhost:3000",
-    NEXT_PUBLIC_NEXTAUTH_URL: "http://localhost:3000",
+    NEXTAUTH_URL: "ttps://convo-tan.vercel.app",
+    NEXT_PUBLIC_NEXTAUTH_URL: "ttps://convo-tan.vercel.app",
     // https://convo-tan.vercel.app
     UPSTASH_REDIS_REST_URL: "https://eu1-nice-ostrich-39114.upstash.io",
     UPSTASH_REDIS_REST_TOKEN:
