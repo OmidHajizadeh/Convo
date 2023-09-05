@@ -1,11 +1,14 @@
 "use client";
 
-import { Button, TextField } from "@mui/material";
+import { useState } from "react";
 import { useRouter } from "next/navigation";
+
 import { useForm } from "react-hook-form";
 import { toast } from "react-hot-toast";
+
+import Button from "@mui/material/Button";
+import TextField from "@mui/material/TextField";
 import EditIcon from "@mui/icons-material/Edit";
-import { useState } from "react";
 
 type EditFormProps = {
   session: Session;
@@ -23,7 +26,7 @@ const EditForm = ({ session }: EditFormProps) => {
       },
     }
   );
-  
+
   const { errors, isSubmitting } = formState;
   const router = useRouter();
   const [name, setName] = useState(session.user.name);
@@ -67,6 +70,8 @@ const EditForm = ({ session }: EditFormProps) => {
       <TextField
         label="اسم نمایشی"
         variant="standard"
+        color="info"
+        className="text-slate-200"
         {...register("name", {
           required: {
             value: true,
@@ -82,7 +87,7 @@ const EditForm = ({ session }: EditFormProps) => {
         })}
         error={!!errors.name}
         helperText={errors.name ? errors.name.message : `25/${name.length}`}
-        className="w-full"
+        sx={{ width: "100%" }}
       />
       <span></span>
       <div>

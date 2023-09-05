@@ -1,11 +1,8 @@
 "use client";
 
-import { useEffect, useState } from "react";
-
 import { useAppSelector } from "@/store/Redux/hooks";
 import ChatControls from "./ChatControls";
 import ChatMessages from "./ChatMessages";
-import { Friend } from "@/lib/Models/Friend";
 
 type ChatPanelProps = {
   currentUser: User;
@@ -20,15 +17,6 @@ const ChatPanel = ({ currentUser, chatPartner, chatId }: ChatPanelProps) => {
     (friendObj) => friendObj.friend.id === chatPartner.id
   )!;
 
-  // const [friend, setFriend] = useState<Friend>();
-  // ! This messed up work is done to avoid hydration errors :/
-  // useEffect(() => {
-  // const friendObj = friendsList.find(
-  //   (friendObj) => friendObj.friend.id === chatPartner.id
-  // )!;
-  //   setFriend(friendObj);
-  // }, [chatPartner.id, friendsList]);
-
   return (
     <>
       <div className="convo-chat__conversation flex-grow overflow-auto">
@@ -36,7 +24,7 @@ const ChatPanel = ({ currentUser, chatPartner, chatId }: ChatPanelProps) => {
           <ChatMessages partnerObj={friend} currentUser={currentUser as User} />
         )}
       </div>
-      <div className="convo-chat__controls bg-secondary-light/50 dark:bg-primary-dark flex-shrink p-4 bg-success/30">
+      <div className="convo-chat__controls bg-secondary-light dark:bg-primary-dark flex-shrink p-4">
         <ChatControls
           sessionId={currentUser.id}
           chatId={chatId}

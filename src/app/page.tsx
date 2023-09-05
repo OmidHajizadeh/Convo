@@ -14,7 +14,9 @@ export default async function Home() {
             href="/login"
             variant="contained"
             disableElevation
-            className="self-center lg:self-end"
+            sx={{
+              alignSelf: { xs: "center", lg: "end" },
+            }}
           >
             بزن بریم!
           </Button>

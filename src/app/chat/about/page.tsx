@@ -13,21 +13,21 @@ const AboutPage = () => {
     <PageFrame className="flex flex-col" dir="ltr">
       <section className="flex flex-col items-center xl:items-start gap-3">
         <code className="flex flex-col sm:flex-row gap-3 items-center">
-          <span>App Name</span>
+          <span className="dark:text-slate-200">App Name</span>
           <span className="rounded-md bg-slate-200/75 dark:text-black py-1 px-2">Convo</span>
         </code>
         <code className="flex flex-col sm:flex-row gap-3 items-center">
-          <span>Version</span>
+          <span className="dark:text-slate-200">Version</span>
           <span className="rounded-md bg-slate-200/75 dark:text-black py-1 px-2">1.0.0</span>
         </code>
         <code className="flex flex-col sm:flex-row gap-3 items-center">
-          <span>Creator</span>
+          <span className="dark:text-slate-200">Creator</span>
           <span className="rounded-md bg-slate-200/75 dark:text-black py-1 px-2">
             Omid Hajizadeh
           </span>
         </code>
         <code className="flex flex-col sm:flex-row gap-3 items-center">
-          <span>Contact Info</span>
+          <span className="dark:text-slate-200">Contact Info</span>
           <Link
             className="rounded-md bg-slate-200/75 dark:text-black py-1 px-2"
             href="mailto:omid.hajizadehh@gmail.com"
@@ -37,7 +37,7 @@ const AboutPage = () => {
         </code>
       </section>
       <section className="mt-auto">
-        <code className="mb-3 block text-center xl:text-start">Powered By</code>
+        <code className="mb-3 block dark:text-slate-200 text-center xl:text-start">Powered By</code>
         <ul className="flex flex-wrap justify-center xl:justify-start gap-3 overflow-auto">
           <li
             className="flex-shrink-0 w-20 h-20 bg-slate-300/30 hover:bg-orange-200/30 transition-all duration-300 rounded-xl backdrop-blur-sm"

@@ -2,9 +2,11 @@
 
 import { useState } from "react";
 import Image from "next/image";
+
 import { toast } from "react-hot-toast";
 import { signIn } from "next-auth/react";
-import { Button } from "@mui/material";
+
+import Button from "@mui/material/Button";
 import GoogleIcon from "@mui/icons-material/Google";
 import GitHubIcon from "@mui/icons-material/GitHub";
 
@@ -27,7 +29,7 @@ const LoginPage = () => {
 
   return (
     <main className="grid place-items-center min-h-screen bg-landing-wave-lines bg-fixed bg-cover bg-no-repeat bg-center">
-      <section className="flex flex-col justify-center overflow-auto lg:flex-row gap-4 p-5 xl:container w-full relative xl:rounded-2xl bg-slate-100/20 shadow-xl backdrop-blur-sm h-screen xl:h-[50rem] max-h-screen">
+      <section className="grid lg:grid-cols-2 justify-center overflow-auto lg:flex-row gap-4 p-5 xl:container w-full relative xl:rounded-2xl bg-slate-100/20 shadow-xl backdrop-blur-sm h-screen xl:h-[90vh] max-h-screen">
         <div className="lg:flex-1 flex flex-col justify-center items-center text-center">
           <h3 className="text-4xl sm:text-6xl font-bold mb-8">ورود به کانوو</h3>
           <p className="mb-4">با استفاده از یکی از سرویس های زیر وارد شوید</p>
@@ -38,7 +40,11 @@ const LoginPage = () => {
               variant="contained"
               endIcon={<GoogleIcon />}
               disableElevation
-              className="w-full !py-3 !mb-4"
+              sx={{
+                width: "100%",
+                paddingBlock: "0.75rem",
+                marginBottom: "1rem",
+              }}
             >
               <span className="relative top-[2px]">Google</span>
             </Button>
@@ -48,7 +54,7 @@ const LoginPage = () => {
               variant="contained"
               endIcon={<GitHubIcon />}
               disableElevation
-              className="w-full !py-3"
+              sx={{ width: "100%", paddingBlock: "0.75rem" }}
             >
               <span className="relative top-[2px]">Github</span>
             </Button>
@@ -62,7 +68,7 @@ const LoginPage = () => {
             alt="login banner"
             placeholder="blur"
             blurDataURL="/login.svg"
-            className="w-full aspect-square"
+            className="w-full"
           />
         </div>
       </section>

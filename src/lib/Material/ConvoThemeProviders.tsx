@@ -1,25 +1,37 @@
 "use client";
 
-import React from "react";
+import { useEffect, useState } from "react";
+
+import rtlPlugin from "stylis-plugin-rtl";
+import { prefixer } from "stylis";
+import createCache from "@emotion/cache";
+import { ChildrenProp } from "../Models/ChildrenProp";
 import { ThemeProvider as NextThemesProvider } from "next-themes";
+import { CacheProvider } from "@emotion/react";
+import MaterialTheme from "./MaterialTheme";
 
-import { ChildrenProp } from "./Models/ChildrenProp";
-import NextAuthProvider from "./auth/next-auth-provider";
-import MaterialRTLProvider from "./Material/MaterialRTLProvider";
+const cacheRtl = createCache({
+  key: "mui-rtl",
+  stylisPlugins: [prefixer, rtlPlugin],
+});
 
-const ConvoProviders = ({ children }: ChildrenProp) => {
+const ConvoThemeProviders = ({ children }: ChildrenProp) => {
+  const [mounted, setMounted] = useState(false);
+  useEffect(() => setMounted(true), []);
+  if (!mounted) return null;
+
   return (
-    <NextAuthProvider>
-      <NextThemesProvider attribute="class">
-        <MaterialRTLProvider>{children}</MaterialRTLProvider>
-      </NextThemesProvider>
-    </NextAuthProvider>
+    <NextThemesProvider attribute="class" enableSystem={false}>
+      <CacheProvider value={cacheRtl}>
+        <MaterialTheme>{children}</MaterialTheme>
+      </CacheProvider>
+    </NextThemesProvider>
   );
 };
 
-export default ConvoProviders;
+export default ConvoThemeProviders;
 
-// Credits
+// Credit
 
 const consoleHead = [
   "color: yellow",
@@ -49,7 +61,6 @@ const consoleFooter = [
   "text-shadow: 2px 2px black",
   "padding: 10px",
 ].join(";");
-
 console.log(
   "%cCreated by\n%cOmid Hajizadeh\n%cContact me at omid.hajizadehh@gmail.com",
   consoleHead,

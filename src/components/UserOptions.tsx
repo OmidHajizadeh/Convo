@@ -1,17 +1,19 @@
 "use client";
 
 import Link from "next/link";
+
 import { useTheme } from "next-themes";
+
+import Avatar from "@mui/material/Avatar";
+import Badge from "@mui/material/Badge";
 import EditIcon from "@mui/icons-material/Edit";
 import GroupIcon from "@mui/icons-material/Group";
 import LogoutIcon from "@mui/icons-material/Logout";
 import Diversity3Icon from "@mui/icons-material/Diversity3";
 import ExploreIcon from "@mui/icons-material/Explore";
-import Avatar from "@mui/material/Avatar";
 import InfoIcon from "@mui/icons-material/Info";
 
 import { useAppSelector } from "@/store/Redux/hooks";
-import { Badge } from "@mui/material";
 
 export default function UserOptions({
   onCloseDrawer,
@@ -35,7 +37,7 @@ export default function UserOptions({
           onClick={closeDrawerHandler}
           href="/chat/friends-list"
         >
-          <Avatar className="me-3">
+          <Avatar sx={{ marginInlineEnd: "0.75rem" }}>
             <Diversity3Icon className="dark:text-black" />
           </Avatar>
           <span
@@ -65,7 +67,7 @@ export default function UserOptions({
               )
             }
           >
-            <Avatar className="me-3">
+            <Avatar sx={{ marginInlineEnd: "0.75rem" }}>
               <GroupIcon className="dark:text-black" />
             </Avatar>
           </Badge>
@@ -85,7 +87,7 @@ export default function UserOptions({
           onClick={closeDrawerHandler}
           href="/chat/explorer"
         >
-          <Avatar className="me-3">
+          <Avatar sx={{ marginInlineEnd: "0.75rem" }}>
             <ExploreIcon className="dark:text-black" />
           </Avatar>
           <span
@@ -104,7 +106,7 @@ export default function UserOptions({
           onClick={closeDrawerHandler}
           href="/chat/edit-profile"
         >
-          <Avatar className="me-3">
+          <Avatar sx={{ marginInlineEnd: "0.75rem" }}>
             <EditIcon className="dark:text-black" />
           </Avatar>
           <span
@@ -123,7 +125,7 @@ export default function UserOptions({
           onClick={closeDrawerHandler}
           href="/chat/about"
         >
-          <Avatar className="me-3">
+          <Avatar sx={{ marginInlineEnd: "0.75rem" }}>
             <InfoIcon className="dark:text-black" />
           </Avatar>
           <span
@@ -142,7 +144,7 @@ export default function UserOptions({
           onClick={closeDrawerHandler}
           href="/api/auth/signout"
         >
-          <Avatar className="me-3">
+          <Avatar sx={{ marginInlineEnd: "0.75rem" }}>
             <LogoutIcon className="dark:text-black" />
           </Avatar>
           <span

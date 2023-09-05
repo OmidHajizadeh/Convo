@@ -1,11 +1,10 @@
 "use client";
 
-import Image from "next/image";
 import { useEffect, useState } from "react";
+import Image from "next/image";
 
-import FriendListItem from "@/app/chat/friends-list/_components/FriendListItem";
+import FriendListItem from "../_components/FriendListItem";
 import { useAppSelector } from "@/store/Redux/hooks";
-import { Friend } from "@/lib/Models/Friend";
 
 type FriendListProps = {
   session: Session;

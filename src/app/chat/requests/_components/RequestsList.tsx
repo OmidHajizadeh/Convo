@@ -2,8 +2,11 @@
 
 import { useEffect, useState } from "react";
 import Image from "next/image";
+import dynamic from "next/dynamic";
+
 import { toast } from "react-hot-toast";
-import ListItem from "@mui/material/ListItem";
+
+import Tooltip from "@mui/material/Tooltip";
 import Avatar from "@mui/material/Avatar";
 import IconButton from "@mui/material/IconButton";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
@@ -13,7 +16,8 @@ import { useAppDispatch, useAppSelector } from "@/store/Redux/hooks";
 import { friendRequestsActions } from "@/store/Redux/FriendRequests/friendRequestsSlice";
 import { friendsActions } from "@/store/Redux/friendsSlice/friendsSlice";
 import { Friend } from "@/lib/Models/Friend";
-import { Tooltip } from "@mui/material";
+
+const ListItem = dynamic(() => import("@mui/material/ListItem"), {ssr: false})
 
 const RequestsList = () => {
   const [isLoading, setIsLoading] = useState(false);
@@ -78,7 +82,7 @@ const RequestsList = () => {
                         onClick={handleRequest.bind(null, user.id, "accept")}
                         disabled={isLoading}
                       >
-                        <CheckCircleIcon />
+                        <CheckCircleIcon className="dark:text-slate-200" />
                       </IconButton>
                     </Tooltip>
                     <Tooltip title="رد کردن" arrow placement="top">
@@ -88,13 +92,13 @@ const RequestsList = () => {
                         onClick={handleRequest.bind(null, user.id, "deny")}
                         disabled={isLoading}
                       >
-                        <CancelIcon />
+                        <CancelIcon className="dark:text-slate-200" />
                       </IconButton>
                     </Tooltip>
                   </div>
                 }
               >
-                <Avatar className="me-3">
+                <Avatar sx={{marginInlineEnd: '0.75rem'}}>
                   <Image
                     src={user.image!}
                     width={400}
@@ -103,7 +107,7 @@ const RequestsList = () => {
                   />
                 </Avatar>
                 <span className="flex flex-col">
-                  <span>{user.name}</span>
+                  <span className="dark:text-slate-200">{user.name}</span>
                   <small className="dark:text-slate-200">{user.email}</small>
                 </span>
               </ListItem>

@@ -1,10 +1,13 @@
 "use client";
 
 import { useRef, useState } from "react";
+
 import { toast } from "react-hot-toast";
 import { nanoid } from "nanoid";
 import ClipLoader from "react-spinners/ClipLoader";
-import { IconButton, TextareaAutosize } from "@mui/material";
+
+import TextareaAutosize from "@mui/material/TextareaAutosize";
+import IconButton from "@mui/material/IconButton";
 import SendIcon from "@mui/icons-material/Send";
 
 import { useAppDispatch } from "@/store/Redux/hooks";
@@ -122,7 +125,7 @@ const ChatControls = ({
           aria-label={isSending ? "در حال ارسال" : "ارسال"}
           onClick={sendMessage}
           disabled={isSending || text.length === 0}
-          className="w-10"
+          sx={{ width: "2.5rem" }}
         >
           {isSending ? <ClipLoader size={22} color="#737373" /> : <SendIcon />}
         </IconButton>
@@ -136,13 +139,15 @@ const ChatControls = ({
             }
           }}
           onChange={onUserInput}
-          className="font-light focus:outline-none px-3 py-2 flex-grow resize-none dark:bg-primary-light"
+          className="font-light focus:outline-none px-3 py-2 flex-grow resize-none dark:text-slate-200 dark:bg-primary-light"
           aria-label="متن پیام"
           placeholder="پیام خود را وارد کنید..."
           disabled={isSending}
         />
       </div>
-      <small className="absolute text-slate-400/50 -top-3 start-10">500/{text.length}</small>
+      <small className="absolute text-slate-400/50 -top-3 start-10">
+        500/{text.length}
+      </small>
     </div>
   );
 };

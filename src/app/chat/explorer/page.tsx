@@ -2,13 +2,15 @@ import { Metadata } from "next";
 import Image from "next/image";
 import { notFound } from "next/navigation";
 
+import Alert from "@mui/material/Alert";
+
 import { fetchServerSession } from "@/utils/serverInteractions";
 import { fetchRedis } from "@/utils/fetchRedis";
 import { Explorer } from "@/lib/Models/Explorer";
 import ExplorerListItem from "./_components/ExplorerListItem";
 import UserStatus from "./_components/UserStatus";
 import PageFrame from "@/components/PageFrame";
-import { Alert } from "@mui/material";
+
 
 export const metadata: Metadata = {
   title: "اکسپلورر",
@@ -56,9 +58,12 @@ const ExplorerPage = async () => {
 
   return (
     <PageFrame className="text-center flex flex-col">
-      <Alert severity="info" className="text-start">
-        شما میتوانید با قرار دادن خود در لیست اکسپلورر، به دیگران اجازه دهید به
-        شما درخواست دوستی ارسال کنند.
+      <Alert
+        severity="info"
+        sx={{ textAlign: "start", marginBottom: "0.75rem" }}
+      >
+        شما میتوانید با قرار دادن پروفایل خود در لیست اکسپلورر، به دیگران اجازه
+        دهید به شما درخواست دوستی ارسال کنند.
       </Alert>
 
       <UserStatus />
