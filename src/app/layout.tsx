@@ -3,7 +3,8 @@ import localFont from "next/font/local";
 import { Toaster } from "react-hot-toast";
 
 import "./globals.css";
-import ConvoProviders from "@/lib/ConvoProviders";
+import NextAuthProvider from "@/lib/auth/next-auth-provider";
+import ConvoThemeProviders from "@/lib/Material/ConvoThemeProviders";
 
 export const metadata: Metadata = {
   title: "کانوو",
@@ -70,13 +71,21 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    
-    <html lang="fa" dir="rtl" className="light" style={{colorScheme: 'light'}}>
-      <body className={`${mainFont.variable} font-main font-regular bg-white dark:bg-gray-800`}>
-        <ConvoProviders>
-          <Toaster />
-          {children}
-        </ConvoProviders>
+    <html
+      lang="fa"
+      dir="rtl"
+      className="light"
+      style={{ colorScheme: "light" }}
+    >
+      <body
+        className={`${mainFont.variable} font-main font-regular bg-white dark:bg-gray-800`}
+      >
+        <NextAuthProvider>
+          <ConvoThemeProviders>
+            <Toaster />
+            {children}
+          </ConvoThemeProviders>
+        </NextAuthProvider>
       </body>
     </html>
   );

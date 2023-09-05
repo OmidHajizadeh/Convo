@@ -1,22 +1,19 @@
 "use client";
 
-import Image from "next/image";
 import { useState } from "react";
+import Image from "next/image";
 
-import {
-  AppBar,
-  Box,
-  CssBaseline,
-  Divider,
-  Drawer,
-  IconButton,
-  Toolbar,
-} from "@/lib/Material/MaterialClientComponents";
-import { MenuIcon } from "@/lib/Material/MaterialClientIcons";
+import { useTheme } from "next-themes";
+
+import AppBar from "@mui/material/AppBar";
+import Box from "@mui/material/Box";
+import Drawer from "@mui/material/Drawer";
+import IconButton from "@mui/material/IconButton";
+import Toolbar from "@mui/material/Toolbar";
+import MenuIcon from "@mui/icons-material/Menu";
 
 import UserOptions from "./UserOptions";
 import ToggleThemeButton from "./ToggleThemeButton";
-import { useTheme } from "next-themes";
 
 const drawerWidth = 320;
 
@@ -46,7 +43,7 @@ export default function ResponsiveChatSidebar({
       >
         {userHead}
       </div>
-      <Divider />
+      <hr />
       <ul className="mt-2">
         <UserOptions onCloseDrawer={handleDrawerToggle} />
       </ul>
@@ -54,10 +51,8 @@ export default function ResponsiveChatSidebar({
   );
 
   return (
-    <Box sx={{ display: "flex" }}>
-      <CssBaseline />
+    <Box sx={{ display: "flex", width: '100%' }}>
       <AppBar
-        className=""
         position="absolute"
         elevation={0}
         sx={{
@@ -66,22 +61,27 @@ export default function ResponsiveChatSidebar({
           border: "unset",
           backgroundColor: (t) =>
             resolvedTheme === "light"
-              ? t.palette.secondary.light
+              ? t.palette.secondary.main
               : t.palette.primary.main,
           backdropFilter: "blur(8px)",
         }}
       >
-        <Toolbar className="flex items justify-between">
+        <Toolbar
+          sx={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "space-between",
+          }}
+        >
           <span className="flex-grow flex items-center">
             <IconButton
-              className=""
               color="inherit"
               aria-label="open drawer"
               edge="start"
               onClick={handleDrawerToggle}
               sx={{ mr: 2, display: { xl: "none" } }}
             >
-              <MenuIcon />
+              <MenuIcon className="text-primary-dark dark:text-secondary-light" />
             </IconButton>
             <Image
               src="/logo.png"
@@ -97,14 +97,12 @@ export default function ResponsiveChatSidebar({
       </AppBar>
       <Box
         component="nav"
-        className=""
         sx={{ width: { xl: drawerWidth }, flexShrink: { xl: 0 } }}
         aria-label="mailbox folders"
       >
         <Drawer
           variant="temporary"
           open={mobileOpen}
-          className=""
           onClose={handleDrawerToggle}
           ModalProps={{
             keepMounted: true, // Better open performance on mobile.
@@ -127,7 +125,6 @@ export default function ResponsiveChatSidebar({
         </Drawer>
         <Drawer
           variant="permanent"
-          className=""
           sx={{
             display: { xs: "none", xl: "block" },
             "& .MuiDrawer-paper": {
@@ -152,10 +149,11 @@ export default function ResponsiveChatSidebar({
       </Box>
       <Box
         component="main"
-        className="convo-menu flex flex-col"
         sx={{
+          display: "flex",
+          flexDirection: "column",
           flexGrow: 1,
-          width: { xl: `calc(100% - ${drawerWidth}px)` },
+          // width: { xs: "100%", xl: `calc(100% - ${drawerWidth}px)` },
         }}
       >
         <Toolbar />

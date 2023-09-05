@@ -1,11 +1,10 @@
-import { useEffect, useState } from "react";
+"use client"
+
 import { useTheme } from "next-themes";
 
-import {
-  styled,
-  FormControlLabel,
-  Switch,
-} from "@/lib/Material/MaterialClientComponents";
+import { styled } from "@mui/material/styles";
+import FormControlLabel from "@mui/material/FormControlLabel";
+import Switch from "@mui/material/Switch";
 
 const MaterialUISwitch = styled(Switch)(({ theme }) => ({
   width: 62,
@@ -29,7 +28,7 @@ const MaterialUISwitch = styled(Switch)(({ theme }) => ({
     },
   },
   "& .MuiSwitch-thumb": {
-    backgroundColor: theme.palette.mode === "dark" ? "#000" : "#ffc107",
+    backgroundColor: theme.palette.mode === "dark" ? "#000000" : "#ffc107",
     width: 32,
     height: 32,
     "&:before": {
@@ -55,21 +54,14 @@ const MaterialUISwitch = styled(Switch)(({ theme }) => ({
 
 export default function ToggleThemeButton() {
   const { setTheme, resolvedTheme } = useTheme();
+
   function toggleTheme() {
     setTheme(resolvedTheme === "dark" ? "light" : "dark");
   }
 
-  const [isMounted, setIsMounted] = useState(false);
-  useEffect(() => {
-    setIsMounted(true);
-  }, []);
-  if (!isMounted) {
-    return null;
-  }
-
   return (
     <FormControlLabel
-      className="!m-0"
+      sx={{ margin: 0 }}
       control={
         <MaterialUISwitch
           checked={resolvedTheme === "dark"}

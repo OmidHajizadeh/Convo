@@ -33,8 +33,6 @@ const config: Config = {
         "chat-pattern": "url('/chat-bg.webp')",
       },
       colors: {
-        "convo-blue": "#1fe5f2",
-        "convo-gray": "#d4d4d4",
         primary: {
           light: "#141414",
           dark: "#2b2b2b",

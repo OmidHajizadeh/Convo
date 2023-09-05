@@ -1,4 +1,4 @@
-import { Skeleton } from "@/lib/Material/MaterialClientComponents";
+import Skeleton from "@mui/material/Skeleton";
 
 const ChatLoadingPage = () => {
   return (

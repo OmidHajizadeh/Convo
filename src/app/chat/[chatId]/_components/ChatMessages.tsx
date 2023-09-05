@@ -2,11 +2,12 @@
 
 import { useEffect, useRef } from "react";
 import Image from "next/image";
+
 import { format } from "date-fns";
 import ClockLoader from "react-spinners/ClockLoader";
 
-import { Avatar } from "@/lib/Material/MaterialClientComponents";
-import { ErrorIcon } from "@/lib/Material/MaterialClientIcons";
+import Avatar from "@mui/material/Avatar";
+import ErrorIcon from "@mui/icons-material/Error"
 
 import { Friend } from "@/lib/Models/Friend";
 
@@ -40,7 +41,7 @@ const ChatMessages = ({ currentUser, partnerObj }: ChatMessagesProps) => {
             alt={partnerObj.friend.name!}
             className="w-20 h-20 mb-4 rounded-full"
           />
-          <h4 className="bg-slate-100 rounded-md text-slate-800 px-3 py-1">
+          <h4 className="bg-slate-200 dark:bg-slate-800 rounded-md text-slate-800 dark:text-slate-200 px-3 py-1">
             چت خود را با {partnerObj.friend.name} آغاز کنید
           </h4>
         </div>
@@ -113,7 +114,7 @@ const ChatMessages = ({ currentUser, partnerObj }: ChatMessagesProps) => {
                   color="#000000"
                 />
               ) : message.status === "error" ? (
-                <ErrorIcon className="order-3" />
+                <ErrorIcon sx={{order: 3}} />
               ) : null}
             </div>
           );

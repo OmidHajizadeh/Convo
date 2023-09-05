@@ -1,19 +1,18 @@
 "use client";
 
 import { useState } from "react";
+
 import { toast } from "react-hot-toast";
 import { useForm } from "react-hook-form";
 
-import {
-  Button,
-  TextField,
-  Dialog,
-  DialogActions,
-  DialogContent,
-  DialogContentText,
-  DialogTitle,
-} from "@/lib/Material/MaterialClientComponents";
-import { AddIcon } from "@/lib/Material/MaterialClientIcons";
+import Button from "@mui/material/Button";
+import TextField from "@mui/material/TextField";
+import Dialog from "@mui/material/Dialog";
+import DialogActions from "@mui/material/DialogActions";
+import DialogContent from "@mui/material/DialogContent";
+import DialogContentText from "@mui/material/DialogContentText";
+import DialogTitle from "@mui/material/DialogTitle";
+import AddIcon from "@mui/icons-material/Add";
 
 type FormValue = {
   email: string;
@@ -65,9 +64,16 @@ export default function FormDialog() {
         onClick={handleClickOpen}
         disableElevation
         color="secondary"
-        className="!fixed bottom-4 end-4 !rounded-[50%] !w-16 !h-16"
+        sx={{
+          position: "fixed",
+          bottom: "1rem",
+          insetInlineEnd: "1rem",
+          borderRadius: "50%",
+          width: "4rem",
+          height: "4rem",
+        }}
       >
-        <AddIcon className="!w-9 !h-9" />
+        <AddIcon sx={{ width: "2.25rem", height: "2.25rem" }} />
       </Button>
       <Dialog open={open} onClose={handleClose}>
         <DialogTitle>افزودن دوست جدید</DialogTitle>

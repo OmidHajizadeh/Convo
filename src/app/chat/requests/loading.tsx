@@ -1,5 +1,6 @@
+import Skeleton from "@mui/material/Skeleton";
+
 import PageFrame from "@/components/PageFrame";
-import { Skeleton } from "@/lib/Material/MaterialClientComponents";
 
 const RequestsLoadingPage = () => {
   return (

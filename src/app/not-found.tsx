@@ -3,7 +3,7 @@ import Image from "next/image";
 const NotFoundPage = () => {
   return (
     <main className="grid place-items-center min-h-screen bg-landing-wave-lines bg-fixed bg-cover bg-no-repeat bg-center">
-      <section className="flex flex-col justify-center overflow-auto md:flex-row gap-4 p-5 xl:container w-full relative xl:rounded-2xl dark:bg-gray-900/40 bg-gray-100/30 shadow-xl backdrop-blur-sm h-screen xl:h-[50rem] max-h-screen">
+      <section className="flex flex-col justify-center overflow-auto md:flex-row gap-4 p-5 xl:container w-full relative xl:rounded-2xl dark:bg-gray-900/40 bg-gray-100/30 shadow-xl backdrop-blur-sm h-screen xl:h-[90vh] max-h-screen">
         <div className="md:flex-1 flex flex-col justify-center items-center text-center md:text-start">
           <div>
             <h3 className="text-4xl font-bold dark:text-slate-100">خطای سمت کاربر</h3>

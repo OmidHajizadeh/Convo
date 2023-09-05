@@ -24,10 +24,9 @@
   -webkit-line-clamp: 3;
 }
 
-.convo .convo-menu,
-.convo > .MuiBox-root {
+/* .convo > .MuiBox-root {
   width: 100%;
-}
+} */
 
 .background-animate {
   background-size: 400%;

@@ -1,10 +1,13 @@
 "use client";
 
 import Image from "next/image";
+
 import { toast } from "react-hot-toast";
 
-import { IconButton, ListItem, Tooltip } from "@/lib/Material/MaterialClientComponents";
-import { AddCircleIcon } from "@/lib/Material/MaterialClientIcons";
+import IconButton from "@mui/material/IconButton";
+import ListItem from "@mui/material/ListItem";
+import Tooltip from "@mui/material/Tooltip";
+import AddCircleIcon from "@mui/icons-material/AddCircle";
 
 import { Explorer } from "@/lib/Models/Explorer";
 
@@ -43,7 +46,7 @@ const ExplorerListItem = ({ explorer }: ExplorerListItemProps) => {
       className="flex items-center rounded-lg !p-4 bg-gray-100/80 dark:bg-gray-700/80 text-start"
       secondaryAction={
         <Tooltip title="ارسال درخواست دوستی" arrow placement="top-end">
-        <IconButton
+        <IconButton className="dark:text-slate-200"
           onClick={sendFriendRequestHandler}
           edge="end"
           aria-label="ارسال درخواست دوستی"
@@ -61,7 +64,7 @@ const ExplorerListItem = ({ explorer }: ExplorerListItemProps) => {
         className="me-3 w-20 h-20 rounded-lg"
       />
       <span className="flex flex-col flex-grow">
-        <span>{explorer.user.name}</span>
+        <span className="dark:text-slate-200">{explorer.user.name}</span>
         <small className="dark:text-slate-200">{explorer.statusText}</small>
       </span>
     </ListItem>

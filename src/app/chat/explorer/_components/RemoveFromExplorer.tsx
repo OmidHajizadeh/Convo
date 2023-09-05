@@ -1,13 +1,17 @@
 "use client";
 
 import { useState } from "react";
+import dynamic from "next/dynamic";
+
 import { toast } from "react-hot-toast";
 
-import { Button } from "@/lib/Material/MaterialClientComponents";
-import { RemoveCircleIcon } from "@/lib/Material/MaterialClientIcons";
+import RemoveCircleIcon from '@mui/icons-material/RemoveCircle';
 
 import { explorerActions } from "@/store/Redux/Explorer/explorerSlice";
 import { useAppDispatch } from "@/store/Redux/hooks";
+
+
+const Button = dynamic(() => import("@mui/material/Button"), {ssr: false})
 
 const RemoveFromExplorer = () => {
   const dispatch = useAppDispatch();

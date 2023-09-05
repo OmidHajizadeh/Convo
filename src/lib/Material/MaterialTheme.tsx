@@ -1,24 +1,14 @@
-"use client";
-
-import { createTheme, ThemeProvider } from "@mui/material/styles";
-import rtlPlugin from "stylis-plugin-rtl";
-import { prefixer } from "stylis";
-import { CacheProvider } from "@emotion/react";
-import createCache from "@emotion/cache";
-import { useTheme } from "next-themes";
+import { useTheme, ThemeProvider as NextThemesProvider } from "next-themes";
+import {
+  createTheme,
+  ThemeProvider as MaterialThemeProvider,
+} from "@mui/material/styles";
 import { useMemo } from "react";
+import { ChildrenProp } from "../Models/ChildrenProp";
 
-const cacheRtl = createCache({
-  key: "muirtl",
-  stylisPlugins: [prefixer, rtlPlugin],
-});
-
-export default function MaterialRTLProvider({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+const MaterialTheme = ({ children }: ChildrenProp) => {
   const { resolvedTheme } = useTheme();
+
   const theme = useMemo(
     () =>
       createTheme({
@@ -65,8 +55,8 @@ export default function MaterialRTLProvider({
   );
 
   return (
-    <CacheProvider value={cacheRtl}>
-      <ThemeProvider theme={theme}>{children}</ThemeProvider>
-    </CacheProvider>
+    <MaterialThemeProvider theme={theme}>{children}</MaterialThemeProvider>
   );
-}
+};
+
+export default MaterialTheme;

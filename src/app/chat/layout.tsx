@@ -50,7 +50,7 @@ const ChatListLayout = async ({ children }: ChildrenProp) => {
 
   return (
     <div className="h-screen grid place-items-center bg-landing-wave-lines bg-fixed bg-cover bg-no-repeat bg-center">
-      <section className="convo backdrop-blur-sm flex xl:container w-full relative shadow-lg xl:rounded-2xl overflow-hidden h-screen xl:h-[50rem] max-h-screen">
+      <section className="convo backdrop-blur-sm flex xl:container w-full relative shadow-lg xl:rounded-2xl overflow-hidden h-screen xl:h-[90vh] max-h-screen">
         <ReduxProvider>
           <NewFriendRequestsSubscriber
             initialFriendRequestList={incomingFriendRequests}
