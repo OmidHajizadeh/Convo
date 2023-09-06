@@ -1,10 +1,11 @@
+import PageFrame from '@/components/PageFrame'
 import { ConvoPuffLoader } from '@/components/spinners'
 
 const ExplorerLoadingPage = () => {
   return (
-    <div className='grid place-items-center h-full p-4'>
+    <PageFrame className='grid place-items-center'>
       <ConvoPuffLoader color="#36d7b7" size={100} />
-    </div>
+    </PageFrame>
   )
 }
 
