@@ -8,8 +8,6 @@ export const metadata: Metadata = {
   title: "درباره کانوو",
 };
 
-export const dynamic = 'force-static';
-
 const AboutPage = () => {
   return (
     <PageFrame className="flex flex-col" dir="ltr">
