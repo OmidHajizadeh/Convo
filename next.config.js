@@ -13,14 +13,20 @@ const nextConfig = {
     domains: ["avatars.githubusercontent.com", "lh3.googleusercontent.com"],
   },
   env: {
-    PUSHER_APP_ID: "1666659",
-    PUSHER_APP_SECRET: "436c314268d1d9dcb974",
-    NEXT_PUBLIC_PUSHER_APP_KEY: "db923cfb97eb4e41e7b9",
+    PUSHER_APP_ID: "1655774",
+    PUSHER_APP_SECRET: "3cd642f23712c62d6e68",
+    NEXT_PUBLIC_PUSHER_APP_KEY: "7dfc18eab0a65da85c2a",
 
     NEXTAUTH_SECRET: "v2KDsXQyl6uFqJV1MuhiVAFPOgJ8kSJzWbps7VTgfE8",
-    NEXTAUTH_URL: "https://convo-tan.vercel.app",
-    NEXT_PUBLIC_NEXTAUTH_URL: "https://convo-tan.vercel.app",
-    // "https://convo-tan.vercel.app"
+    NEXTAUTH_URL:
+      process.env.NODE_ENV !== "development"
+        ? "https://convo-tan.vercel.app"
+        : "http://localhost:3000",
+    NEXT_PUBLIC_NEXTAUTH_URL:
+      process.env.NODE_ENV !== "development"
+        ? "https://convo-tan.vercel.app"
+        : "http://localhost:3000",
+
     UPSTASH_REDIS_REST_URL: "https://eu1-nice-ostrich-39114.upstash.io",
     UPSTASH_REDIS_REST_TOKEN:
       "AZjKASQgMjc2ZTQ1OTEtZWFjMi00ZWZiLTliNjUtOGU0NTQzMmNmM2E3YTczNTllMzNjNjhhNGY4ZWE0YzZkYThjMjQ0Y2QwMWQ=",
