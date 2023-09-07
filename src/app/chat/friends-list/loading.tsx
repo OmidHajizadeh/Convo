@@ -7,7 +7,7 @@ const ChatListLoadingPage = () => {
     <PageFrame>
       <ul className="space-y-3">
         <li className="rounded-lg flex px-4 py-3 bg-gray-100/80 dark:bg-gray-700/80">
-          <span className="me-3">
+          <span className="me-4">
             <Skeleton variant="circular" width={40} height={40} />
           </span>
           <span className="w-full">
@@ -19,7 +19,7 @@ const ChatListLoadingPage = () => {
           </span>
         </li>
         <li className="rounded-lg flex p-4 bg-gray-100/80 dark:bg-gray-700/80">
-          <span className="me-3">
+          <span className="me-4">
             <Skeleton variant="circular" width={40} height={40} />
           </span>
           <span className="w-full">
@@ -31,7 +31,7 @@ const ChatListLoadingPage = () => {
           </span>
         </li>
         <li className="rounded-lg flex p-4 bg-gray-100/80 dark:bg-gray-700/80">
-          <span className="me-3">
+          <span className="me-4">
             <Skeleton variant="circular" width={40} height={40} />
           </span>
           <span className="w-full">
@@ -43,7 +43,7 @@ const ChatListLoadingPage = () => {
           </span>
         </li>
         <li className="rounded-lg flex p-4 bg-gray-100/80 dark:bg-gray-700/80">
-          <span className="me-3">
+          <span className="me-4">
             <Skeleton variant="circular" width={40} height={40} />
           </span>
           <span className="w-full">

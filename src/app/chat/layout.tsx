@@ -13,6 +13,7 @@ import HeadUser from "@/components/HeadUser";
 import FriendsChatSubscriber from "@/utils/subscribers/FriendsChatSubscriber";
 import ExplorerStatus from "@/utils/subscribers/ExplorerStatus";
 import { Friend } from "@/lib/Models/Friend";
+import OnlineMembersSubscriber from "@/utils/subscribers/OnlineMembersSubscriber";
 
 const ChatListLayout = async ({ children }: ChildrenProp) => {
   const session = await fetchServerSession();
@@ -61,6 +62,7 @@ const ChatListLayout = async ({ children }: ChildrenProp) => {
             sessionId={session.user.id}
           />
           <ExplorerStatus isAlreadyInExplorer={!!isAlreadyInExplorer} />
+          <OnlineMembersSubscriber />
           <ResponsiveChatSidebar userHead={<HeadUser session={session} />}>
             {children}
           </ResponsiveChatSidebar>

@@ -16,6 +16,7 @@ import { useAppDispatch, useAppSelector } from "@/store/Redux/hooks";
 import { friendRequestsActions } from "@/store/Redux/FriendRequests/friendRequestsSlice";
 import { friendsActions } from "@/store/Redux/friendsSlice/friendsSlice";
 import { Friend } from "@/lib/Models/Friend";
+import UserAvatar from "@/components/UserAvatar";
 
 const ListItem = dynamic(() => import("@mui/material/ListItem"), {ssr: false})
 
@@ -98,14 +99,7 @@ const RequestsList = () => {
                   </div>
                 }
               >
-                <Avatar sx={{marginInlineEnd: '0.75rem'}}>
-                  <Image
-                    src={user.image!}
-                    width={400}
-                    height={400}
-                    alt={user.name!}
-                  />
-                </Avatar>
+                <UserAvatar user={user} />
                 <span className="flex flex-col">
                   <span className="dark:text-slate-200">{user.name}</span>
                   <small className="dark:text-slate-200">{user.email}</small>

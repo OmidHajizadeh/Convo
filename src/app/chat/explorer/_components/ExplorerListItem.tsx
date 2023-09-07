@@ -46,14 +46,15 @@ const ExplorerListItem = ({ explorer }: ExplorerListItemProps) => {
       className="flex items-center rounded-lg !p-4 bg-gray-100/80 dark:bg-gray-700/80 text-start"
       secondaryAction={
         <Tooltip title="ارسال درخواست دوستی" arrow placement="top-end">
-        <IconButton className="dark:text-slate-200"
-          onClick={sendFriendRequestHandler}
-          edge="end"
-          aria-label="ارسال درخواست دوستی"
+          <IconButton
+            className="dark:text-slate-200"
+            onClick={sendFriendRequestHandler}
+            edge="end"
+            aria-label="ارسال درخواست دوستی"
           >
-          <AddCircleIcon />
-        </IconButton>
-          </Tooltip>
+            <AddCircleIcon />
+          </IconButton>
+        </Tooltip>
       }
     >
       <Image

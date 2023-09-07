@@ -5,6 +5,7 @@ import Avatar from "@mui/material/Avatar";
 
 import { chatHrefConstructor } from "@/utils/helpers";
 import { Friend } from "@/lib/Models/Friend";
+import UserAvatar from "@/components/UserAvatar";
 
 
 type FriendListItemProps = {
@@ -18,14 +19,7 @@ const FriendListItem = ({ friendObject, session }: FriendListItemProps) => {
   return (
     <li className="rounded-lg px-4 py-3 bg-gray-100/80 dark:bg-gray-700/80">
       <Link className="flex w-full items-center" href={`/chat/${chatId}`}>
-        <Avatar sx={{ marginInlineEnd: "0.75rem" }}>
-          <Image
-            src={friendObject.friend.image!}
-            alt={friendObject.friend.name!}
-            width={400}
-            height={400}
-          />
-        </Avatar>
+        <UserAvatar user={friendObject.friend} />
         <div className="flex flex-col">
           <span className="dark:text-slate-200">{friendObject.friend.name}</span>
           <small className="text-slate-500 dark:text-slate-200 inline-flex items-center gap-2">

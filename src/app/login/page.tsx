@@ -22,8 +22,6 @@ const LoginPage = () => {
       });
     } catch (err) {
       toast.error("خطایی رخ داد. دوباره امتحان کنید");
-    } finally {
-      setIsLoading(false);
     }
   }
 

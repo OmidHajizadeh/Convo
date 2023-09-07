@@ -7,7 +7,7 @@ const RequestsLoadingPage = () => {
     <PageFrame>
       <ul className="space-y-3">
         <li className="rounded-lg flex px-4 py-3 bg-gray-100/80 dark:bg-gray-700/80">
-          <span className="me-3">
+          <span className="me-4">
             <Skeleton variant="circular" width={40} height={40} />
           </span>
           <span className="flex flex-grow gap-4 justify-between items-center">
@@ -28,7 +28,7 @@ const RequestsLoadingPage = () => {
           </span>
         </li>
         <li className="rounded-lg flex px-4 py-3 bg-gray-100/80 dark:bg-gray-700/80">
-          <span className="me-3">
+          <span className="me-4">
             <Skeleton variant="circular" width={40} height={40} />
           </span>
           <span className="flex flex-grow gap-4 justify-between items-center">
@@ -49,7 +49,7 @@ const RequestsLoadingPage = () => {
           </span>
         </li>
         <li className="rounded-lg flex px-4 py-3 bg-gray-100/80 dark:bg-gray-700/80">
-          <span className="me-3">
+          <span className="me-4">
             <Skeleton variant="circular" width={40} height={40} />
           </span>
           <span className="flex flex-grow gap-4 justify-between items-center">
@@ -70,7 +70,7 @@ const RequestsLoadingPage = () => {
           </span>
         </li>
         <li className="rounded-lg flex px-4 py-3 bg-gray-100/80 dark:bg-gray-700/80">
-          <span className="me-3">
+          <span className="me-4">
             <Skeleton variant="circular" width={40} height={40} />
           </span>
           <span className="flex flex-grow gap-4 justify-between items-center">
@@ -91,7 +91,7 @@ const RequestsLoadingPage = () => {
           </span>
         </li>
         <li className="rounded-lg flex px-4 py-3 bg-gray-100/80 dark:bg-gray-700/80">
-          <span className="me-3">
+          <span className="me-4">
             <Skeleton variant="circular" width={40} height={40} />
           </span>
           <span className="flex flex-grow gap-4 justify-between items-center">
@@ -112,7 +112,7 @@ const RequestsLoadingPage = () => {
           </span>
         </li>
         <li className="rounded-lg flex px-4 py-3 bg-gray-100/80 dark:bg-gray-700/80">
-          <span className="me-3">
+          <span className="me-4">
             <Skeleton variant="circular" width={40} height={40} />
           </span>
           <span className="flex flex-grow gap-4 justify-between items-center">
@@ -133,7 +133,7 @@ const RequestsLoadingPage = () => {
           </span>
         </li>
         <li className="rounded-lg flex px-4 py-3 bg-gray-100/80 dark:bg-gray-700/80">
-          <span className="me-3">
+          <span className="me-4">
             <Skeleton variant="circular" width={40} height={40} />
           </span>
           <span className="flex flex-grow gap-4 justify-between items-center">
