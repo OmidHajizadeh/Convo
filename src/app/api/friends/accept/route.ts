@@ -97,10 +97,31 @@ export async function POST(req: NextRequest) {
     );
   }
 
-  let friendString: string;
-
   try {
-    friendString = await fetchRedis<string>("get", `user:${senderId}`);
+    const friendPromise = fetchRedis<string>("get", `user:${senderId}`);
+
+    const triggerSuccessRequest = pusherServer.trigger(
+      toPusherKey(`user:${senderId}:friend_request_response`),
+      "friend_request_response",
+      JSON.stringify({
+        user: session.user,
+        state: "accepted",
+      })
+    );
+
+    const [friendString] = await Promise.all([
+      friendPromise,
+      triggerSuccessRequest,
+    ]);
+
+    return NextResponse.json(
+      {
+        message: "کاربر در لیست دوستان شما قرار گرفت ",
+        error: false,
+        friendString,
+      },
+      { status: 200 }
+    );
   } catch (error) {
     return NextResponse.json(
       {
@@ -111,22 +132,4 @@ export async function POST(req: NextRequest) {
       { status: 500 }
     );
   }
-
-  pusherServer.trigger(
-    toPusherKey(`user:${senderId}:friend_request_response`),
-    "friend_request_response",
-    JSON.stringify({
-      user: session.user,
-      state: "accepted",
-    })
-  );
-
-  return NextResponse.json(
-    {
-      message: "کاربر در لیست دوستان شما قرار گرفت ",
-      error: false,
-      friendString,
-    },
-    { status: 200 }
-  );
 }

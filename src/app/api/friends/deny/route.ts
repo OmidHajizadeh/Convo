@@ -28,7 +28,26 @@ export async function POST(req: NextRequest) {
   }
 
   try {
-    await db.srem(`user:${session.user.id}:incoming_friend_requests`, senderId);
+    const updateDatabase = db.srem(
+      `user:${session.user.id}:incoming_friend_requests`,
+      senderId
+    );
+
+    const triggerDenyRequest = pusherServer.trigger(
+      toPusherKey(`user:${senderId}:friend_request_response`),
+      "friend_request_response",
+      JSON.stringify({
+        user: session.user,
+        state: "denied",
+      })
+    );
+
+    await Promise.all([updateDatabase, triggerDenyRequest]);
+
+    return NextResponse.json(
+      { message: "درخواست کاربر برای دوستی با شما رد شد", error: false },
+      { status: 200 }
+    );
   } catch (error) {
     return NextResponse.json(
       {
@@ -39,18 +58,4 @@ export async function POST(req: NextRequest) {
       { status: 500 }
     );
   }
-
-  pusherServer.trigger(
-    toPusherKey(`user:${senderId}:friend_request_response`),
-    "friend_request_response",
-    JSON.stringify({
-      user: session.user,
-      state: "denied",
-    })
-  );
-
-  return NextResponse.json(
-    { message: "درخواست کاربر برای دوستی با شما رد شد", error: false },
-    { status: 200 }
-  );
 }

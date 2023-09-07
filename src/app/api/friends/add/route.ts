@@ -127,36 +127,36 @@ export async function POST(req: Request) {
     );
   }
 
-  let friendString: string = await fetchRedis<string>(
-    "get",
-    `user:${friendId}`
-  );
-
   try {
-    friendString = await fetchRedis<string>("get", `user:${friendId}`);
+    const friendPromise = fetchRedis<string>("get", `user:${friendId}`);
+
+    const triggerSuccessRequest = pusherServer.trigger(
+      toPusherKey(`user:${friendId}:incoming_friend_requests`),
+      "incoming_friend_requests",
+      JSON.stringify(session.user)
+    );
+
+    const [friendString] = await Promise.all([
+      friendPromise,
+      triggerSuccessRequest,
+    ]);
+
+    return NextResponse.json(
+      {
+        message: "درخواست با موفقیت فرستاده شد",
+        error: false,
+        friend: friendString,
+      },
+      { status: 200 }
+    );
   } catch (error) {
     return NextResponse.json(
       {
         message: "خطا در برقراری ارتباط با سرور",
         error: true,
-        source: "add: friendString",
+        source: "add: friendAsString",
       },
       { status: 500 }
     );
   }
-
-  pusherServer.trigger(
-    toPusherKey(`user:${friendId}:incoming_friend_requests`),
-    "incoming_friend_requests",
-    JSON.stringify(session.user)
-  );
-
-  return NextResponse.json(
-    {
-      message: "درخواست با موفقیت فرستاده شد",
-      error: false,
-      friend: friendString,
-    },
-    { status: 200 }
-  );
 }

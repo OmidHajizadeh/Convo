@@ -60,12 +60,12 @@ export async function POST(req: NextRequest) {
   }
 
   try {
-    await db.zadd(`chat:${chatId}:messages`, {
+    const addMessageToDatabase = db.zadd(`chat:${chatId}:messages`, {
       score: message.timestamp,
       member: JSON.stringify(message),
     });
 
-    pusherServer.trigger(
+    const triggerSuccessMessage = pusherServer.trigger(
       toPusherKey(`chat:${friendId}:new-message`),
       "incoming_message",
       {
@@ -74,6 +74,8 @@ export async function POST(req: NextRequest) {
         chatId,
       }
     );
+
+    await Promise.all([addMessageToDatabase, triggerSuccessMessage]);
 
     return NextResponse.json(
       { message: "پیام با موفقیت ارسال شد", error: false },
