@@ -1,5 +1,4 @@
 import { db } from "@/lib/database/db";
-import { fetchRedis } from "@/utils/fetchRedis";
 import { fetchServerSession } from "@/utils/serverInteractions";
 import { NextResponse } from "next/server";
 
