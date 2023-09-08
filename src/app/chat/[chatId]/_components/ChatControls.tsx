@@ -130,6 +130,7 @@ const ChatControls = ({
           {isSending ? <ClipLoader size={22} color="#737373" /> : <SendIcon />}
         </IconButton>
         <TextareaAutosize
+          dir="auto"
           maxRows={3}
           ref={messageRef}
           onKeyDown={(e) => {

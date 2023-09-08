@@ -31,7 +31,7 @@ const FriendListItem = ({ friendObject, session }: FriendListItemProps) => {
                     : friendObject.friend.name}
                 </span>
                 :
-                <span className="lines-1">{friendObject.messages[0].text}</span>
+                <span dir="auto" className="lines-1">{friendObject.messages[0].text}</span>
               </>
             ) : (
               <small>بدون گفتگو</small>
