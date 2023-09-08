@@ -10,12 +10,15 @@ import Tooltip from "@mui/material/Tooltip";
 import AddCircleIcon from "@mui/icons-material/AddCircle";
 
 import { Explorer } from "@/lib/Models/Explorer";
+import { useAudio } from "@/hooks/convo-hooks";
 
 type ExplorerListItemProps = {
   explorer: Explorer;
 };
 
 const ExplorerListItem = ({ explorer }: ExplorerListItemProps) => {
+  const systemSound = useAudio("/sounds/convo-system.mp3");
+  
   async function sendFriendRequestHandler() {
     try {
       toast.loading("در حال ارسال درخواست...", { id: "friend-request" });
@@ -37,6 +40,7 @@ const ExplorerListItem = ({ explorer }: ExplorerListItemProps) => {
       toast.error("خطا در ارسال درخواست. لطفا دوباره امتحان کنید");
     } finally {
       toast.dismiss("friend-request");
+      systemSound.play();
     }
   }
 

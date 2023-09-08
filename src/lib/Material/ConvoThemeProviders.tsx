@@ -45,12 +45,8 @@ const consoleBody = [
   "color: #78b5d5",
   "text-align: center",
   "width: 100%",
-  "margin-block: -2.5rem -1.5rem",
+  "margin-block: -2.5rem -2rem",
   "display: block",
-  "font-family:  Lucida Handwriting",
-  "font-size: 45px",
-  "font-weight: 1000",
-  "text-shadow: 4px 4px black",
   "padding: 10px",
 ].join(";");
 const consoleFooter = [
@@ -59,10 +55,16 @@ const consoleFooter = [
   "width: 100%",
   "display: block",
   "text-shadow: 2px 2px black",
-  "padding: 10px",
 ].join(";");
 console.log(
-  "%cCreated by\n%cOmid Hajizadeh\n%cContact me at omid.hajizadehh@gmail.com",
+  `%cCreated by\n%c
+   ██████╗ ███╗   ███╗██╗██████╗     ██╗  ██╗ █████╗      ██╗██╗███████╗ █████╗ ██████╗ ███████╗██╗  ██╗
+  ██╔═══██╗████╗ ████║██║██╔══██╗    ██║  ██║██╔══██╗     ██║██║╚══███╔╝██╔══██╗██╔══██╗██╔════╝██║  ██║
+  ██║   ██║██╔████╔██║██║██║  ██║    ███████║███████║     ██║██║  ███╔╝ ███████║██║  ██║█████╗  ███████║
+  ██║   ██║██║╚██╔╝██║██║██║  ██║    ██╔══██║██╔══██║██   ██║██║ ███╔╝  ██╔══██║██║  ██║██╔══╝  ██╔══██║
+  ╚██████╔╝██║ ╚═╝ ██║██║██████╔╝    ██║  ██║██║  ██║╚█████╔╝██║███████╗██║  ██║██████╔╝███████╗██║  ██║
+   ╚═════╝ ╚═╝     ╚═╝╚═╝╚═════╝     ╚═╝  ╚═╝╚═╝  ╚═╝ ╚════╝ ╚═╝╚══════╝╚═╝  ╚═╝╚═════╝ ╚══════╝╚═╝  ╚═╝
+  \n%cContact me at omid.hajizadehh@gmail.com`,
   consoleHead,
   consoleBody,
   consoleFooter

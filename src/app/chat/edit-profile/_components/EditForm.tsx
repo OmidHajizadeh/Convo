@@ -9,6 +9,7 @@ import { toast } from "react-hot-toast";
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
 import EditIcon from "@mui/icons-material/Edit";
+import { useAudio } from "@/hooks/convo-hooks";
 
 type EditFormProps = {
   session: Session;
@@ -19,6 +20,7 @@ type EditFormData = {
 };
 
 const EditForm = ({ session }: EditFormProps) => {
+  const systemSound = useAudio("/sounds/convo-system.mp3");
   const { register, handleSubmit, formState, setError } = useForm<EditFormData>(
     {
       defaultValues: {
@@ -57,6 +59,7 @@ const EditForm = ({ session }: EditFormProps) => {
     } catch {
       toast.error("خطا در ارسال درخواست. لطفا دوباره امتحان کنید");
     } finally {
+      systemSound.play();
       toast.dismiss("edit-profile");
     }
   }

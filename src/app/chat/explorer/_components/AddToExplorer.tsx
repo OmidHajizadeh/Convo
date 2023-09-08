@@ -11,12 +11,14 @@ import SendIcon from "@mui/icons-material/Send";
 
 import { useAppDispatch } from "@/store/Redux/hooks";
 import { explorerActions } from "@/store/Redux/Explorer/explorerSlice";
+import { useAudio } from "@/hooks/convo-hooks";
 
 type ExplorerFormData = {
   statusText: string;
 };
 
 const AddToExplorer = () => {
+  const systemSound = useAudio("/sounds/convo-system.mp3");
   const { register, handleSubmit, formState } = useForm<ExplorerFormData>();
   const { errors, isSubmitting } = formState;
   const dispatch = useAppDispatch();
@@ -40,6 +42,8 @@ const AddToExplorer = () => {
       }
     } catch (error) {
       toast.error("خطایی در ارتباط با سرور رخ داد. لطفا دوباره امتحان کنید.");
+    } finally {
+      systemSound.play();
     }
   }
 

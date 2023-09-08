@@ -13,6 +13,7 @@ import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
 import AddIcon from "@mui/icons-material/Add";
+import { useAudio } from "@/hooks/convo-hooks";
 
 type FormValue = {
   email: string;
@@ -20,6 +21,7 @@ type FormValue = {
 
 export default function FormDialog() {
   const [open, setOpen] = useState(false);
+  const systemSound = useAudio("/sounds/convo-system.mp3");
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -49,6 +51,7 @@ export default function FormDialog() {
       } else {
         toast.success(resData.message);
         handleClose();
+        systemSound.play();
       }
     } catch {
       toast.error("خطا در ارسال درخواست. لطفا دوباره امتحان کنید");

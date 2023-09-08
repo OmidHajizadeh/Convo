@@ -17,11 +17,15 @@ import { friendRequestsActions } from "@/store/Redux/FriendRequests/friendReques
 import { friendsActions } from "@/store/Redux/friendsSlice/friendsSlice";
 import { Friend } from "@/lib/Models/Friend";
 import UserAvatar from "@/components/UserAvatar";
+import { useAudio } from "@/hooks/convo-hooks";
 
-const ListItem = dynamic(() => import("@mui/material/ListItem"), {ssr: false})
+const ListItem = dynamic(() => import("@mui/material/ListItem"), {
+  ssr: false,
+});
 
 const RequestsList = () => {
   const [isLoading, setIsLoading] = useState(false);
+  const systemSound = useAudio("/sounds/convo-system.mp3");
 
   const dispatch = useAppDispatch();
   const { friendRequestsList } = useAppSelector(
@@ -37,32 +41,37 @@ const RequestsList = () => {
   async function handleRequest(senderId: string, action: string) {
     setIsLoading(true);
     toast.loading("در حال اعمال درخواست...", { id: "handle-request" });
-    const res = await fetch(`/api/friends/${action}`, {
-      method: "POST",
-      body: JSON.stringify({
-        id: senderId,
-      }),
-    });
+    try {
+      const res = await fetch(`/api/friends/${action}`, {
+        method: "POST",
+        body: JSON.stringify({
+          id: senderId,
+        }),
+      });
 
-    const resData = await res.json();
+      const resData = await res.json();
 
-    if (resData.error) {
-      toast.error(resData.message);
-    } else {
-      toast.success(resData.message);
-      dispatch(friendRequestsActions.handledFriendRequest(senderId));
-      if (action === "accept") {
-        const friend = JSON.parse(resData.friendString) as User;
-        const friendObject: Friend = {
-          friend,
-          messages: [],
-        };
-        dispatch(friendsActions.addNewFriendChat(friendObject));
+      if (resData.error) {
+        toast.error(resData.message);
+      } else {
+        toast.success(resData.message);
+        dispatch(friendRequestsActions.handledFriendRequest(senderId));
+        if (action === "accept") {
+          const friend = JSON.parse(resData.friendString) as User;
+          const friendObject: Friend = {
+            friend,
+            messages: [],
+          };
+          dispatch(friendsActions.addNewFriendChat(friendObject));
+        }
       }
+    } catch (error) {
+      toast.error("خطا در ارسال درخواست. لطفا دوباره امتحان کنید");
+    } finally {
+      systemSound.play();
+      setIsLoading(false);
+      toast.dismiss("handle-request");
     }
-
-    setIsLoading(false);
-    toast.dismiss("handle-request");
   }
 
   return (

@@ -8,11 +8,11 @@ import { toast } from "react-hot-toast";
 import { Avatar } from "@mui/material";
 
 import { pusherClient } from "@/lib/pusher/pusher";
-import { chatHrefConstructor, toPusherKey } from "@/utils/helpers";
-
+import { toPusherKey } from "@/utils/helpers";
 import { Friend } from "@/lib/Models/Friend";
 import { useAppDispatch } from "@/store/Redux/hooks";
 import { friendsActions } from "@/store/Redux/friendsSlice/friendsSlice";
+import { useAudio } from "@/hooks/convo-hooks";
 
 const FriendsChatSubscriber = ({
   sessionId,
@@ -23,6 +23,7 @@ const FriendsChatSubscriber = ({
 }) => {
   const pathname = usePathname();
   const dispatch = useAppDispatch();
+  const newMessageSound = useAudio("/sounds/convo-new-message.mp3");
 
   // Setting initial chat list
   useEffect(() => {
@@ -42,7 +43,6 @@ const FriendsChatSubscriber = ({
       message: Message;
       chatId: string;
     }) => {
-
       if (`/chat/${chatId}` !== pathname) {
         toast(
           (t) => {
@@ -70,9 +70,14 @@ const FriendsChatSubscriber = ({
           }
         );
       }
+      newMessageSound.play();
 
       dispatch(
-        friendsActions.optimisticallyUpdateFriendChat({ friendId: sender.id, message, messageStatus: 'success' })
+        friendsActions.optimisticallyUpdateFriendChat({
+          friendId: sender.id,
+          message,
+          messageStatus: "success",
+        })
       );
     };
 
@@ -82,7 +87,7 @@ const FriendsChatSubscriber = ({
       pusherClient.unsubscribe(toPusherKey(`chat:${sessionId}:messages`));
       pusherClient.unbind("incoming_message", newMessageHandler);
     };
-  }, [sessionId, pathname, dispatch]);
+  }, [sessionId, pathname]);
 
   return null;
 };

@@ -12,6 +12,7 @@ import { friendRequestsActions } from "@/store/Redux/FriendRequests/friendReques
 import { useAppDispatch } from "@/store/Redux/hooks";
 import { friendsActions } from "@/store/Redux/friendsSlice/friendsSlice";
 import { Friend } from "@/lib/Models/Friend";
+import { useAudio } from "@/hooks/convo-hooks";
 
 const NewFriendRequestsSubscriber = ({
   sessionId,
@@ -21,6 +22,8 @@ const NewFriendRequestsSubscriber = ({
   initialFriendRequestList: User[];
 }) => {
   const dispatch = useAppDispatch();
+  const newFriendRequestSound = useAudio("/sounds/convo-new-friend-request.mp3");
+  const responseSound = useAudio("/sounds/convo-response.mp3");
 
   // Setting inital friend requests
   useEffect(() => {
@@ -58,6 +61,7 @@ const NewFriendRequestsSubscriber = ({
           id: "new-friend-request",
         }
       );
+      newFriendRequestSound.play();
       dispatch(friendRequestsActions.setNewFriendRequest(friend));
     };
 
@@ -99,6 +103,7 @@ const NewFriendRequestsSubscriber = ({
           break;
         }
       }
+      responseSound.play();
     }
 
     pusherClient.bind("friend_request_response", friendRequestResponseHandler);
