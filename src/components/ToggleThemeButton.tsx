@@ -69,6 +69,7 @@ export default function ToggleThemeButton() {
         />
       }
       label={null}
+      aria-label="تغییر تم برنامه"
     />
   );
 }

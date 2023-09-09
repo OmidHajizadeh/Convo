@@ -32,6 +32,7 @@ async function chatPage(chatId: string) {
   } catch (error) {
     notFound();
   }
+
   return {
     user,
     chatPartner,
@@ -47,7 +48,6 @@ export async function generateMetadata({ params: { chatId } }: ChatPageProps) {
 
 const ChatPage = async ({ params: { chatId } }: ChatPageProps) => {
   const { chatPartner, user } = await chatPage(chatId);
-
   return (
     <div className="h-full">
       <div className="relative flex flex-col h-full">

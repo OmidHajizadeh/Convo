@@ -29,16 +29,18 @@ const friendsSlice = createSlice({
       action: PayloadAction<{
         friendId: string;
         message: Message;
-        messageStatus: "pending" | "success";
+        messageStatus: "error" | "pending" | "seen" | "unseen" | "success";
       }>
     ) => {
       state.friendsList = state.friendsList.map((friendObject) => {
         if (friendObject.friend.id === action.payload.friendId) {
-          
           return {
             ...friendObject,
             messages: [
-              { ...action.payload.message, status: action.payload.messageStatus },
+              {
+                ...action.payload.message,
+                status: action.payload.messageStatus,
+              },
               ...friendObject.messages,
             ],
           } as Friend;

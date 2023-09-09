@@ -15,7 +15,7 @@ interface Message {
   recieverId: string;
   text: string;
   timestamp: number;
-  status?: "success" | "error" | "pending";
+  status: "error" | "pending" | "seen" | "unseen" | "success";
 }
 
 interface Chat {

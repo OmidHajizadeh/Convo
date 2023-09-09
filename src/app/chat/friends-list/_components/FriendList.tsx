@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+// import { useEffect, useState } from "react";
 import Image from "next/image";
 
 import FriendListItem from "../_components/FriendListItem";
@@ -13,11 +13,11 @@ type FriendListProps = {
 const FriendList = ({ session }: FriendListProps) => {
   const { friendsList } = useAppSelector((state) => state.friends);
 
-  const [isMounted, setIsMounted] = useState(false);
-  useEffect(() => setIsMounted(true), []);
-  if (!isMounted) {
-    return null;
-  }
+  // const [isMounted, setIsMounted] = useState(false);
+  // useEffect(() => setIsMounted(true), []);
+  // if (!isMounted) {
+  //   return null;
+  // }
 
   return (
     <>

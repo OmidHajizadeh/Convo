@@ -50,10 +50,12 @@ const ChatControls = ({
       recieverId: chatPartnerId,
       text: messageText,
       timestamp,
+      status: 'pending'
     };
 
     try {
       setIsSending(true);
+      messageRef.current.value = "";
 
       dispatch(
         friendsActions.optimisticallyUpdateFriendChat({
@@ -86,12 +88,9 @@ const ChatControls = ({
             },
           })
         );
+
       } else {
-        messageRef.current.value = "";
-        setTimeout(() => {
-          messageRef.current.focus();
-          setText("");
-        }, 100);
+
         dispatch(
           friendsActions.updateFriendChat({
             friendId: chatPartnerId,
@@ -143,7 +142,6 @@ const ChatControls = ({
           className="font-light focus:outline-none px-3 py-2 flex-grow resize-none dark:text-slate-200 dark:bg-primary-light"
           aria-label="متن پیام"
           placeholder="پیام خود را وارد کنید..."
-          disabled={isSending}
         />
       </div>
       <small className="absolute text-slate-400/50 -top-3 start-10">

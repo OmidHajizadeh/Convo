@@ -7,7 +7,9 @@ import { format } from "date-fns";
 import ClockLoader from "react-spinners/ClockLoader";
 
 import Avatar from "@mui/material/Avatar";
-import ErrorIcon from "@mui/icons-material/Error"
+import ErrorIcon from "@mui/icons-material/Error";
+import SingleTick from "@mui/icons-material/Done";
+import DoubleTick from "@mui/icons-material/DoneAll";
 
 import { Friend } from "@/lib/Models/Friend";
 
@@ -96,15 +98,26 @@ const ChatMessages = ({ currentUser, partnerObj }: ChatMessagesProps) => {
                 }`}
               >
                 <p dir="auto" className="chat-message__text mb-1 font-light">
-                  {message.text}
+                  {message.text} - {message.status}
                 </p>
-                <small
-                  className={`chat-message__date text-gray-600/60 dark:text-white/50 ${
-                    isMessageFromCurrentUser ? "self-end" : "self-start"
-                  }`}
-                >
-                  {formattedTimestamp(message.timestamp)}
-                </small>
+                <span className="flex">
+                  <small
+                    className={`chat-message__date text-gray-600/60 dark:text-white/50 ${
+                      isMessageFromCurrentUser ? "ms-auto" : "me-auto"
+                    }`}
+                    >
+                    {formattedTimestamp(message.timestamp)}
+                  </small>
+                    {isMessageFromCurrentUser && (
+                      <>
+                        {message.status === "seen" ? (
+                          <DoubleTick sx={{ fontSize: 16, marginInlineStart: 1 }} />
+                        ) : message.status === "unseen" ? (
+                          <SingleTick sx={{ fontSize: 16, marginInlineStart: 1 }} />
+                        ) : null}
+                      </>
+                    )}
+                </span>
               </div>
 
               {message.status === "pending" ? (
@@ -114,7 +127,7 @@ const ChatMessages = ({ currentUser, partnerObj }: ChatMessagesProps) => {
                   color="#000000"
                 />
               ) : message.status === "error" ? (
-                <ErrorIcon sx={{order: 3}} />
+                <ErrorIcon sx={{ order: 3 }} />
               ) : null}
             </div>
           );
