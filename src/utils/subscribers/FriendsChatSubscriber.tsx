@@ -69,21 +69,13 @@ const FriendsChatSubscriber = ({
             id: "new-message",
           }
         );
-        dispatch(
-        friendsActions.optimisticallyUpdateFriendChat({
-          friendId: sender.id,
-          message,
-          messageStatus: "unseen",
-        }))
-      } else {
-        dispatch(
-        friendsActions.optimisticallyUpdateFriendChat({
-          friendId: sender.id,
-          message,
-          messageStatus: "seen",
-        })
-        )
       }
+      dispatch(
+        friendsActions.updateFriendChat({
+          friendId: sender.id,
+          message,
+        })
+      );
       newMessageSound.play();
     };
 

@@ -63,10 +63,7 @@ export async function POST(req: NextRequest) {
   try {
     await db.zadd(`chat:${chatId}:messages`, {
       score: message.timestamp,
-      member: JSON.stringify({
-        ...message,
-        status: "unseen",
-      }),
+      member: JSON.stringify(message),
     });
 
     await pusherServer.trigger(
@@ -74,10 +71,7 @@ export async function POST(req: NextRequest) {
       "incoming_message",
       {
         sender: session.user,
-        message: {
-          ...message,
-          status: "unseen",
-        },
+        message,
         chatId,
       }
     );

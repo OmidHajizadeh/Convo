@@ -98,7 +98,7 @@ const ChatMessages = ({ currentUser, partnerObj }: ChatMessagesProps) => {
                 }`}
               >
                 <p dir="auto" className="chat-message__text mb-1 font-light">
-                  {message.text} - {message.status}
+                  {message.text}
                 </p>
                 <span className="flex">
                   <small
@@ -108,7 +108,7 @@ const ChatMessages = ({ currentUser, partnerObj }: ChatMessagesProps) => {
                     >
                     {formattedTimestamp(message.timestamp)}
                   </small>
-                    {isMessageFromCurrentUser && (
+                    {/* {isMessageFromCurrentUser && (
                       <>
                         {message.status === "seen" ? (
                           <DoubleTick sx={{ fontSize: 16, marginInlineStart: 1 }} />
@@ -116,7 +116,7 @@ const ChatMessages = ({ currentUser, partnerObj }: ChatMessagesProps) => {
                           <SingleTick sx={{ fontSize: 16, marginInlineStart: 1 }} />
                         ) : null}
                       </>
-                    )}
+                    )} */}
                 </span>
               </div>
 
