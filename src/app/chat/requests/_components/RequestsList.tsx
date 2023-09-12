@@ -2,15 +2,14 @@
 
 import { useEffect, useState } from "react";
 import Image from "next/image";
-import dynamic from "next/dynamic";
 
 import { toast } from "react-hot-toast";
 
 import Tooltip from "@mui/material/Tooltip";
-import Avatar from "@mui/material/Avatar";
 import IconButton from "@mui/material/IconButton";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import CancelIcon from "@mui/icons-material/Cancel";
+import { ListItem } from "@mui/material";
 
 import { useAppDispatch, useAppSelector } from "@/store/Redux/hooks";
 import { friendRequestsActions } from "@/store/Redux/FriendRequests/friendRequestsSlice";
@@ -19,9 +18,6 @@ import { Friend } from "@/lib/Models/Friend";
 import UserAvatar from "@/components/UserAvatar";
 import { useAudio } from "@/hooks/convo-hooks";
 
-const ListItem = dynamic(() => import("@mui/material/ListItem"), {
-  ssr: false,
-});
 
 const RequestsList = () => {
   const [isLoading, setIsLoading] = useState(false);
