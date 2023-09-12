@@ -12,6 +12,7 @@ type ChatPanelProps = {
 
 const ChatPanel = ({ currentUser, chatPartner, chatId }: ChatPanelProps) => {
   const { friendsList } = useAppSelector((state) => state.friends);
+
   const friend = friendsList.find(
     (friendObj) => friendObj.friend.id === chatPartner.id
   )!;

@@ -24,6 +24,31 @@ const friendsSlice = createSlice({
     addNewFriendChat: (state, action: PayloadAction<Friend>) => {
       state.friendsList.push(action.payload);
     },
+<<<<<<< HEAD
+=======
+    optimisticallyUpdateFriendChat: (
+      state,
+      action: PayloadAction<{
+        friendId: string;
+        message: Message;
+        messageStatus: "pending" | "success";
+      }>
+    ) => {
+      state.friendsList = state.friendsList.map((friendObject) => {
+        if (friendObject.friend.id === action.payload.friendId) {
+          
+          return {
+            ...friendObject,
+            messages: [
+              { ...action.payload.message, status: action.payload.messageStatus },
+              ...friendObject.messages,
+            ],
+          } as Friend;
+        }
+        return friendObject;
+      });
+    },
+>>>>>>> parent of fa10d3e (midway of adding seen and unseen messages feature)
     updateFriendChat: (
       state,
       action: PayloadAction<{ friendId: string; message: Message }>

@@ -7,7 +7,7 @@ import { format } from "date-fns";
 import ClockLoader from "react-spinners/ClockLoader";
 
 import Avatar from "@mui/material/Avatar";
-import ErrorIcon from "@mui/icons-material/Error";
+import ErrorIcon from "@mui/icons-material/Error"
 
 import { Friend } from "@/lib/Models/Friend";
 
@@ -100,7 +100,7 @@ const ChatMessages = ({ currentUser, partnerObj }: ChatMessagesProps) => {
                 </p>
                 <small
                   className={`chat-message__date text-gray-600/60 dark:text-white/50 ${
-                    isMessageFromCurrentUser ? "ms-auto" : "me-auto"
+                    isMessageFromCurrentUser ? "self-end" : "self-start"
                   }`}
                 >
                   {formattedTimestamp(message.timestamp)}
@@ -114,7 +114,7 @@ const ChatMessages = ({ currentUser, partnerObj }: ChatMessagesProps) => {
                   color="#000000"
                 />
               ) : message.status === "error" ? (
-                <ErrorIcon sx={{ order: 3 }} />
+                <ErrorIcon sx={{order: 3}} />
               ) : null}
 
             </div>

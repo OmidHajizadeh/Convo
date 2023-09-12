@@ -77,6 +77,14 @@ const FriendsChatSubscriber = ({
         })
       );
       newMessageSound.play();
+
+      dispatch(
+        friendsActions.optimisticallyUpdateFriendChat({
+          friendId: sender.id,
+          message,
+          messageStatus: "success",
+        })
+      );
     };
 
     pusherClient.bind("incoming_message", newMessageHandler);

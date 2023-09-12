@@ -75,7 +75,6 @@ export default function FormDialog() {
           width: "4rem",
           height: "4rem",
         }}
-        aria-label="باز شدن فرم افزودن دوست"
       >
         <AddIcon sx={{ width: "2.25rem", height: "2.25rem" }} />
       </Button>
