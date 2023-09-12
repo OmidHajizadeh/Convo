@@ -62,7 +62,10 @@ export async function POST(req: NextRequest) {
   try {
     const addMessageToDatabase = db.zadd(`chat:${chatId}:messages`, {
       score: message.timestamp,
-      member: JSON.stringify(message),
+      member: JSON.stringify({
+        ...message,
+        status: "unseen",
+      }),
     });
 
     const triggerSuccessMessage = pusherServer.trigger(
@@ -70,7 +73,10 @@ export async function POST(req: NextRequest) {
       "incoming_message",
       {
         sender: session.user,
-        message,
+        message: {
+          ...message,
+          status: "unseen",
+        },
         chatId,
       }
     );

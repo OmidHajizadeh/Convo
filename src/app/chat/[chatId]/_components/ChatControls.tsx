@@ -50,18 +50,17 @@ const ChatControls = ({
       recieverId: chatPartnerId,
       text: messageText,
       timestamp,
+      status: 'pending'
     };
 
     try {
       setIsSending(true);
 
       dispatch(
-        friendsActions.updateFriendChat({
+        friendsActions.optimisticallyUpdateFriendChat({
           friendId: chatPartnerId,
-          message: {
-            ...message,
-            status: "pending",
-          },
+          message,
+          messageStatus: "pending",
         })
       );
 
@@ -75,7 +74,6 @@ const ChatControls = ({
           chatId,
         }),
       });
-      
       const resData = await response.json();
 
       if (resData.error) {
@@ -89,7 +87,9 @@ const ChatControls = ({
             },
           })
         );
+
       } else {
+
         dispatch(
           friendsActions.updateFriendChat({
             friendId: chatPartnerId,
