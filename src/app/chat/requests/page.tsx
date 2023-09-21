@@ -11,8 +11,9 @@ export const metadata: Metadata = {
 
 const RequestsPage = async () => {
   const session = await fetchServerSession();
+  
   if (!session) notFound();
-
+  
   return (
     <PageFrame>
       <RequestsList />

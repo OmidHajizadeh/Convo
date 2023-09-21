@@ -14,13 +14,15 @@ import { useAppDispatch } from "@/store/Redux/hooks";
 import { friendsActions } from "@/store/Redux/friendsSlice/friendsSlice";
 import { useAudio } from "@/hooks/convo-hooks";
 
+type FriendsChatSubscriber = {
+  sessionId: string;
+  initialFriends: Friend[];
+};
+
 const FriendsChatSubscriber = ({
   sessionId,
   initialFriends,
-}: {
-  sessionId: string;
-  initialFriends: Friend[];
-}) => {
+}: FriendsChatSubscriber) => {
   const pathname = usePathname();
   const dispatch = useAppDispatch();
   const newMessageSound = useAudio("/sounds/convo-new-message.mp3");
@@ -43,6 +45,7 @@ const FriendsChatSubscriber = ({
       message: Message;
       chatId: string;
     }) => {
+      
       if (`/chat/${chatId}` !== pathname) {
         toast(
           (t) => {
@@ -69,30 +72,14 @@ const FriendsChatSubscriber = ({
             id: "new-message",
           }
         );
-        dispatch(
-        friendsActions.optimisticallyUpdateFriendChat({
-          friendId: sender.id,
-          message,
-          messageStatus: "unseen",
-        }))
-      } else {
-        dispatch(
-        friendsActions.optimisticallyUpdateFriendChat({
-          friendId: sender.id,
-          message,
-          messageStatus: "seen",
-        })
-        )
       }
-      newMessageSound.play();
-
       dispatch(
-        friendsActions.optimisticallyUpdateFriendChat({
+        friendsActions.updateFriendChat({
           friendId: sender.id,
           message,
-          messageStatus: "success",
         })
       );
+      newMessageSound.play();
     };
 
     pusherClient.bind("incoming_message", newMessageHandler);

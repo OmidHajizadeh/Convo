@@ -14,6 +14,7 @@ import FriendsChatSubscriber from "@/utils/subscribers/FriendsChatSubscriber";
 import ExplorerStatus from "@/utils/subscribers/ExplorerStatus";
 import { Friend } from "@/lib/Models/Friend";
 import OnlineMembersSubscriber from "@/utils/subscribers/OnlineMembersSubscriber";
+import BlockedUsersSubscriber from "@/utils/subscribers/BlockedUsersSubscriber";
 
 const ChatListLayout = async ({ children }: ChildrenProp) => {
   const session = await fetchServerSession();
@@ -24,6 +25,8 @@ const ChatListLayout = async ({ children }: ChildrenProp) => {
   let isAlreadyInExplorer: 0 | 1;
 
   let friends: Friend[];
+  let blockedFriendIds: string[];
+  let blockedByFriendIds: string[];
 
   try {
     const incommingFriendRequestIds = await fetchRedis<string[]>(
@@ -31,20 +34,48 @@ const ChatListLayout = async ({ children }: ChildrenProp) => {
       `user:${session.user.id}:incoming_friend_requests`
     );
 
-    incomingFriendRequests = await Promise.all(
+    const incomingFriendRequestStrings = await Promise.all(
       incommingFriendRequestIds.map(async (senderId) => {
-        const sender = await fetchRedis<string>("get", `user:${senderId}`);
-        return JSON.parse(sender);
+        return fetchRedis<string>("get", `user:${senderId}`);
       })
     );
 
-    friends = await getFriendsByUserId(session.user.id);
+    incomingFriendRequests = incomingFriendRequestStrings.map((request) =>
+      JSON.parse(request)
+    );
 
-    isAlreadyInExplorer = await fetchRedis<0 | 1>(
+    const isAlreadyInExplorerReq = fetchRedis<0 | 1>(
       "hexists",
       "explorer:explorer_list",
       session.user.id
     );
+    const blockedFriendsIdReq = fetchRedis<string[]>(
+      "smembers",
+      `user:${session.user.id}:block_list`
+    );
+    const friendsReq = getFriendsByUserId(session.user.id);
+
+    const [isAlreadyInExplorerRes, blockedFriendsIdRes, friendsRes] =
+      await Promise.all([
+        isAlreadyInExplorerReq,
+        blockedFriendsIdReq,
+        friendsReq,
+      ]);
+
+    const blockedByFriendIdsReq = await Promise.all(
+      friendsRes.map((friend) => {
+        return fetchRedis<0 | 1>(
+          "sismember",
+          `user:${friend.friend.id}:block_list`
+        );
+      })
+    );
+
+    console.log(blockedByFriendIdsReq);
+
+    friends = friendsRes;
+    isAlreadyInExplorer = isAlreadyInExplorerRes;
+    blockedFriendIds = blockedFriendsIdRes;
   } catch (error) {
     notFound();
   }
@@ -58,6 +89,11 @@ const ChatListLayout = async ({ children }: ChildrenProp) => {
             sessionId={session.user.id}
           />
           <FriendsChatSubscriber
+            initialFriends={friends}
+            sessionId={session.user.id}
+          />
+          <BlockedUsersSubscriber
+            initialBlockedIds={blockedFriendIds}
             initialFriends={friends}
             sessionId={session.user.id}
           />

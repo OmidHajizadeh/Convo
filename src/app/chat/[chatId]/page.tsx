@@ -1,4 +1,4 @@
-import { notFound } from "next/navigation";
+import { notFound, redirect } from "next/navigation";
 
 import { fetchServerSession } from "@/utils/serverInteractions";
 import ChatPartnerHead from "./_components/ChatPartnerHead";
@@ -18,7 +18,7 @@ async function chatPage(chatId: string) {
 
   const [userId1, userId2] = chatId.split("--");
 
-  if (userId1 !== user.id && userId2 !== user.id) notFound();
+  if (userId1 !== user.id && userId2 !== user.id) redirect("chat/friends-list");
 
   const chatPartnerId = user.id === userId1 ? userId2 : userId1;
   let chatPartner: User;
@@ -32,6 +32,25 @@ async function chatPage(chatId: string) {
   } catch (error) {
     notFound();
   }
+
+  const amIBlocked = fetchRedis<0 | 1>(
+    "sismember",
+    `user:${chatPartnerId}:block_list`,
+    session.user.id
+  );
+  const isPartnerBlocked = fetchRedis<0 | 1>(
+    "sismember",
+    `user:${session.user.id}:block_list`,
+    chatPartnerId
+  );
+
+  const [iAmBlocked, partnerIsBlocked] = await Promise.all([
+    amIBlocked,
+    isPartnerBlocked,
+  ]);
+
+  if (iAmBlocked || partnerIsBlocked) notFound();
+
   return {
     user,
     chatPartner,
@@ -52,7 +71,7 @@ const ChatPage = async ({ params: { chatId } }: ChatPageProps) => {
     <div className="h-full">
       <div className="relative flex flex-col h-full">
         <div className="convo-chat__header absolute top-0 start-0 end-0 z-30">
-          <ChatPartnerHead user={chatPartner} />
+          <ChatPartnerHead friendId={chatPartner.id} />
         </div>
         <ChatPanel
           chatId={chatId}

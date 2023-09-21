@@ -62,6 +62,7 @@ const ChatLoadingPage = () => {
             <Skeleton variant="circular" width={40} height={40} />
           </div>
         </div>
+
       </div>
       <div className="h-20 bg-slate-100 dark:bg-primary-dark p-3 flex items-center justify-stretch">
         <Skeleton

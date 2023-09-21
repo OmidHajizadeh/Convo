@@ -13,6 +13,8 @@ export async function POST(req: NextRequest) {
   const { chatId, message }: { chatId: string; message: Message } = body;
   const [userId1, userId2] = chatId.split("--");
 
+  delete message["status"];
+
   // is user authorized
   if (
     !session ||
@@ -60,28 +62,20 @@ export async function POST(req: NextRequest) {
   }
 
   try {
-    const addMessageToDatabase = db.zadd(`chat:${chatId}:messages`, {
+    await db.zadd(`chat:${chatId}:messages`, {
       score: message.timestamp,
-      member: JSON.stringify({
-        ...message,
-        status: "unseen",
-      }),
+      member: JSON.stringify(message),
     });
 
-    const triggerSuccessMessage = pusherServer.trigger(
+    await pusherServer.trigger(
       toPusherKey(`chat:${friendId}:new-message`),
       "incoming_message",
       {
         sender: session.user,
-        message: {
-          ...message,
-          status: "unseen",
-        },
+        message,
         chatId,
       }
     );
-
-    await Promise.all([addMessageToDatabase, triggerSuccessMessage]);
 
     return NextResponse.json(
       { message: "پیام با موفقیت ارسال شد", error: false },

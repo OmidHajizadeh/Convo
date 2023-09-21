@@ -26,6 +26,7 @@ const ExplorerPage = async () => {
       "hgetall",
       "explorer:explorer_list"
     );
+    
   } catch (error) {
     notFound();
   }
@@ -36,12 +37,10 @@ const ExplorerPage = async () => {
   let people: User[];
 
   try {
-    people = await Promise.all(
-      peopleIds.map(async (item) => {
-        const user = await fetchRedis<string>("get", `user:${item}`);
-        return JSON.parse(user) as User;
-      })
+    const peopleAsString = await Promise.all(
+      peopleIds.map((item) => fetchRedis<string>("get", `user:${item}`))
     );
+    people = peopleAsString.map((user) => JSON.parse(user));
   } catch (error) {
     notFound();
   }

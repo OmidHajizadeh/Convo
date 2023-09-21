@@ -14,6 +14,7 @@ import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
 import AddIcon from "@mui/icons-material/Add";
 import { useAudio } from "@/hooks/convo-hooks";
+import { useTheme } from "next-themes";
 
 type FormValue = {
   email: string;
@@ -22,6 +23,7 @@ type FormValue = {
 export default function FormDialog() {
   const [open, setOpen] = useState(false);
   const systemSound = useAudio("/sounds/convo-system.mp3");
+  const { resolvedTheme } = useTheme();
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -105,10 +107,19 @@ export default function FormDialog() {
             />
           </DialogContent>
           <DialogActions>
-            <Button onClick={handleClose}>کنسل</Button>
+            <Button
+              sx={{
+                color: resolvedTheme === "dark" ? "#fff" : "#000",
+              }}
+              onClick={handleClose}
+            >
+              کنسل
+            </Button>
             <Button
               type="submit"
-              // variant="contained"
+              sx={{
+                color: resolvedTheme === "dark" ? "#fff" : "#000",
+              }}
               disabled={!isValid || isSubmitting}
             >
               ارسال درخواست

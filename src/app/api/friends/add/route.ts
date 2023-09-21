@@ -60,6 +60,43 @@ export async function POST(req: Request) {
     );
   }
 
+  const areYouBlocked = db.sismember(
+    `user:${friendId}:block_list`,
+    session.user.id
+  );
+
+  const isUserBlocked = db.sismember(
+    `user:${friendId}:block_list`,
+    session.user.id
+  );
+
+  const [youAreBlocked, userIsBlocked] = await Promise.all([
+    areYouBlocked,
+    isUserBlocked,
+  ]);
+
+  if (youAreBlocked) {
+    return NextResponse.json(
+      {
+        message: "کاربر مورد نظر شما را بلاک کرده است",
+        error: true,
+        source: "add: youAreBlocked",
+      },
+      { status: 500 }
+    );
+  }
+
+  if (userIsBlocked) {
+    return NextResponse.json(
+      {
+        message: "شما این کاربر را بلاک کرده اید",
+        error: true,
+        source: "add: userIsBlocked",
+      },
+      { status: 500 }
+    );
+  }
+
   let isAlreadyAFriend: 0 | 1;
 
   try {
@@ -128,18 +165,13 @@ export async function POST(req: Request) {
   }
 
   try {
-    const friendPromise = fetchRedis<string>("get", `user:${friendId}`);
+    const friendString = await fetchRedis<string>("get", `user:${friendId}`);
 
-    const triggerSuccessRequest = pusherServer.trigger(
+    await pusherServer.trigger(
       toPusherKey(`user:${friendId}:incoming_friend_requests`),
       "incoming_friend_requests",
       JSON.stringify(session.user)
     );
-
-    const [friendString] = await Promise.all([
-      friendPromise,
-      triggerSuccessRequest,
-    ]);
 
     return NextResponse.json(
       {
