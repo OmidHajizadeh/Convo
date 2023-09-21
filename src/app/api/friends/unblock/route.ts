@@ -47,10 +47,37 @@ export async function POST(req: Request) {
     );
   }
 
-  // are already friends
-  if (areAlreadyFriends) {
+  // are not already friends
+  if (!areAlreadyFriends) {
     return NextResponse.json(
-      { message: "کاربر مورد نظر در لیست دوستان شما میباشد", error: true },
+      { message: "کاربر مورد نظر در لیست دوستان شما نمیباشد", error: true },
+      { status: 400 }
+    );
+  }
+
+  let isUserBlocked: 0 | 1;
+
+  try {
+    isUserBlocked = await fetchRedis<0 | 1>(
+      "sismember",
+      `user:${session.user.id}:block_list`,
+      friendId
+    );
+  } catch (error) {
+    return NextResponse.json(
+      {
+        message: "خطا در برقراری ارتباط با سرور",
+        error: true,
+        source: "add: areAlreadyFriends",
+      },
+      { status: 500 }
+    );
+  }
+
+  // is not already blocked
+  if (!isUserBlocked) {
+    return NextResponse.json(
+      { message: "کاربر مورد نظر بلاک نمیباشد", error: true },
       { status: 400 }
     );
   }

@@ -39,7 +39,6 @@
     "react-hook-form": "^7.45.4",
     "react-hot-toast": "^2.4.1",
     "react-redux": "^8.1.2",
-    "react-spinners": "^0.13.8",
     "stylis": "^4.1.1",
     "stylis-plugin-rtl": "^2.1.1",
     "svix": "^1.8.1",

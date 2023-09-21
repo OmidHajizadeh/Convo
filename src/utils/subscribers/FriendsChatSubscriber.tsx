@@ -45,7 +45,6 @@ const FriendsChatSubscriber = ({
       message: Message;
       chatId: string;
     }) => {
-      
       if (`/chat/${chatId}` !== pathname) {
         toast(
           (t) => {
@@ -53,6 +52,7 @@ const FriendsChatSubscriber = ({
               <Link
                 href={`/chat/${chatId}`}
                 onClick={() => toast.dismiss(t.id)}
+                dir="auto"
               >
                 {message.text}
               </Link>
@@ -72,22 +72,15 @@ const FriendsChatSubscriber = ({
             id: "new-message",
           }
         );
-        dispatch(
-        friendsActions.optimisticallyUpdateFriendChat({
-          friendId: sender.id,
-          message,
-          messageStatus: "unseen",
-        }))
-      } else {
-        dispatch(
-        friendsActions.optimisticallyUpdateFriendChat({
-          friendId: sender.id,
-          message,
-          messageStatus: "seen",
-        })
-        )
       }
+      
       newMessageSound.play();
+      dispatch(
+        friendsActions.updateFriendChat({
+          friendId: sender.id,
+          message,
+        })
+      );
     };
 
     pusherClient.bind("incoming_message", newMessageHandler);
@@ -96,7 +89,7 @@ const FriendsChatSubscriber = ({
       pusherClient.unsubscribe(toPusherKey(`chat:${sessionId}:messages`));
       pusherClient.unbind("incoming_message", newMessageHandler);
     };
-  }, [sessionId, pathname]);
+  }, [pathname]);
 
   return null;
 };

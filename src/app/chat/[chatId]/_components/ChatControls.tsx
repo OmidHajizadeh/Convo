@@ -4,14 +4,14 @@ import { useRef, useState } from "react";
 
 import { toast } from "react-hot-toast";
 import { nanoid } from "nanoid";
-import ClipLoader from "react-spinners/ClipLoader";
 
 import TextareaAutosize from "@mui/material/TextareaAutosize";
 import IconButton from "@mui/material/IconButton";
 import SendIcon from "@mui/icons-material/Send";
 
-import { useAppDispatch } from "@/store/Redux/hooks";
+import { useAppDispatch, useAppSelector } from "@/store/Redux/hooks";
 import { friendsActions } from "@/store/Redux/friendsSlice/friendsSlice";
+import { CircularProgress } from "@mui/material";
 
 type ChatControlsProp = {
   chatId: string;
@@ -26,6 +26,10 @@ const ChatControls = ({
 }: ChatControlsProp) => {
   const messageRef = useRef<HTMLTextAreaElement>(null!);
   const [isSending, setIsSending] = useState(false);
+  const { blockedIds, blockedByIds } = useAppSelector((state) => state.friends);
+  const iUserBlocked = blockedIds.includes(chatPartnerId);
+  const amIBlocked = blockedByIds.includes(chatPartnerId);
+
   const [text, setText] = useState("");
 
   const dispatch = useAppDispatch();
@@ -50,7 +54,7 @@ const ChatControls = ({
       recieverId: chatPartnerId,
       text: messageText,
       timestamp,
-      status: 'pending'
+      status: "pending",
     };
 
     dispatch(
@@ -86,9 +90,7 @@ const ChatControls = ({
             },
           })
         );
-
       } else {
-
         dispatch(
           friendsActions.updateFriendChat({
             friendId: chatPartnerId,
@@ -118,16 +120,19 @@ const ChatControls = ({
   return (
     <div className="relative pt-2">
       <div className="flex items-start bg-white dark:bg-gray-300/10 rounded-2xl overflow-hidden">
-        <IconButton
-          aria-label={isSending ? "در حال ارسال" : "ارسال"}
-          onClick={sendMessage}
-          disabled={isSending || text.length === 0}
-          sx={{ width: "2.5rem" }}
-        >
-          {isSending ? <ClipLoader size={22} color="#737373" /> : <SendIcon />}
-        </IconButton>
+        {!iUserBlocked && !amIBlocked ? (
+          <IconButton
+            aria-label={isSending ? "در حال ارسال" : "ارسال"}
+            onClick={sendMessage}
+            disabled={text.length === 0}
+            sx={{ width: "2.5rem" }}
+          >
+            <SendIcon />
+          </IconButton>
+        ) : null}
         <TextareaAutosize
           dir="auto"
+          disabled={iUserBlocked || amIBlocked}
           maxRows={3}
           ref={messageRef}
           onKeyDown={(e) => {
@@ -139,12 +144,20 @@ const ChatControls = ({
           onChange={onUserInput}
           className="font-light focus:outline-none px-3 py-2 flex-grow resize-none dark:text-slate-200 dark:bg-primary-light"
           aria-label="متن پیام"
-          placeholder="پیام خود را وارد کنید..."
+          placeholder={
+            iUserBlocked
+              ? "شما کاربر را بلاک کرده اید"
+              : amIBlocked
+              ? "کاربر شما را بلاک کرده است"
+              : "پیام خود را بنویسید ..."
+          }
         />
       </div>
-      <small className="absolute text-slate-400/50 -top-3 start-10">
-        500/{text.length}
-      </small>
+      {!iUserBlocked && !amIBlocked ? (
+        <small className="absolute text-slate-400/50 -top-3 start-10">
+          500/{text.length}
+        </small>
+      ) : null}
     </div>
   );
 };

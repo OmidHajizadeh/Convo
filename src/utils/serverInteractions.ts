@@ -40,10 +40,12 @@ export async function getFriendsByUserId(userId: string) {
   const friends = await Promise.all(
     friendIds.map(async (friendId) => {
       const chatId = chatHrefConstructor(userId, friendId);
+
       const [userString, messages] = await Promise.all([
         fetchRedis<string>("get", `user:${friendId}`),
         getChatMessages(chatId),
       ]);
+
       const user = JSON.parse(userString) as User;
       return {
         friend: user,

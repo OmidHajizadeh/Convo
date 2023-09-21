@@ -55,6 +55,33 @@ export async function POST(req: Request) {
     );
   }
 
+  let isUserBlocked: 0 | 1;
+
+  try {
+    isUserBlocked = await fetchRedis<0 | 1>(
+      "sismember",
+      `user:${session.user.id}:block_list`,
+      friendId
+    );
+  } catch (error) {
+    return NextResponse.json(
+      {
+        message: "خطا در برقراری ارتباط با سرور",
+        error: true,
+        source: "add: areAlreadyFriends",
+      },
+      { status: 500 }
+    );
+  }
+
+  // is already blocked
+  if (isUserBlocked) {
+    return NextResponse.json(
+      { message: "کاربر مورد نظر قبلا بلاک شده است", error: true },
+      { status: 400 }
+    );
+  }
+
   try {
     await db.sadd(`user:${session.user.id}:block_list`, friendId);
 

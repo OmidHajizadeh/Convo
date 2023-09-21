@@ -1,5 +1,9 @@
 "use client";
 
+import { useState } from "react";
+import { toast } from "react-hot-toast";
+import { useTheme } from "next-themes";
+
 import {
   Button,
   Dialog,
@@ -10,17 +14,13 @@ import {
   IconButton,
   Tooltip,
 } from "@mui/material";
-import { useState } from "react";
-import { toast } from "react-hot-toast";
 import DoNotDisturbOnIcon from "@mui/icons-material/DoNotDisturbOn";
+import DoDisturbOffIcon from "@mui/icons-material/DoDisturbOff";
 
 import { useAppDispatch, useAppSelector } from "@/store/Redux/hooks";
 import { friendsActions } from "@/store/Redux/friendsSlice/friendsSlice";
 import UserAvatar from "@/components/UserAvatar";
-import { useTheme } from "next-themes";
-import { useRouter } from "next/navigation";
 import { useAudio } from "@/hooks/convo-hooks";
-import { Friend } from "@/lib/Models/Friend";
 
 type ChatPartnerHeadProps = {
   friendId: string;
@@ -31,12 +31,14 @@ const ChatPartnerHead = ({ friendId }: ChatPartnerHeadProps) => {
   const [loading, setLoading] = useState(false);
   const dispatch = useAppDispatch();
   const { resolvedTheme } = useTheme();
-  const router = useRouter();
   const responseSound = useAudio("/sounds/convo-system.mp3");
-  const { friendsList } = useAppSelector((state) => state.friends);
+  const { friendsList, blockedIds } = useAppSelector((state) => state.friends);
+
   const friendObject = friendsList.find(
     (friendObj) => friendObj.friend.id === friendId
   )!;
+  
+  const iUserBlocked = blockedIds.includes(friendId);
 
   function handleClickOpen() {
     setOpen(true);
@@ -46,13 +48,13 @@ const ChatPartnerHead = ({ friendId }: ChatPartnerHeadProps) => {
     setOpen(false);
   }
 
-  async function blockUserHandler() {
+  async function handleBlockRelatedRequest(type: "block" | "unblock") {
     setLoading(true);
     toast.loading("درحال انجام عملیات...", { id: "block" });
     try {
-      const res = await fetch("/api/friends/block", {
+      const res = await fetch(`/api/friends/${type}`, {
         method: "POST",
-        body: JSON.stringify(friendObject.friend.id),
+        body: JSON.stringify(friendId),
       });
 
       const resData = await res.json();
@@ -60,10 +62,11 @@ const ChatPartnerHead = ({ friendId }: ChatPartnerHeadProps) => {
         toast.error(resData.message);
       } else {
         toast.success(resData.message);
-        setTimeout(() => {
-          dispatch(friendsActions.removeFriendChat(friendObject));
-        }, 1000);
-        router.replace("/chat/friends-list");
+        if (type === "unblock") {
+          dispatch(friendsActions.unblockUser(friendId));
+        } else {
+          dispatch(friendsActions.blockUser(friendId));
+        }
       }
     } catch {
       toast.error("خطا در برقراری  با سرور");
@@ -88,11 +91,27 @@ const ChatPartnerHead = ({ friendId }: ChatPartnerHeadProps) => {
           </small>
         </div>
       </div>
-      <Tooltip title={`بلاک کردن ${friendObject.friend.name}`}>
-        <IconButton aria-label="بلاک" onClick={handleClickOpen}>
-          <DoNotDisturbOnIcon />
-        </IconButton>
-      </Tooltip>
+      {iUserBlocked ? (
+        <Tooltip title={`آنبلاک کردن ${friendObject.friend.name}`} placement="right">
+          <IconButton
+            disabled={loading}
+            aria-label="آنبلاک"
+            onClick={handleBlockRelatedRequest.bind(null, "unblock")}
+          >
+            <DoDisturbOffIcon />
+          </IconButton>
+        </Tooltip>
+      ) : (
+        <Tooltip title={`بلاک کردن ${friendObject.friend.name}`} placement="right">
+          <IconButton
+            disabled={loading}
+            aria-label="بلاک"
+            onClick={handleClickOpen}
+          >
+            <DoNotDisturbOnIcon />
+          </IconButton>
+        </Tooltip>
+      )}
       <Dialog
         open={open}
         onClose={handleClose}
@@ -104,8 +123,8 @@ const ChatPartnerHead = ({ friendId }: ChatPartnerHeadProps) => {
         </DialogTitle>
         <DialogContent>
           <DialogContentText id="alert-dialog-description">
-            بعد از بلاک شدن مکالمات شما حفظ میشود، ولی در لیست چت به یک دیگر
-            دسترسی نخواهید داشت. آیا مطمئن هستید ؟
+            بعد از بلاک کردن کاربر، مکالمات شما حفظ میشود ولی قادر به
+            ارسال یا دریافت پیام نخواهید بود. آیا مطمئن هستید ؟
           </DialogContentText>
         </DialogContent>
         <DialogActions>
@@ -119,7 +138,7 @@ const ChatPartnerHead = ({ friendId }: ChatPartnerHeadProps) => {
             خیر
           </Button>
           <Button
-            onClick={blockUserHandler}
+            onClick={handleBlockRelatedRequest.bind(null, "block")}
             sx={{
               color: resolvedTheme === "dark" ? "#fff" : "#000",
             }}

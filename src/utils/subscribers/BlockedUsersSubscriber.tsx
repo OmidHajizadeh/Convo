@@ -2,7 +2,6 @@
 
 import { useEffect } from "react";
 import Image from "next/image";
-import { usePathname, useRouter } from "next/navigation";
 import { toast } from "react-hot-toast";
 
 import { Avatar } from "@mui/material";
@@ -11,28 +10,30 @@ import { Friend } from "@/lib/Models/Friend";
 import { pusherClient } from "@/lib/pusher/pusher";
 import { friendsActions } from "@/store/Redux/friendsSlice/friendsSlice";
 import { useAppDispatch } from "@/store/Redux/hooks";
-import { chatHrefConstructor, toPusherKey } from "../helpers";
-import { fetchRedis } from "../fetchRedis";
-import { getChatMessages } from "../serverInteractions";
+import { toPusherKey } from "../helpers";
 import { useAudio } from "@/hooks/convo-hooks";
 
 type BlockedUsersSubscriberProps = {
   initialBlockedIds: string[];
-  initialFriends: Friend[];
+  initialBlockedByIds: string[];
   sessionId: string;
 };
 
 const BlockedUsersSubscriber = ({
   initialBlockedIds,
-  initialFriends,
+  initialBlockedByIds,
   sessionId,
 }: BlockedUsersSubscriberProps) => {
   const dispatch = useAppDispatch();
-  const pathname = usePathname();
   const responseSound = useAudio("/sounds/convo-system.mp3");
 
   useEffect(() => {
-    dispatch(friendsActions.setInitialBlockedIds(initialBlockedIds));
+    dispatch(
+      friendsActions.setInitialBlockList({
+        initialBlockedByIds,
+        initialBlockedIds,
+      })
+    );
   }, []);
 
   useEffect(() => {
@@ -48,7 +49,7 @@ const BlockedUsersSubscriber = ({
         id: "you-are-blocked",
       });
       responseSound.play();
-      
+      dispatch(friendsActions.blockedByUser(user.id));
     }
 
     pusherClient.bind("blocked_by_user", onBeingBlockedHandler);
@@ -70,12 +71,8 @@ const BlockedUsersSubscriber = ({
         ),
         id: "you-are-unblocked",
       });
-      const unblockedBy = initialFriends.find(
-        (friendObj) => friendObj.friend.id === user.id
-      );
-      console.log(unblockedBy);
-      dispatch(friendsActions.addNewFriendChat(unblockedBy!));
       responseSound.play();
+      dispatch(friendsActions.unblockedByUser(user.id));
     }
 
     pusherClient.bind("unblocked_by_user", onBeingUnblockedHandler);
@@ -83,7 +80,7 @@ const BlockedUsersSubscriber = ({
       pusherClient.unsubscribe(toPusherKey(`user:${sessionId}:unblocked`));
       pusherClient.unbind("unblocked_by_user", onBeingUnblockedHandler);
     };
-  }, [pathname]);
+  }, []);
 
   return null;
 };

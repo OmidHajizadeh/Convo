@@ -28,30 +28,6 @@ const friendsSlice = createSlice({
     addNewFriendChat: (state, action: PayloadAction<Friend>) => {
       state.friendsList.push(action.payload);
     },
-    optimisticallyUpdateFriendChat: (
-      state,
-      action: PayloadAction<{
-        friendId: string;
-        message: Message;
-        messageStatus: "error" | "pending" | "seen" | "unseen" | "success";
-      }>
-    ) => {
-      state.friendsList = state.friendsList.map((friendObject) => {
-        if (friendObject.friend.id === action.payload.friendId) {
-          return {
-            ...friendObject,
-            messages: [
-              {
-                ...action.payload.message,
-                status: action.payload.messageStatus,
-              },
-              ...friendObject.messages,
-            ],
-          } as Friend;
-        }
-        return friendObject;
-      });
-    },
     updateFriendChat: (
       state,
       action: PayloadAction<{ friendId: string; message: Message }>
@@ -80,23 +56,29 @@ const friendsSlice = createSlice({
         return friendObject;
       });
     },
-    setInitialBlockedIds: (state, action: PayloadAction<string[]>) => {
-      state.blockedIds.push(...action.payload);
+    setInitialBlockList: (
+      state,
+      action: PayloadAction<{
+        initialBlockedByIds: string[];
+        initialBlockedIds: string[];
+      }>
+    ) => {
+      state.blockedIds.push(...action.payload.initialBlockedIds);
+      state.blockedByIds.push(...action.payload.initialBlockedByIds);
     },
     blockUser: (state, action: PayloadAction<string>) => {
       state.blockedIds.push(action.payload);
     },
     unblockUser: (state, action: PayloadAction<string>) => {
-      state.blockedIds.filter((id) => id !== action.payload);
-    },
-    setInitialBlockedbyIds: (state, action: PayloadAction<string[]>) => {
-      state.blockedByIds.push(...action.payload);
+      state.blockedIds = state.blockedIds.filter((id) => id !== action.payload);
     },
     blockedByUser: (state, action: PayloadAction<string>) => {
       state.blockedByIds.push(action.payload);
     },
     unblockedByUser: (state, action: PayloadAction<string>) => {
-      state.blockedByIds.filter((id) => id !== action.payload);
+      state.blockedByIds = state.blockedByIds.filter(
+        (id) => id !== action.payload
+      );
     },
   },
 });

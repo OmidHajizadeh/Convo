@@ -28,28 +28,11 @@ async function chatPage(chatId: string) {
       "get",
       `user:${chatPartnerId}`
     );
+
     chatPartner = JSON.parse(chatPartnerString);
   } catch (error) {
     notFound();
   }
-
-  const amIBlocked = fetchRedis<0 | 1>(
-    "sismember",
-    `user:${chatPartnerId}:block_list`,
-    session.user.id
-  );
-  const isPartnerBlocked = fetchRedis<0 | 1>(
-    "sismember",
-    `user:${session.user.id}:block_list`,
-    chatPartnerId
-  );
-
-  const [iAmBlocked, partnerIsBlocked] = await Promise.all([
-    amIBlocked,
-    isPartnerBlocked,
-  ]);
-
-  if (iAmBlocked || partnerIsBlocked) notFound();
 
   return {
     user,

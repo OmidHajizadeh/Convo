@@ -1,9 +1,14 @@
+"use client";
+
 import Image from "next/image";
 import Link from "next/link";
+import { useState } from "react";
 
+import CircularProgress from "@mui/material/CircularProgress";
 import Button from "@mui/material/Button";
 
-export default async function Home() {
+export default function Home() {
+  const [isLoading, setIsLoading] = useState(false);
   return (
     <main className="min-h-screen flex gap-3 flex-col lg:flex-row justify-center lg:justify-evenly items-center overflow-hidden relative bg-landing-wave-lines bg-fixed bg-cover bg-no-repeat bg-center">
       <section>
@@ -18,8 +23,12 @@ export default async function Home() {
             sx={{
               alignSelf: { xs: "center", lg: "end" },
             }}
+            onClick={() => setIsLoading(true)}
           >
             بزن بریم!
+            {isLoading && (
+              <CircularProgress color="secondary" size={20} className="ms-3" />
+            )}
           </Button>
         </article>
       </section>

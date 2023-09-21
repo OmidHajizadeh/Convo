@@ -4,12 +4,12 @@ import { useEffect, useRef } from "react";
 import Image from "next/image";
 
 import { format } from "date-fns";
-import ClockLoader from "react-spinners/ClockLoader";
 
 import Avatar from "@mui/material/Avatar";
 import ErrorIcon from "@mui/icons-material/Error";
 
 import { Friend } from "@/lib/Models/Friend";
+import { CircularProgress } from "@mui/material";
 
 type ChatMessagesProps = {
   currentUser: User;
@@ -96,7 +96,7 @@ const ChatMessages = ({ currentUser, partnerObj }: ChatMessagesProps) => {
                 }`}
               >
                 <p dir="auto" className="chat-message__text mb-1 font-light">
-                  {message.text} - {message.status}
+                  {message.text}
                 </p>
                 <span className="flex">
                   <small
@@ -108,13 +108,11 @@ const ChatMessages = ({ currentUser, partnerObj }: ChatMessagesProps) => {
                   </small>
                 </span>
               </div>
-
               {isMessageFromCurrentUser ? (
                 message.status === "pending" ? (
-                  <ClockLoader
-                    className="order-3 mb-[0.15rem]"
+                  <CircularProgress
                     size={20}
-                    color="#000000"
+                    sx={{ order: 3, color: "#000" }}
                   />
                 ) : message.status === "error" ? (
                   <ErrorIcon sx={{ order: 3 }} />

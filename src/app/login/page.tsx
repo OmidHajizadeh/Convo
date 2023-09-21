@@ -7,6 +7,7 @@ import { toast } from "react-hot-toast";
 import { signIn } from "next-auth/react";
 
 import Button from "@mui/material/Button";
+import CircularProgress from '@mui/material/CircularProgress';
 import GoogleIcon from "@mui/icons-material/Google";
 import GitHubIcon from "@mui/icons-material/GitHub";
 
@@ -36,7 +37,7 @@ const LoginPage = () => {
               disabled={isLoading}
               onClick={signInHandler.bind(null, "google")}
               variant="contained"
-              endIcon={<GoogleIcon />}
+              endIcon={!isLoading ? <GoogleIcon /> : <CircularProgress sx={{color: '#fff'}} size={20} />}
               disableElevation
               sx={{
                 width: "100%",
@@ -50,7 +51,7 @@ const LoginPage = () => {
               disabled={isLoading}
               onClick={signInHandler.bind(null, "github")}
               variant="contained"
-              endIcon={<GitHubIcon />}
+              endIcon={!isLoading ? <GitHubIcon /> : <CircularProgress sx={{color: '#fff'}} size={20} />}
               disableElevation
               sx={{ width: "100%", paddingBlock: "0.75rem" }}
             >

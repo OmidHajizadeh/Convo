@@ -25,8 +25,8 @@ const ChatListLayout = async ({ children }: ChildrenProp) => {
   let isAlreadyInExplorer: 0 | 1;
 
   let friends: Friend[];
-  let blockedFriendIds: string[];
-  let blockedByFriendIds: string[];
+  let blockedFriendIds: string[] = [];
+  let blockedByFriendIds: string[] = [];
 
   try {
     const incommingFriendRequestIds = await fetchRedis<string[]>(
@@ -63,15 +63,22 @@ const ChatListLayout = async ({ children }: ChildrenProp) => {
       ]);
 
     const blockedByFriendIdsReq = await Promise.all(
-      friendsRes.map((friend) => {
+      friendsRes.map((friendObj) => {
         return fetchRedis<0 | 1>(
           "sismember",
-          `user:${friend.friend.id}:block_list`
+          `user:${friendObj.friend.id}:block_list`,
+          session.user.id
         );
       })
     );
 
-    console.log(blockedByFriendIdsReq);
+    console.log("blockedByFriendIdsReq ", blockedByFriendIdsReq);
+
+    for (let i = 0; i < blockedByFriendIdsReq.length; i++) {
+      if (blockedByFriendIdsReq[i]) {
+        blockedByFriendIds.push(friendsRes[i].friend.id);
+      }
+    }
 
     friends = friendsRes;
     isAlreadyInExplorer = isAlreadyInExplorerRes;
@@ -94,7 +101,7 @@ const ChatListLayout = async ({ children }: ChildrenProp) => {
           />
           <BlockedUsersSubscriber
             initialBlockedIds={blockedFriendIds}
-            initialFriends={friends}
+            initialBlockedByIds={blockedByFriendIds}
             sessionId={session.user.id}
           />
           <ExplorerStatus isAlreadyInExplorer={!!isAlreadyInExplorer} />
