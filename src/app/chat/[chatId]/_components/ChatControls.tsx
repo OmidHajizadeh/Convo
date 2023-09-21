@@ -50,7 +50,7 @@ const ChatControls = ({
       recieverId: chatPartnerId,
       text: messageText,
       timestamp,
-      status: "pending",
+      status: 'pending'
     };
 
     dispatch(
@@ -86,7 +86,9 @@ const ChatControls = ({
             },
           })
         );
+
       } else {
+
         dispatch(
           friendsActions.updateFriendChat({
             friendId: chatPartnerId,

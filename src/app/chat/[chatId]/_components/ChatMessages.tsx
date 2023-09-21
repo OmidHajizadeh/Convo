@@ -96,7 +96,7 @@ const ChatMessages = ({ currentUser, partnerObj }: ChatMessagesProps) => {
                 }`}
               >
                 <p dir="auto" className="chat-message__text mb-1 font-light">
-                  {message.text}
+                  {message.text} - {message.status}
                 </p>
                 <span className="flex">
                   <small
