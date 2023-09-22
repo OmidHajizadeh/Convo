@@ -33,17 +33,19 @@ const ExplorerPage = async () => {
 
   const peopleIds = peopleHash.filter((p, index) => index % 2 === 0);
   const peopleTexts = peopleHash.filter((p, index) => index % 2 === 1);
-
+  
   let people: User[];
-
+  
   try {
     const peopleAsString = await Promise.all(
-      peopleIds.map((item) => fetchRedis<string>("get", `user:${item}`))
-    );
-    people = peopleAsString.map((user) => JSON.parse(user));
-  } catch (error) {
-    notFound();
-  }
+      peopleIds.map((item) => {
+        return fetchRedis<string>("get", `user:${item}`)
+      })
+      );
+      people = peopleAsString.map((user) => JSON.parse(user));
+    } catch (error) {
+      notFound();
+    }
 
   const explorers: Explorer[] = people
     .map((person, index) => {

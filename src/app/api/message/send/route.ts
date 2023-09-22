@@ -66,7 +66,6 @@ export async function POST(req: NextRequest) {
       score: message.timestamp,
       member: JSON.stringify({
         ...message,
-        status: "unseen",
       }),
     });
 
@@ -75,10 +74,7 @@ export async function POST(req: NextRequest) {
       "incoming_message",
       {
         sender: session.user,
-        message: {
-          ...message,
-          status: "unseen",
-        },
+        message,
         chatId,
       }
     );

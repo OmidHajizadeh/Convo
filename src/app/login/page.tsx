@@ -21,7 +21,6 @@ const LoginPage = () => {
         redirect: true,
         callbackUrl: "/",
       });
-    setIsLoading(false);
     } catch (err) {
       toast.error("خطایی رخ داد. دوباره امتحان کنید");
     }
