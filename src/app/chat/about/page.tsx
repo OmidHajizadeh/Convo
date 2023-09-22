@@ -17,49 +17,59 @@ type Stack = {
 const AboutPage = () => {
   const stacks: Stack[] = [
     {
-      name: "NextJS 13",
+      name: "NextJS v13.4.19",
       href: "https://nextjs.org/",
       image: "/packages/nextjs.webp",
     },
     {
-      name: "NextAuth",
+      name: "React v18.2.0",
+      href: "https://react.dev/",
+      image: "/packages/react.webp",
+    },
+    {
+      name: "NextAuth v4.23.0",
       href: "https://next-auth.js.org/",
       image: "/packages/nextauth.webp",
     },
     {
-      name: "Material UI",
+      name: "Material UI v5.9.1",
       href: "https://mui.com/",
       image: "/packages/mui.webp",
     },
     {
-      name: "TailwindCSS",
+      name: "TailwindCSS v3.3.3",
       href: "https://tailwindcss.com/",
       image: "/packages/tailwindcss.webp",
     },
     {
-      name: "TypeScript",
+      name: "TypeScript v5.1.6",
       href: "https://www.typescriptlang.org/",
       image: "/packages/typescript.webp",
     },
     {
-      name: "Upstash",
+      name: "Upstash v3.0.4",
       href: "https://upstash.com/",
       image: "/packages/upstash.webp",
     },
     {
-      name: "Redis",
+      name: "Redis v1.22.0",
       href: "https://redis.io/",
       image: "/packages/redis.webp",
     },
     {
-      name: "Redux Toolkit",
+      name: "Redux Toolkit v1.9.5",
       href: "https://redux-toolkit.js.org/",
       image: "/packages/redux.webp",
     },
     {
-      name: "Pusher",
+      name: "Pusher v5.1.3",
       href: "https://pusher.com/",
       image: "/packages/pusher.webp",
+    },
+    {
+      name: "Couldinary v4.22.0",
+      href: "https://cloudinary.com/",
+      image: "/packages/couldinary.webp",
     },
   ];
 

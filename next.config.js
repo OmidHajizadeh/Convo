@@ -10,7 +10,11 @@ const nextConfig = {
     disable: process.env.NODE_ENV !== "development",
   }),
   images: {
-    domains: ["avatars.githubusercontent.com", "lh3.googleusercontent.com"],
+    domains: [
+      "avatars.githubusercontent.com",
+      "lh3.googleusercontent.com",
+      "res.cloudinary.com",
+    ],
   },
   env: {
     PUSHER_APP_ID: "1655774",
@@ -30,6 +34,10 @@ const nextConfig = {
     UPSTASH_REDIS_REST_URL: "https://eu1-nice-ostrich-39114.upstash.io",
     UPSTASH_REDIS_REST_TOKEN:
       "AZjKASQgMjc2ZTQ1OTEtZWFjMi00ZWZiLTliNjUtOGU0NTQzMmNmM2E3YTczNTllMzNjNjhhNGY4ZWE0YzZkYThjMjQ0Y2QwMWQ=",
+
+    CLOUDINARY_URL:
+      "cloudinary://535627957596415:TKxlMFn7IhR6MTgIJcxOzFoXt00@djbjm2nh7",
+    NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME: "djbjm2nh7",
 
     GOOGLE_CLIENT_ID:
       "711908709419-a4ci29ctod9b53505pboi7gt8409gto6.apps.googleusercontent.com",

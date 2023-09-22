@@ -72,8 +72,6 @@ const ChatListLayout = async ({ children }: ChildrenProp) => {
       })
     );
 
-    console.log("blockedByFriendIdsReq ", blockedByFriendIdsReq);
-
     for (let i = 0; i < blockedByFriendIdsReq.length; i++) {
       if (blockedByFriendIdsReq[i]) {
         blockedByFriendIds.push(friendsRes[i].friend.id);

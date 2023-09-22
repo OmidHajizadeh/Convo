@@ -2,14 +2,15 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-
 import { useForm } from "react-hook-form";
 import { toast } from "react-hot-toast";
 
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
 import EditIcon from "@mui/icons-material/Edit";
+
 import { useAudio } from "@/hooks/convo-hooks";
+import UploadImage from "./UploadImage";
 
 type EditFormProps = {
   session: Session;
@@ -21,30 +22,31 @@ type EditFormData = {
 
 const EditForm = ({ session }: EditFormProps) => {
   const systemSound = useAudio("/sounds/convo-system.mp3");
-  const { register, handleSubmit, formState, setError } = useForm<EditFormData>(
-    {
-      defaultValues: {
-        name: session.user.name,
-      },
-    }
-  );
+  const { register, handleSubmit, formState } = useForm<EditFormData>({
+    defaultValues: {
+      name: session.user.name,
+    },
+  });
 
   const { errors, isSubmitting } = formState;
   const router = useRouter();
   const [name, setName] = useState(session.user.name);
+  const [imageUrl, setImageUrl] = useState(session.user.image);
+
+  function onImageUpload(url: string) {
+    setImageUrl(url);
+  }
 
   async function submitProfileHandler(formData: EditFormData) {
     if (isSubmitting) return;
-    if (name === session.user.name) {
-      setError("name", { message: "اسمی تغییری نداشته است" });
-      return;
-    }
+
     try {
       toast.loading("در حال ارسال درخواست...", { id: "edit-profile" });
       const res = await fetch("/api/edit-profile", {
         method: "POST",
         body: JSON.stringify({
           name: formData.name,
+          image: imageUrl,
         }),
       });
 
@@ -68,8 +70,16 @@ const EditForm = ({ session }: EditFormProps) => {
     <form
       noValidate
       onSubmit={handleSubmit(submitProfileHandler)}
-      className="grid sm:grid-cols-2 gap-3 mt-4"
+      className="flex flex-col gap-4 items-center mt-4"
+      id="edit-profile"
     >
+      <UploadImage
+        onChange={(url) => {
+          onImageUpload(url);
+        }}
+        disabled={isSubmitting}
+        value={imageUrl}
+      />
       <TextField
         label="اسم نمایشی"
         variant="standard"
@@ -90,19 +100,15 @@ const EditForm = ({ session }: EditFormProps) => {
         })}
         error={!!errors.name}
         helperText={errors.name ? errors.name.message : `25/${name.length}`}
-        sx={{ width: "100%" }}
       />
-      <span></span>
-      <div>
-        <Button
-          type="submit"
-          disableElevation
-          variant="contained"
-          startIcon={<EditIcon />}
-        >
-          ویرایش
-        </Button>
-      </div>
+      <Button
+        type="submit"
+        disableElevation
+        variant="contained"
+        startIcon={<EditIcon />}
+      >
+        ویرایش
+      </Button>
     </form>
   );
 };

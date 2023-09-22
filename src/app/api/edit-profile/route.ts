@@ -15,8 +15,9 @@ export async function POST(req: Request) {
 
   const body: {
     name: string;
+    image: string;
   } = await req.json();
-  const { name } = body;
+  const { name, image } = body;
 
   // is the provided status text valid
   if (name.trim().length > 25 || name.trim().length === 0) {
@@ -46,6 +47,7 @@ export async function POST(req: Request) {
   const newUser = {
     ...dataBaseUser,
     name,
+    image,
   };
 
   try {
