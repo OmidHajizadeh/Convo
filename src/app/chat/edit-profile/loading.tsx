@@ -1,5 +1,6 @@
-import PageFrame from '@/components/PageFrame'
 import CircularProgress from '@mui/material/CircularProgress';
+
+import PageFrame from '@/components/PageFrame'
 
 const EditProfileLoadingPage = () => {
   return (

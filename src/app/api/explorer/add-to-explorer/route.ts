@@ -1,7 +1,8 @@
+import { NextResponse } from "next/server";
+
 import { db } from "@/lib/database/db";
 import { fetchRedis } from "@/utils/fetchRedis";
 import { fetchServerSession } from "@/utils/serverInteractions";
-import { NextResponse } from "next/server";
 
 export async function POST(req: Request) {
   const session = await fetchServerSession();

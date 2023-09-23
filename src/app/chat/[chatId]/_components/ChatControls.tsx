@@ -5,13 +5,11 @@ import { useRef, useState } from "react";
 import { toast } from "react-hot-toast";
 import { nanoid } from "nanoid";
 
-import TextareaAutosize from "@mui/material/TextareaAutosize";
-import IconButton from "@mui/material/IconButton";
+import {TextareaAutosize, IconButton} from "@mui/material";
 import SendIcon from "@mui/icons-material/Send";
 
 import { useAppDispatch, useAppSelector } from "@/store/Redux/hooks";
 import { friendsActions } from "@/store/Redux/friendsSlice/friendsSlice";
-import { CircularProgress } from "@mui/material";
 
 type ChatControlsProp = {
   chatId: string;

@@ -13,6 +13,11 @@ export const metadata: Metadata = {
   creator: "Omid Hajizadeh",
   manifest: "/manifest.json",
   themeColor: "#78b5d5",
+  icons: {
+    apple: "/logo.png",
+    icon: "/logo.png",
+    shortcut: "/logo.png",
+  },
 };
 
 const mainFont = localFont({

@@ -5,8 +5,7 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "react-hot-toast";
 
-import Button from "@mui/material/Button";
-import TextField from "@mui/material/TextField";
+import {Button, TextField} from "@mui/material";
 import SendIcon from "@mui/icons-material/Send";
 
 import { useAppDispatch } from "@/store/Redux/hooks";

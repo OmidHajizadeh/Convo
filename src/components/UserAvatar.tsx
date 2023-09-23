@@ -1,9 +1,10 @@
 "use client";
 
-import { styled } from "@mui/material/styles";
-import Badge from "@mui/material/Badge";
-import Avatar from "@mui/material/Avatar";
 import Image from "next/image";
+
+import { styled } from "@mui/material/styles";
+import { Badge, Avatar } from "@mui/material";
+
 import { useOnlineStatus } from "@/hooks/convo-hooks";
 
 type UserAvatarProps = {

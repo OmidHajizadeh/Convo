@@ -2,11 +2,12 @@
 
 import { useEffect, useState } from "react";
 
+import { Alert } from "@mui/material";
+
 import { useAppSelector } from "@/store/Redux/hooks";
 import RemoveFromExplorer from "./RemoveFromExplorer";
 import AddToExplorer from "./AddToExplorer";
 
-import { Alert } from "@mui/material";
 
 const UserStatus = () => {
   const { isUserInExplorer } = useAppSelector((state) => state.explorer);

@@ -1,10 +1,9 @@
-"use client"
+"use client";
 
 import { useTheme } from "next-themes";
 
 import { styled } from "@mui/material/styles";
-import FormControlLabel from "@mui/material/FormControlLabel";
-import Switch from "@mui/material/Switch";
+import { FormControlLabel, Switch } from "@mui/material";
 
 const MaterialUISwitch = styled(Switch)(({ theme }) => ({
   width: 62,

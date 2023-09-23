@@ -5,11 +5,10 @@ import Image from "next/image";
 
 import { format } from "date-fns";
 
-import Avatar from "@mui/material/Avatar";
+import { CircularProgress, Avatar } from "@mui/material";
 import ErrorIcon from "@mui/icons-material/Error";
 
 import { Friend } from "@/lib/Models/Friend";
-import { CircularProgress } from "@mui/material";
 
 type ChatMessagesProps = {
   currentUser: User;

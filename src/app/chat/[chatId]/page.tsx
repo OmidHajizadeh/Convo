@@ -1,9 +1,9 @@
 import { notFound, redirect } from "next/navigation";
 
 import { fetchServerSession } from "@/utils/serverInteractions";
+import { fetchRedis } from "@/utils/fetchRedis";
 import ChatPartnerHead from "./_components/ChatPartnerHead";
 import ChatPanel from "./_components/ChatPanel";
-import { fetchRedis } from "@/utils/fetchRedis";
 
 type ChatPageProps = {
   params: {

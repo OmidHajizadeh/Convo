@@ -1,5 +1,6 @@
-import PageFrame from '@/components/PageFrame'
 import { CircularProgress } from '@mui/material'
+
+import PageFrame from '@/components/PageFrame'
 
 const ExplorerLoadingPage = () => {
   return (

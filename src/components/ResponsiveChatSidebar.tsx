@@ -5,11 +5,7 @@ import Image from "next/image";
 
 import { useTheme } from "next-themes";
 
-import AppBar from "@mui/material/AppBar";
-import Box from "@mui/material/Box";
-import Drawer from "@mui/material/Drawer";
-import IconButton from "@mui/material/IconButton";
-import Toolbar from "@mui/material/Toolbar";
+import { AppBar, Box, Drawer, IconButton, Toolbar } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
 
 import UserOptions from "./UserOptions";
@@ -51,7 +47,7 @@ export default function ResponsiveChatSidebar({
   );
 
   return (
-    <Box sx={{ display: "flex", width: '100%' }}>
+    <Box sx={{ display: "flex", width: "100%" }}>
       <AppBar
         position="absolute"
         elevation={0}

@@ -1,5 +1,7 @@
 import Image from "next/image";
+
 import { CldUploadWidget } from "next-cloudinary";
+
 import { IconButton, Tooltip } from "@mui/material";
 import CloudUploadIcon from "@mui/icons-material/CloudUpload";
 

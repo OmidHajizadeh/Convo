@@ -5,9 +5,10 @@ const withPWA = require("next-pwa");
 const nextConfig = {
   ...withPWA({
     dest: "public",
+    scope: '/',
     register: true,
     skipWaiting: true,
-    disable: process.env.NODE_ENV !== "development",
+    disable: false,
   }),
   images: {
     domains: [

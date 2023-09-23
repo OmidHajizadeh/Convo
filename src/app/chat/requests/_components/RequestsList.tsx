@@ -5,11 +5,9 @@ import Image from "next/image";
 
 import { toast } from "react-hot-toast";
 
-import Tooltip from "@mui/material/Tooltip";
-import IconButton from "@mui/material/IconButton";
+import { Tooltip, IconButton, ListItem } from "@mui/material";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import CancelIcon from "@mui/icons-material/Cancel";
-import { ListItem } from "@mui/material";
 
 import { useAppDispatch, useAppSelector } from "@/store/Redux/hooks";
 import { friendRequestsActions } from "@/store/Redux/FriendRequests/friendRequestsSlice";
@@ -17,7 +15,6 @@ import { friendsActions } from "@/store/Redux/friendsSlice/friendsSlice";
 import { Friend } from "@/lib/Models/Friend";
 import UserAvatar from "@/components/UserAvatar";
 import { useAudio } from "@/hooks/convo-hooks";
-
 
 const RequestsList = () => {
   const [isLoading, setIsLoading] = useState(false);
