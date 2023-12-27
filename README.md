@@ -1,34 +1,42 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Convo
+#### Video Demo : <https://youtu.be/jJJFe_IHRSw>
+#### Description: A beautiful SPA chat application created via React and NextJS framework!
 
-## Getting Started
+This is a robust and efficient chat application developed using Next.js 13, designed to offer seamless real-time communication functionalities leveraging WebSockets. With its progressive web app (PWA) features, users can experience a native app-like interface while enjoying the flexibility of web-based access.
 
-First, run the development server:
+We utilized the versatile Redis database to comprehensively store Convo's data, encompassing messages, friend lists, chats, and more. Additionally, by integrating our app with Cloudinary, users can effortlessly upload new images to personalize their avatars.
 
-```bash
+Furthermore, we implemented highly secure Route APIs that meticulously validate types and authenticate users sending requests. This stringent process ensures that our app functions as seamlessly and reliably as the most renowned chat messengers in the industry.
+
+## Folder Details
+As this is a React-based project, it includes familiar files like `package.json`, `package-lock.json`, and others. Additionally, files such as `tailwind.config.ts` hold configurations for the TailwindCSS library, primarily responsible for our styling and layouts.
+
+The crux of this project lies within the src folder, housing the laid-out source code.
+
+Convo, built with Next.js 13, leverages the recently added App Router feature for its routes. In the `app` folder, the Route APIs, serving as endpoints for receiving requests, reside within the `api` folder. Other routes accessible via the app's sidebar are categorized as normal routes. Most of these routes are sub-routes within the chat folder, utilizing Next.js' Server Components, rendering server-side (SSR). Each route's entry point is located in respective `page.tsx` files, paired with a `loading.tsx` file responsible for displaying a skeleton loader before fully fetching the page from the server. Additionally, each route houses a `_components` folder containing route-specific components, primarily responsible for handling user interactions, such as form submissions.
+
+Adjacent to the app folder, the components folder stores reusable components shared across all our routes.
+
+The utils folder includes several files: `helpers.ts` exports various helper functions utilized across different components, `serverInteractions.ts` exports functions predominantly used for fetching information from our database, and `fetchRedis.ts` exports a function serving two purposes: facilitating general interactions with the Redis database and mitigating Next.js' consistent caching of content.
+
+Within `utils/subscribers`, five subscriber components exist. Although they don't render content within our app, they orchestrate real-time functionalities by establishing connections with our `Pusher` service, notifying users of new updates. These subscriber components are utilized within the `app/layout.tsx` file and persist throughout the app's lifecycle, remaining mounted after initialization.
+
+Lastly, the `public` folder hosts all static contents, such as images and SVG files.
+
+## Features
+
+- PWA Support: Provides an engaging and responsive experience across devices, offering offline access and quick load times.
+- Real-time Communication: Utilizing WebSockets for instant message delivery and updates.
+- Adding friends and strangers to friend list
+- User Blocking: Empowering users to manage their interactions by blocking other users when necessary.
+- Profile Editing: Users can personalize their profiles post-creation, allowing for customization and updates.
+- OAuth Integration: Seamless login options using Google and GitHub accounts for user authentication and authorization.
+- ...
+
+## Installation
+1. Download the project folder.
+2. Run the following commands:
+```sh
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
 ```
-
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
-
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
-
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.

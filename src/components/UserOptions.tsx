@@ -64,12 +64,12 @@ export default function UserOptions({
       icon: <EditIcon className="dark:text-black" />,
       isActive: pathname === "/chat/edit-profile",
     },
-    // {
-    //   path: "/chat/about",
-    //   title: "درباره کانوو",
-    //   icon: <InfoIcon className="dark:text-black" />,
-    //   isActive: pathname === "/chat/about",
-    // },
+    {
+      path: "/chat/about",
+      title: "درباره کانوو",
+      icon: <InfoIcon className="dark:text-black" />,
+      isActive: pathname === "/chat/about",
+    },
     {
       path: "/api/auth/signout",
       title: "خروج",
