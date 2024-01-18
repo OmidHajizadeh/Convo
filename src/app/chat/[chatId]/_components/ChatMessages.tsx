@@ -94,7 +94,7 @@ const ChatMessages = ({ currentUser, partnerObj }: ChatMessagesProps) => {
                   "rounded-ee-none"
                 }`}
               >
-                <p dir="auto" className="chat-message__text mb-1 font-light">
+                <p dir="auto" className="chat-message__text whitespace-break-spaces mb-1 font-light">
                   {message.text}
                 </p>
                 <span className="flex">
