@@ -11,7 +11,7 @@ export const metadata: Metadata = {
   description: "Convo Chat App",
   applicationName: "Convo",
   creator: "Omid Hajizadeh",
-  manifest: "/manifest.json",
+  manifest: "/manifest-assets/manifest.json",
   themeColor: "#78b5d5",
   icons: {
     apple: "/logo.png",

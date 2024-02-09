@@ -11,6 +11,8 @@ import ExplorerListItem from "./_components/ExplorerListItem";
 import UserStatus from "./_components/UserStatus";
 import PageFrame from "@/components/PageFrame";
 
+import EmptyExplorerSVG from "@/public/icons/empty-explorer.svg";
+
 export const metadata: Metadata = {
   title: "اکسپلورر",
 };
@@ -26,26 +28,25 @@ const ExplorerPage = async () => {
       "hgetall",
       "explorer:explorer_list"
     );
-    
   } catch (error) {
     notFound();
   }
 
   const peopleIds = peopleHash.filter((p, index) => index % 2 === 0);
   const peopleTexts = peopleHash.filter((p, index) => index % 2 === 1);
-  
+
   let people: User[];
-  
+
   try {
     const peopleAsString = await Promise.all(
       peopleIds.map((item) => {
-        return fetchRedis<string>("get", `user:${item}`)
+        return fetchRedis<string>("get", `user:${item}`);
       })
-      );
-      people = peopleAsString.map((user) => JSON.parse(user));
-    } catch (error) {
-      notFound();
-    }
+    );
+    people = peopleAsString.map((user) => JSON.parse(user));
+  } catch (error) {
+    notFound();
+  }
 
   const explorers: Explorer[] = people
     .map((person, index) => {
@@ -82,7 +83,7 @@ const ExplorerPage = async () => {
           <div className="w-full flex items-center flex-col">
             <Image
               alt="لیست خالی اکسپلورر"
-              src="/empty-explorer.svg"
+              src={EmptyExplorerSVG}
               width={800}
               height={800}
               referrerPolicy="no-referrer"

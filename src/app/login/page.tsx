@@ -11,6 +11,8 @@ import LinearProgress from "@mui/material/LinearProgress";
 import GoogleIcon from "@mui/icons-material/Google";
 import GitHubIcon from "@mui/icons-material/GitHub";
 
+import LoginSVG from "@/public/icons/login.svg";
+
 const LoginPage = () => {
   const [isLoading, setIsLoading] = useState(false);
 
@@ -28,7 +30,9 @@ const LoginPage = () => {
 
   return (
     <main className="grid place-items-center min-h-screen bg-landing-wave-lines bg-fixed bg-cover bg-no-repeat bg-center">
-      {isLoading && <LinearProgress className="!fixed top-0 z-10 w-full" color="info" />}
+      {isLoading && (
+        <LinearProgress className="!fixed top-0 z-10 w-full" color="info" />
+      )}
       <section className="grid lg:grid-cols-2 justify-center overflow-auto lg:flex-row gap-4 p-5 xl:container w-full relative xl:rounded-2xl bg-slate-100/20 shadow-xl backdrop-blur-sm h-screen xl:h-[90vh] max-h-screen">
         <div className="lg:flex-1 flex flex-col justify-center items-center text-center">
           <h3 className="text-4xl sm:text-6xl font-bold mb-8">ورود به کانوو</h3>
@@ -58,12 +62,10 @@ const LoginPage = () => {
         </div>
         <div className="lg:flex-1 hidden lg:grid place-items-center">
           <Image
-            src="/login.svg"
+            src={LoginSVG}
             width={500}
             height={500}
             alt="login banner"
-            placeholder="blur"
-            blurDataURL="/login.svg"
             className="w-full"
           />
         </div>

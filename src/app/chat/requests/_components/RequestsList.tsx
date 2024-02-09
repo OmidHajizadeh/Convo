@@ -16,6 +16,8 @@ import { Friend } from "@/lib/Models/Friend";
 import UserAvatar from "@/components/UserAvatar";
 import { useAudio } from "@/hooks/convo-hooks";
 
+import NoRequestSVG from "@/public/icons/no-request.svg";
+
 const RequestsList = () => {
   const [isLoading, setIsLoading] = useState(false);
   const systemSound = useAudio("/sounds/convo-system.mp3");
@@ -114,7 +116,7 @@ const RequestsList = () => {
         <div className="grid place-items-center h-full">
           <div className="w-full flex items-center flex-col">
             <Image
-              src="/no-request.svg"
+              src={NoRequestSVG}
               alt="بنر لیست خالی درخواست ها"
               width={700}
               height={700}

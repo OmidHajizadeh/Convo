@@ -39,8 +39,6 @@ export default function Home() {
           height={800}
           alt="screenshot"
           className="max-w-[35rem] w-full"
-          placeholder="blur"
-          blurDataURL="/landing-page/phone.webp"
         />
       </div>
     </main>

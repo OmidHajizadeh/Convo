@@ -6,6 +6,8 @@ import Image from "next/image";
 import FriendListItem from "../_components/FriendListItem";
 import { useAppSelector } from "@/store/Redux/hooks";
 
+import NoChatSVG from "@/public/icons/no-chat.svg";
+
 type FriendListProps = {
   session: Session;
 };
@@ -37,7 +39,7 @@ const FriendList = ({ session }: FriendListProps) => {
         <div className="flex items-center justify-center h-full">
           <div className="flex-grow flex flex-col items-center">
             <Image
-              src="/no-chat.svg"
+              src={NoChatSVG}
               alt="بنر خالی بودن لیست چت"
               width={700}
               height={700}

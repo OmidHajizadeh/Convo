@@ -124,9 +124,7 @@ const AboutPage = () => {
                   <Image
                     className="w-auto max-h-full object-contain"
                     src={stack.image}
-                    blurDataURL={stack.image}
                     fill
-                    placeholder="blur"
                     alt={stack.name}
                   />
                 </Link>

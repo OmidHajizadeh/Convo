@@ -30,7 +30,7 @@ const config: Config = {
       },
       backgroundImage: {
         "landing-wave-lines": "url('/landing-page/landing-wave-lines.svg')",
-        "chat-pattern": "url('/chat-bg.webp')",
+        "chat-pattern": "url('/icons/chat-bg.webp')",
       },
       colors: {
         primary: {
