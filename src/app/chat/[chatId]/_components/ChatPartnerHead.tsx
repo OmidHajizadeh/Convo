@@ -37,8 +37,10 @@ const ChatPartnerHead = ({ friendId }: ChatPartnerHeadProps) => {
   const friendObject = friendsList.find(
     (friendObj) => friendObj.friend.id === friendId
   )!;
-  
+
   const iUserBlocked = blockedIds.includes(friendId);
+
+  if (!friendObject.friend) return;
 
   function handleClickOpen() {
     setOpen(true);
@@ -92,7 +94,10 @@ const ChatPartnerHead = ({ friendId }: ChatPartnerHeadProps) => {
         </div>
       </div>
       {iUserBlocked ? (
-        <Tooltip title={`آنبلاک کردن ${friendObject.friend.name}`} placement="right">
+        <Tooltip
+          title={`آنبلاک کردن ${friendObject.friend.name}`}
+          placement="right"
+        >
           <IconButton
             disabled={loading}
             aria-label="آنبلاک"
@@ -102,7 +107,10 @@ const ChatPartnerHead = ({ friendId }: ChatPartnerHeadProps) => {
           </IconButton>
         </Tooltip>
       ) : (
-        <Tooltip title={`بلاک کردن ${friendObject.friend.name}`} placement="right">
+        <Tooltip
+          title={`بلاک کردن ${friendObject.friend.name}`}
+          placement="right"
+        >
           <IconButton
             disabled={loading}
             aria-label="بلاک"
@@ -123,8 +131,8 @@ const ChatPartnerHead = ({ friendId }: ChatPartnerHeadProps) => {
         </DialogTitle>
         <DialogContent>
           <DialogContentText id="alert-dialog-description">
-            بعد از بلاک کردن کاربر، مکالمات شما حفظ میشود ولی قادر به
-            ارسال یا دریافت پیام نخواهید بود. آیا مطمئن هستید ؟
+            بعد از بلاک کردن کاربر، مکالمات شما حفظ میشود ولی قادر به ارسال یا
+            دریافت پیام نخواهید بود. آیا مطمئن هستید ؟
           </DialogContentText>
         </DialogContent>
         <DialogActions>

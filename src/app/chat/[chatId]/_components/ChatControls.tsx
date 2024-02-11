@@ -5,11 +5,12 @@ import { useRef, useState } from "react";
 import { toast } from "react-hot-toast";
 import { nanoid } from "nanoid";
 
-import {TextareaAutosize, IconButton} from "@mui/material";
+import { TextareaAutosize, IconButton } from "@mui/material";
 import SendIcon from "@mui/icons-material/Send";
 
 import { useAppDispatch, useAppSelector } from "@/store/Redux/hooks";
 import { friendsActions } from "@/store/Redux/friendsSlice/friendsSlice";
+import { Friend } from "@/lib/Models/Friend";
 
 type ChatControlsProp = {
   chatId: string;
@@ -17,11 +18,7 @@ type ChatControlsProp = {
   sessionId: string;
 };
 
-const ChatControls = ({
-  chatId,
-  chatPartnerId,
-  sessionId,
-}: ChatControlsProp) => {
+const ChatControls = ({ chatId, chatPartnerId, sessionId }: ChatControlsProp) => {
   const messageRef = useRef<HTMLTextAreaElement>(null!);
   const [isSending, setIsSending] = useState(false);
   const { blockedIds, blockedByIds } = useAppSelector((state) => state.friends);

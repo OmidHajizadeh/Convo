@@ -1,13 +1,14 @@
 {
   "name": "convo",
-  "version": "1.4.0",
+  "version": "1.9.0",
   "author": "Omid Hajizadeh",
   "private": true,
   "scripts": {
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "web-push": "web-push"
   },
   "dependencies": {
     "@auth/upstash-redis-adapter": "^1.0.0",
@@ -20,6 +21,7 @@
     "@types/node": "20.4.9",
     "@types/react": "18.2.19",
     "@types/react-dom": "18.2.7",
+    "@types/web-push": "^3.6.3",
     "@upstash/redis": "^1.22.0",
     "autoprefixer": "10.4.14",
     "date-fns": "^2.30.0",
@@ -45,6 +47,7 @@
     "stylis-plugin-rtl": "^2.1.1",
     "svix": "^1.8.1",
     "tailwindcss": "3.3.3",
-    "typescript": "5.1.6"
+    "typescript": "5.1.6",
+    "web-push": "^3.6.7"
   }
 }

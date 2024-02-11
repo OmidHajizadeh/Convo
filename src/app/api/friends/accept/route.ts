@@ -1,10 +1,11 @@
+import webPush from "web-push";
 import { NextRequest, NextResponse } from "next/server";
 
 import { db } from "@/lib/database/db";
 import { fetchServerSession } from "@/utils/serverInteractions";
 import { fetchRedis } from "@/utils/fetchRedis";
 import { pusherServer } from "@/lib/pusher/pusher";
-import { toPusherKey } from "@/utils/helpers";
+import { chatHrefConstructor, toPusherKey } from "@/utils/helpers";
 
 export async function POST(req: NextRequest) {
   const session = await fetchServerSession();
@@ -86,6 +87,42 @@ export async function POST(req: NextRequest) {
     await db.sadd(`user:${session.user.id}:friends`, senderId);
     await db.sadd(`user:${senderId}:friends`, session.user.id);
     await db.srem(`user:${session.user.id}:incoming_friend_requests`, senderId);
+
+    const friendSubscriptions = await fetchRedis<string[]>(
+      "zrange",
+      `push-subscriber:${senderId}`,
+      0,
+      -1
+    );
+
+    if (friendSubscriptions) {
+      const subObjects = friendSubscriptions.map((sub) => JSON.parse(sub));
+
+      const pushMessage: PushMessage = {
+        title: "تایید درخواست دوستی",
+        body: `از طرف ${session.user.name}`,
+        image: session.user.image,
+        tag: "system-notification",
+        url:
+          process.env.SITE_URL +
+          "/chat/" +
+          chatHrefConstructor(session.user.id, senderId),
+      };
+
+      subObjects.forEach((subObject) => {
+        webPush.setVapidDetails(
+          process.env.MAILTO_ADDRESS_PUSH as string,
+          process.env.NEXT_PUBLIC_PUBLIC_VAPID_KEY as string,
+          process.env.PRIVATE_VAPID_KEY as string
+        );
+
+        webPush
+          .sendNotification(subObject, JSON.stringify(pushMessage))
+          .catch((err) => {
+            console.log(err);
+          });
+      });
+    }
   } catch (error) {
     return NextResponse.json(
       {

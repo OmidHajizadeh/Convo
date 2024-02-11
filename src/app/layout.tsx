@@ -5,6 +5,7 @@ import { Toaster } from "react-hot-toast";
 import "./globals.css";
 import NextAuthProvider from "@/lib/auth/next-auth-provider";
 import ConvoThemeProviders from "@/lib/Material/ConvoThemeProviders";
+import ServiceWorkerSetup from "@/lib/ServiceWorkerSetup";
 
 export const metadata: Metadata = {
   title: "کانوو",
@@ -87,8 +88,9 @@ export default function RootLayout({
       >
         <NextAuthProvider>
           <ConvoThemeProviders>
-            <Toaster />
             {children}
+            <Toaster />
+            <ServiceWorkerSetup />
           </ConvoThemeProviders>
         </NextAuthProvider>
       </body>

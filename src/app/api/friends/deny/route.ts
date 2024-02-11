@@ -1,9 +1,11 @@
+import webPush from "web-push";
 import { NextRequest, NextResponse } from "next/server";
 
 import { db } from "@/lib/database/db";
 import { pusherServer } from "@/lib/pusher/pusher";
 import { toPusherKey } from "@/utils/helpers";
 import { fetchServerSession } from "@/utils/serverInteractions";
+import { fetchRedis } from "@/utils/fetchRedis";
 
 export async function POST(req: NextRequest) {
   const session = await fetchServerSession();
@@ -43,6 +45,39 @@ export async function POST(req: NextRequest) {
     );
 
     await Promise.all([updateDatabase, triggerDenyRequest]);
+
+    const friendSubscriptions = await fetchRedis<string[]>(
+      "zrange",
+      `push-subscriber:${senderId}`,
+      0,
+      -1
+    );
+
+    if (friendSubscriptions) {
+      const subObjects = friendSubscriptions.map((sub) => JSON.parse(sub));
+
+      const pushMessage: PushMessage = {
+        title: "رد درخواست دوستی",
+        body: `از طرف ${session.user.name}`,
+        image: session.user.image,
+        tag: "system-notification",
+        url: process.env.SITE_URL + "/chat/friends-list",
+      };
+
+      subObjects.forEach((subObject) => {
+        webPush.setVapidDetails(
+          process.env.MAILTO_ADDRESS_PUSH as string,
+          process.env.NEXT_PUBLIC_PUBLIC_VAPID_KEY as string,
+          process.env.PRIVATE_VAPID_KEY as string
+        );
+
+        webPush
+          .sendNotification(subObject, JSON.stringify(pushMessage))
+          .catch((err) => {
+            console.log(err);
+          });
+      });
+    }
 
     return NextResponse.json(
       { message: "درخواست کاربر برای دوستی با شما رد شد", error: false },

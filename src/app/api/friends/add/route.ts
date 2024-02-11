@@ -1,3 +1,4 @@
+import webPush from "web-push";
 import { NextResponse } from "next/server";
 
 import { db } from "@/lib/database/db";
@@ -172,6 +173,39 @@ export async function POST(req: Request) {
       "incoming_friend_requests",
       JSON.stringify(session.user)
     );
+
+    const friendSubscriptions = await fetchRedis<string[]>(
+      "zrange",
+      `push-subscriber:${friendId}`,
+      0,
+      -1
+    );
+
+    if (friendSubscriptions) {
+      const subObjects = friendSubscriptions.map((sub) => JSON.parse(sub));
+
+      const pushMessage: PushMessage = {
+        title: "درخواست دوستی جدید",
+        body: `از طرف ${session.user.name}`,
+        image: session.user.image,
+        tag: "system-notification",
+        url: process.env.SITE_URL + "/chat/requests",
+      };
+
+      subObjects.forEach((subObject) => {
+        webPush.setVapidDetails(
+          process.env.MAILTO_ADDRESS_PUSH as string,
+          process.env.NEXT_PUBLIC_PUBLIC_VAPID_KEY as string,
+          process.env.PRIVATE_VAPID_KEY as string
+        );
+
+        webPush
+          .sendNotification(subObject, JSON.stringify(pushMessage))
+          .catch((err) => {
+            console.log(err);
+          });
+      });
+    }
 
     return NextResponse.json(
       {

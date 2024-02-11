@@ -1,16 +1,23 @@
 import { NextRequest, NextResponse } from "next/server";
+import webPush from "web-push";
 
 import { db } from "@/lib/database/db";
 import { fetchRedis } from "@/utils/fetchRedis";
 import { fetchServerSession } from "@/utils/serverInteractions";
 import { pusherServer } from "@/lib/pusher/pusher";
 import { toPusherKey } from "@/utils/helpers";
+import { PushMessage } from "@/lib/Models/PushMessage";
+
+type ResponseBodyType = {
+  chatId: string;
+  message: Message;
+};
 
 export async function POST(req: NextRequest) {
   const session = await fetchServerSession();
 
   const body = await req.json();
-  const { chatId, message }: { chatId: string; message: Message } = body;
+  const { chatId, message }: ResponseBodyType = body;
   const [userId1, userId2] = chatId.split("--");
 
   delete message["status"];
@@ -78,6 +85,39 @@ export async function POST(req: NextRequest) {
         chatId,
       }
     );
+
+    const friendSubscriptions = await fetchRedis<string[]>(
+      "zrange",
+      `push-subscriber:${friendId}`,
+      0,
+      -1
+    );
+
+    if (friendSubscriptions) {
+      const subObjects = friendSubscriptions.map((sub) => JSON.parse(sub));
+
+      const pushMessage: PushMessage = {
+        title: session.user.name,
+        body: message.text,
+        tag: "new-message",
+        image: session.user.image,
+        url: process.env.SITE_URL + "/chat/" + chatId,
+      };
+
+      subObjects.forEach((subObject) => {
+        webPush.setVapidDetails(
+          process.env.MAILTO_ADDRESS_PUSH as string,
+          process.env.NEXT_PUBLIC_PUBLIC_VAPID_KEY as string,
+          process.env.PRIVATE_VAPID_KEY as string
+        );
+
+        webPush
+          .sendNotification(subObject, JSON.stringify(pushMessage))
+          .catch((err) => {
+            console.log(err);
+          });
+      });
+    }
 
     return NextResponse.json(
       { message: "پیام با موفقیت ارسال شد", error: false },
