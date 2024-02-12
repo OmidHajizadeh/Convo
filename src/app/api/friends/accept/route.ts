@@ -87,73 +87,63 @@ export async function POST(req: NextRequest) {
     await db.sadd(`user:${session.user.id}:friends`, senderId);
     await db.sadd(`user:${senderId}:friends`, session.user.id);
     await db.srem(`user:${session.user.id}:incoming_friend_requests`, senderId);
+    const friendString = await fetchRedis<string>("get", `user:${senderId}`);
 
-    const friendSubscriptions = await fetchRedis<string[]>(
-      "zrange",
-      `push-subscriber:${senderId}`,
-      0,
-      -1
-    );
-
-    if (friendSubscriptions) {
-      const subObjects = friendSubscriptions.map((sub) => JSON.parse(sub));
-
-      const pushMessage: PushMessage = {
-        title: "تایید درخواست دوستی",
-        body: `از طرف ${session.user.name}`,
-        image: session.user.image,
-        tag: "system-notification",
-        url:
-          process.env.SITE_URL +
-          "/chat/" +
-          chatHrefConstructor(session.user.id, senderId),
-      };
-
-      subObjects.forEach((subObject) => {
-        webPush.setVapidDetails(
-          process.env.MAILTO_ADDRESS_PUSH as string,
-          process.env.NEXT_PUBLIC_PUBLIC_VAPID_KEY as string,
-          process.env.PRIVATE_VAPID_KEY as string
-        );
-
-        webPush
-          .sendNotification(subObject, JSON.stringify(pushMessage))
-          .catch((err) => {
-            console.log(err);
-          });
-      });
+    try {
+      await pusherServer.trigger(
+        toPusherKey(`user:${senderId}:friend_request_response`),
+        "friend_request_response",
+        JSON.stringify({
+          user: session.user,
+          state: "accepted",
+        })
+      );
+    } catch (error) {
+      console.warn("[WEBSOCKET] Accepting Friend Request", error);
     }
-  } catch (error) {
+
+    try {
+      const friendSubscriptions = await fetchRedis<string[]>(
+        "zrange",
+        `push-subscriber:${senderId}`,
+        0,
+        -1
+      );
+
+      if (friendSubscriptions) {
+        const subObjects = friendSubscriptions.map((sub) => JSON.parse(sub));
+
+        const pushMessage: PushMessage = {
+          title: "تایید درخواست دوستی",
+          body: `از طرف ${session.user.name}`,
+          image: session.user.image,
+          tag: "system-notification",
+          url:
+            process.env.SITE_URL +
+            "/chat/" +
+            chatHrefConstructor(session.user.id, senderId),
+        };
+
+        subObjects.forEach(async (subObject) => {
+          webPush.setVapidDetails(
+            process.env.MAILTO_ADDRESS_PUSH as string,
+            process.env.NEXT_PUBLIC_PUBLIC_VAPID_KEY as string,
+            process.env.PRIVATE_VAPID_KEY as string
+          );
+
+          await webPush.sendNotification(
+            subObject,
+            JSON.stringify(pushMessage)
+          );
+        });
+      }
+    } catch (error) {
+      console.warn("[PUSH MESSAGE] Accepting Friend Request", error);
+    }
+
     return NextResponse.json(
       {
-        message: "خطا در برقراری ارتباط با سرور",
-        error: true,
-        source: "accept: responsing to friend request",
-      },
-      { status: 500 }
-    );
-  }
-
-  try {
-    const friendPromise = fetchRedis<string>("get", `user:${senderId}`);
-
-    const triggerSuccessRequest = pusherServer.trigger(
-      toPusherKey(`user:${senderId}:friend_request_response`),
-      "friend_request_response",
-      JSON.stringify({
-        user: session.user,
-        state: "accepted",
-      })
-    );
-
-    const [friendString] = await Promise.all([
-      friendPromise,
-      triggerSuccessRequest,
-    ]);
-
-    return NextResponse.json(
-      {
-        message: "کاربر در لیست دوستان شما قرار گرفت ",
+        message: "کاربر در لیست دوستان شما قرار گرفت",
         error: false,
         friendString,
       },
@@ -164,7 +154,7 @@ export async function POST(req: NextRequest) {
       {
         message: "خطا در برقراری ارتباط با سرور",
         error: true,
-        source: "accept: retreiving friend info",
+        source: "accept: responsing to friend request",
       },
       { status: 500 }
     );

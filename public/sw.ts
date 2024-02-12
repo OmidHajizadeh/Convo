@@ -57,3 +57,8 @@ sw.addEventListener("notificationclick", (event) => {
   // );
   //
 });
+
+sw.addEventListener('pushsubscriptionchange', event => {
+  // event.oldSubscription
+  // https://stackoverflow.com/questions/65769568/410-push-subscription-has-unsubscribed-or-expired
+})

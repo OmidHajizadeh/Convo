@@ -76,47 +76,51 @@ export async function POST(req: NextRequest) {
       }),
     });
 
-    await pusherServer.trigger(
-      toPusherKey(`chat:${friendId}:new-message`),
-      "incoming_message",
-      {
-        sender: session.user,
-        message,
-        chatId,
+    try {
+      await pusherServer.trigger(
+        toPusherKey(`chat:${friendId}:new-message`),
+        "incoming_message",
+        {
+          sender: session.user,
+          message,
+          chatId,
+        }
+      );
+    } catch (error) {
+      console.warn("[WEBSOCKET] Sending New Message", error);
+    }
+
+    try {
+      const friendSubscriptions = await fetchRedis<string[]>(
+        "zrange",
+        `push-subscriber:${friendId}`,
+        0,
+        -1
+      );
+
+      if (friendSubscriptions) {
+        const subObjects = friendSubscriptions.map((sub) => JSON.parse(sub));
+
+        const pushMessage: PushMessage = {
+          title: session.user.name,
+          body: message.text,
+          tag: "new-message",
+          image: session.user.image,
+          url: process.env.SITE_URL + "/chat/" + chatId,
+        };
+
+        subObjects.forEach(async (subObject) => {
+          webPush.setVapidDetails(
+            process.env.MAILTO_ADDRESS_PUSH as string,
+            process.env.NEXT_PUBLIC_PUBLIC_VAPID_KEY as string,
+            process.env.PRIVATE_VAPID_KEY as string
+          );
+
+          await webPush.sendNotification(subObject, JSON.stringify(pushMessage));
+        });
       }
-    );
-
-    const friendSubscriptions = await fetchRedis<string[]>(
-      "zrange",
-      `push-subscriber:${friendId}`,
-      0,
-      -1
-    );
-
-    if (friendSubscriptions) {
-      const subObjects = friendSubscriptions.map((sub) => JSON.parse(sub));
-
-      const pushMessage: PushMessage = {
-        title: session.user.name,
-        body: message.text,
-        tag: "new-message",
-        image: session.user.image,
-        url: process.env.SITE_URL + "/chat/" + chatId,
-      };
-
-      subObjects.forEach((subObject) => {
-        webPush.setVapidDetails(
-          process.env.MAILTO_ADDRESS_PUSH as string,
-          process.env.NEXT_PUBLIC_PUBLIC_VAPID_KEY as string,
-          process.env.PRIVATE_VAPID_KEY as string
-        );
-
-        webPush
-          .sendNotification(subObject, JSON.stringify(pushMessage))
-          .catch((err) => {
-            console.log(err);
-          });
-      });
+    } catch (error) {
+      console.warn("[PUSH MESSAGE] Sending New Message", error);
     }
 
     return NextResponse.json(

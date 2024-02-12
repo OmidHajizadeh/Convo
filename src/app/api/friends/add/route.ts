@@ -153,63 +153,66 @@ export async function POST(req: Request) {
   }
 
   try {
-    await db.sadd(`user:${friendId}:incoming_friend_requests`, session.user.id);
-  } catch (error) {
-    return NextResponse.json(
-      {
-        message: "خطا در برقراری ارتباط با سرور",
-        error: true,
-        source: "add: adding to friend requests",
-      },
-      { status: 500 }
+    const addedRequestPromise = db.sadd(
+      `user:${friendId}:incoming_friend_requests`,
+      session.user.id
     );
-  }
+    const friendStringPromise = fetchRedis<string>("get", `user:${friendId}`);
 
-  try {
-    const friendString = await fetchRedis<string>("get", `user:${friendId}`);
+    const [friendString] = await Promise.all([
+      friendStringPromise,
+      addedRequestPromise,
+    ]);
 
-    await pusherServer.trigger(
-      toPusherKey(`user:${friendId}:incoming_friend_requests`),
-      "incoming_friend_requests",
-      JSON.stringify(session.user)
-    );
+    try {
+      await pusherServer.trigger(
+        toPusherKey(`user:${friendId}:incoming_friend_requests`),
+        "incoming_friend_requests",
+        JSON.stringify(session.user)
+      );
+    } catch (error) {
+      console.warn("[WEBSOCKET] Sending Friend Request", error);
+    }
 
-    const friendSubscriptions = await fetchRedis<string[]>(
-      "zrange",
-      `push-subscriber:${friendId}`,
-      0,
-      -1
-    );
+    try {
+      const friendSubscriptions = await fetchRedis<string[]>(
+        "zrange",
+        `push-subscriber:${friendId}`,
+        0,
+        -1
+      );
 
-    if (friendSubscriptions) {
-      const subObjects = friendSubscriptions.map((sub) => JSON.parse(sub));
+      if (friendSubscriptions) {
+        const subObjects = friendSubscriptions.map((sub) => JSON.parse(sub));
 
-      const pushMessage: PushMessage = {
-        title: "درخواست دوستی جدید",
-        body: `از طرف ${session.user.name}`,
-        image: session.user.image,
-        tag: "system-notification",
-        url: process.env.SITE_URL + "/chat/requests",
-      };
+        const pushMessage: PushMessage = {
+          title: "درخواست دوستی جدید",
+          body: `از طرف ${session.user.name}`,
+          image: session.user.image,
+          tag: "system-notification",
+          url: process.env.SITE_URL + "/chat/requests",
+        };
 
-      subObjects.forEach((subObject) => {
-        webPush.setVapidDetails(
-          process.env.MAILTO_ADDRESS_PUSH as string,
-          process.env.NEXT_PUBLIC_PUBLIC_VAPID_KEY as string,
-          process.env.PRIVATE_VAPID_KEY as string
-        );
+        subObjects.forEach(async (subObject) => {
+          webPush.setVapidDetails(
+            process.env.MAILTO_ADDRESS_PUSH as string,
+            process.env.NEXT_PUBLIC_PUBLIC_VAPID_KEY as string,
+            process.env.PRIVATE_VAPID_KEY as string
+          );
 
-        webPush
-          .sendNotification(subObject, JSON.stringify(pushMessage))
-          .catch((err) => {
-            console.log(err);
-          });
-      });
+          await webPush.sendNotification(
+            subObject,
+            JSON.stringify(pushMessage)
+          );
+        });
+      }
+    } catch (error) {
+      console.warn("[PUSH MESSAGE] Sending Friend Request", error);
     }
 
     return NextResponse.json(
       {
-        message: "درخواست با موفقیت فرستاده شد",
+        message: "درخواست دوستی با موفقیت فرستاده شد",
         error: false,
         friend: friendString,
       },
@@ -220,7 +223,7 @@ export async function POST(req: Request) {
       {
         message: "خطا در برقراری ارتباط با سرور",
         error: true,
-        source: "add: friendAsString",
+        source: "[SENDING FRIEND REQUEST]",
       },
       { status: 500 }
     );

@@ -30,53 +30,52 @@ export async function POST(req: NextRequest) {
   }
 
   try {
-    const updateDatabase = db.srem(
-      `user:${session.user.id}:incoming_friend_requests`,
-      senderId
-    );
+    await db.srem(`user:${session.user.id}:incoming_friend_requests`, senderId);
 
-    const triggerDenyRequest = pusherServer.trigger(
-      toPusherKey(`user:${senderId}:friend_request_response`),
-      "friend_request_response",
-      JSON.stringify({
-        user: session.user,
-        state: "denied",
-      })
-    );
+    try {
+      await pusherServer.trigger(
+        toPusherKey(`user:${senderId}:friend_request_response`),
+        "friend_request_response",
+        JSON.stringify({
+          user: session.user,
+          state: "denied",
+        })
+      );
+    } catch (error) {
+      console.warn("[WEBSOCKET] Denying Friend Request", error);
+    }
 
-    await Promise.all([updateDatabase, triggerDenyRequest]);
+    try {
+      const friendSubscriptions = await fetchRedis<string[]>(
+        "zrange",
+        `push-subscriber:${senderId}`,
+        0,
+        -1
+      );
 
-    const friendSubscriptions = await fetchRedis<string[]>(
-      "zrange",
-      `push-subscriber:${senderId}`,
-      0,
-      -1
-    );
+      if (friendSubscriptions) {
+        const subObjects = friendSubscriptions.map((sub) => JSON.parse(sub));
 
-    if (friendSubscriptions) {
-      const subObjects = friendSubscriptions.map((sub) => JSON.parse(sub));
+        const pushMessage: PushMessage = {
+          title: "رد درخواست دوستی",
+          body: `از طرف ${session.user.name}`,
+          image: session.user.image,
+          tag: "system-notification",
+          url: process.env.SITE_URL + "/chat/friends-list",
+        };
 
-      const pushMessage: PushMessage = {
-        title: "رد درخواست دوستی",
-        body: `از طرف ${session.user.name}`,
-        image: session.user.image,
-        tag: "system-notification",
-        url: process.env.SITE_URL + "/chat/friends-list",
-      };
+        subObjects.forEach(async (subObject) => {
+          webPush.setVapidDetails(
+            process.env.MAILTO_ADDRESS_PUSH as string,
+            process.env.NEXT_PUBLIC_PUBLIC_VAPID_KEY as string,
+            process.env.PRIVATE_VAPID_KEY as string
+          );
 
-      subObjects.forEach((subObject) => {
-        webPush.setVapidDetails(
-          process.env.MAILTO_ADDRESS_PUSH as string,
-          process.env.NEXT_PUBLIC_PUBLIC_VAPID_KEY as string,
-          process.env.PRIVATE_VAPID_KEY as string
-        );
-
-        webPush
-          .sendNotification(subObject, JSON.stringify(pushMessage))
-          .catch((err) => {
-            console.log(err);
-          });
-      });
+          await webPush.sendNotification(subObject, JSON.stringify(pushMessage));
+        });
+      }
+    } catch (error) {
+      console.warn("[PUSH MESSAGE] Denying Friend Request", error);
     }
 
     return NextResponse.json(
