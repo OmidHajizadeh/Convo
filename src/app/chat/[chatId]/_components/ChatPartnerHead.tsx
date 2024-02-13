@@ -40,7 +40,7 @@ const ChatPartnerHead = ({ friendId }: ChatPartnerHeadProps) => {
 
   const iUserBlocked = blockedIds.includes(friendId);
 
-  if (!friendObject.friend) return;
+  if (!friendObject || !friendObject.friend) return;
 
   function handleClickOpen() {
     setOpen(true);

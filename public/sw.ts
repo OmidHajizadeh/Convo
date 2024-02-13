@@ -23,42 +23,43 @@ type PushMessage = {
   image?: string;
   url: string;
 };
-sw.addEventListener("push", (event) => {
+
+sw.addEventListener("push", async (event) => {
   if (!event.data) return;
   const message: PushMessage = JSON.parse(event.data.text());
-
-  sw.registration.showNotification(message.title, {
-    icon: message.image || "/manifest-assets/icon-192x192.png",
-    badge: "/manifest-assets/icon-96x96.png",
-    dir: "rtl",
-    tag: message.tag,
-    body: message.body,
-    data: {
-      url: message.url,
-    },
-  });
+  const isWindowOpen = await checkClientIsVisible();
+  
+  if (!isWindowOpen) {
+    sw.registration.showNotification(message.title, {
+      icon: message.image || "/manifest-assets/icon-192x192.png",
+      badge: "/manifest-assets/icon-96x96.png",
+      dir: "rtl",
+      tag: message.tag,
+      body: message.body,
+      data: {
+        url: message.url,
+      },
+    });
+  }
 });
 
+//! Notification Click Handler Event:
 sw.addEventListener("notificationclick", (event) => {
-  const notification = event.notification;
-
-  // event.waitUntil(
-  //   clients.matchAll().then((clients) => {
-  //     const client = clients.find(
-  //       (client) => client.visisbilityState === "visible"
-  //     );
-  //     if (client !== undefined) {
-  //       client.navigate(notification.data.url);
-  //     } else {
-  //       client.openWindow(notification.data.url);
-  //     }
-  //     notification.close();
-  //   })
-  // );
-  //
+  sw.clients.openWindow(event.notification.data.url);
 });
 
-sw.addEventListener('pushsubscriptionchange', event => {
-  // event.oldSubscription
-  // https://stackoverflow.com/questions/65769568/410-push-subscription-has-unsubscribed-or-expired
-})
+//! Utility Functions:
+async function checkClientIsVisible(): Promise<boolean> {
+  const windowClients = await sw.clients.matchAll({
+    type: "window",
+    includeUncontrolled: true,
+  });
+
+  for (var i = 0; i < windowClients.length; i++) {
+    if (windowClients[i].visibilityState === "visible") {
+      return true;
+    }
+  }
+
+  return false;
+}
