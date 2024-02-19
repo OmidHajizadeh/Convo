@@ -4,7 +4,7 @@ const sw = self as unknown as ServiceWorkerGlobalScope;
 
 //! Insall Event:
 sw.addEventListener("install", (event) => {
-  sw.skipWaiting();
+  event.waitUntil(sw.skipWaiting());
   console.log("[ServiceWorker]: Installed");
 });
 
@@ -28,7 +28,7 @@ sw.addEventListener("push", async (event) => {
   if (!event.data) return;
   const message: PushMessage = JSON.parse(event.data.text());
   const isWindowOpen = await checkClientIsVisible();
-  
+
   if (!isWindowOpen) {
     sw.registration.showNotification(message.title, {
       icon: message.image || "/manifest-assets/icon-192x192.png",

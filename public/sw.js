@@ -39,7 +39,7 @@ var _this = this;
 var sw = self;
 //! Insall Event:
 sw.addEventListener("install", function (event) {
-    sw.skipWaiting();
+    event.waitUntil(sw.skipWaiting());
     console.log("[ServiceWorker]: Installed");
 });
 //! Activate Event:
