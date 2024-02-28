@@ -1,9 +1,11 @@
 import { NextRequest, NextResponse } from "next/server";
-import webPush from "web-push";
 
 import { db } from "@/lib/database/db";
 import { fetchRedis } from "@/utils/fetchRedis";
-import { fetchServerSession } from "@/utils/serverInteractions";
+import {
+  fetchServerSession,
+  pushMessageToUser,
+} from "@/utils/serverInteractions";
 import { pusherServer } from "@/lib/pusher/pusher";
 import { toPusherKey } from "@/utils/helpers";
 import { PushMessage } from "@/lib/Models/PushMessage";
@@ -109,15 +111,7 @@ export async function POST(req: NextRequest) {
           url: process.env.SITE_URL + "/chat/" + chatId,
         };
 
-        subObjects.forEach(async (subObject) => {
-          webPush.setVapidDetails(
-            process.env.MAILTO_ADDRESS_PUSH as string,
-            process.env.NEXT_PUBLIC_PUBLIC_VAPID_KEY as string,
-            process.env.PRIVATE_VAPID_KEY as string
-          );
-
-          await webPush.sendNotification(subObject, JSON.stringify(pushMessage));
-        });
+        await pushMessageToUser(subObjects, pushMessage);
       }
     } catch (error) {
       console.warn("[PUSH MESSAGE] Sending New Message", error);

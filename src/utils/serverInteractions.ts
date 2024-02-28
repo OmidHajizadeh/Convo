@@ -1,7 +1,9 @@
 import { authOptions } from "@/lib/auth/auth-options";
 import { getServerSession } from "next-auth";
-import { fetchRedis } from "./fetchRedis";
+import webPush from "web-push";
 import { notFound } from "next/navigation";
+
+import { fetchRedis } from "./fetchRedis";
 import { chatHrefConstructor } from "./helpers";
 import { Friend } from "@/lib/Models/Friend";
 
@@ -55,4 +57,19 @@ export async function getFriendsByUserId(userId: string) {
   );
 
   return friends;
+}
+
+export async function pushMessageToUser(
+  subObjects: any[],
+  pushMessage: PushMessage
+) {
+  for (let i = 0; i < subObjects.length; i++) {
+    webPush.setVapidDetails(
+      process.env.MAILTO_ADDRESS_PUSH as string,
+      process.env.NEXT_PUBLIC_PUBLIC_VAPID_KEY as string,
+      process.env.PRIVATE_VAPID_KEY as string
+    );
+
+    await webPush.sendNotification(subObjects[i], JSON.stringify(pushMessage));
+  }
 }

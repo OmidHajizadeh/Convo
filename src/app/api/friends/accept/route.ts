@@ -1,8 +1,7 @@
-import webPush from "web-push";
 import { NextRequest, NextResponse } from "next/server";
 
 import { db } from "@/lib/database/db";
-import { fetchServerSession } from "@/utils/serverInteractions";
+import { fetchServerSession, pushMessageToUser } from "@/utils/serverInteractions";
 import { fetchRedis } from "@/utils/fetchRedis";
 import { pusherServer } from "@/lib/pusher/pusher";
 import { chatHrefConstructor, toPusherKey } from "@/utils/helpers";
@@ -124,18 +123,8 @@ export async function POST(req: NextRequest) {
             chatHrefConstructor(session.user.id, senderId),
         };
 
-        subObjects.forEach(async (subObject) => {
-          webPush.setVapidDetails(
-            process.env.MAILTO_ADDRESS_PUSH as string,
-            process.env.NEXT_PUBLIC_PUBLIC_VAPID_KEY as string,
-            process.env.PRIVATE_VAPID_KEY as string
-          );
-
-          await webPush.sendNotification(
-            subObject,
-            JSON.stringify(pushMessage)
-          );
-        });
+        await pushMessageToUser(subObjects, pushMessage);
+        
       }
     } catch (error) {
       console.warn("[PUSH MESSAGE] Accepting Friend Request", error);
